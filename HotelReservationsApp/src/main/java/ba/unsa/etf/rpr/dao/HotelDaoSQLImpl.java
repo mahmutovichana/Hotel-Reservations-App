@@ -117,4 +117,16 @@ public class HotelDaoSQLImpl implements HotelDao {
         }
     }
 
+    @Override
+    public void delete(Hotel hotel) {
+        String insert = "DELETE FROM HOTELS WHERE hotel_id = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, hotel.getHotelId());
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }
