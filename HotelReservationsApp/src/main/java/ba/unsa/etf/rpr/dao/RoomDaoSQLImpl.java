@@ -106,4 +106,28 @@ public class RoomDaoSQLImpl implements RoomDao {
         }
     }
 
+    @Override
+    public List<Room> getAll() {
+        String query = "SELECT * FROM ROOMS";
+        List<Room> rooms = new ArrayList<>();
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){ // result set is iterator.
+                Room room = new Room();
+                room.setRoomId(rs.getInt("room_id"));
+                room.setType(rs.getString("type"));
+                room.setCapacity(rs.getInt("capacity"));
+                room.setHasAirConditioning(rs.getInt("hasAirConditioning"));
+                room.setStatus(rs.getInt("status"));
+                room.setHotelId(new HotelDaoSQLImpl().getById(rs.getInt("hotel_id")));
+                rooms.add(room);
+            }
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace(); // poor error handling
+        }
+        return rooms;
+    }
+
 }
