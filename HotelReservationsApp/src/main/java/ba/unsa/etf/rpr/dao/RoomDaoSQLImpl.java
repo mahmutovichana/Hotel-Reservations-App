@@ -76,4 +76,22 @@ public class RoomDaoSQLImpl implements RoomDao {
         return null;
     }
 
+    @Override
+    public Room update(Room room) {
+        String insert = "UPDATE ROOMS SET type = ? AND capacity = ? AND hasAirConditioning = ? AND status = ? AND hotel_id = ? WHERE room_id = ?";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, room.getType());
+            stmt.setObject(2, room.getCapacity());
+            stmt.setObject(3, room.getHasAirConditioning());
+            stmt.setObject(4, room.getStatus());
+            stmt.setObject(5, room.getHotelId());
+            stmt.executeUpdate();
+            return room;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
