@@ -108,4 +108,26 @@ public class ReservationDaoSQLImpl implements ReservationDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<Reservation> getAll() {
+        String query = "SELECT * FROM RESERVATIONS";
+        List<Reservation> users = new ArrayList<>();
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){ // result set is iterator.
+                Reservation reservation = new Reservation();
+                reservation.setUsername(new UserDaoSQLImpl().getByUsername((rs.getString("username"))));
+                reservation.setCheckIn(rs.getDate("checkIn"));
+                reservation.setCheckOut(rs.getDate("checkOut"));
+                reservation.setTotal(rs.getInt("total"));
+                users.add(reservation);
+            }
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace(); // poor error handling
+        }
+        return users;
+    }
 }
