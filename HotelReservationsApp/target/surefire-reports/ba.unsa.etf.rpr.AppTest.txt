@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.AppTest
+-------------------------------------------------------------------------------
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in ba.unsa.etf.rpr.AppTest
