@@ -24,4 +24,30 @@ public class RoomDaoSQLImpl implements RoomDao {
         }
     }
 
+    @Override
+    public Room getById(int id) {
+        String query = "SELECT * FROM ROOMS WHERE room_id = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){ // result set is iterator.
+                Room room = new Room();
+                room.setRoomId(rs.getInt("room_id"));
+                room.setType(rs.getString("type"));
+                room.setCapacity(rs.getInt("capacity"));
+                room.setHasAirConditioning(rs.getInt("hasAirConditioning"));
+                room.setStatus(rs.getInt("status"));
+                room.setHotelId(new HotelDaoSQLImpl().getById(rs.getInt(1)));
+                rs.close();
+                return room;
+            }else{
+                return null; // if there is no elements in the result set return null
+            }
+        }catch (SQLException e){
+            e.printStackTrace(); // poor error handling
+        }
+        return null;
+    }
+
 }
