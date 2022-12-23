@@ -55,4 +55,25 @@ public class RoomDaoSQLImpl implements RoomDao {
         return null;
     }
 
+    @Override
+    public Room add(Room room) {
+        String insert = "INSERT INTO ROOMS(type,capacity,hasAirConditioning,status,hotel_id) VALUES(?,?,?,?,?)";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, room.getType());
+            stmt.setInt(2,room.getCapacity());
+            stmt.setInt(3,room.getHasAirConditioning());
+            stmt.setInt(4,room.getStatus());
+            stmt.setInt(5,room.getHotelId().getHotelId());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next(); // we know that there is one key
+            room.setRoomId(rs.getInt(1)); //set username to return it back
+            return room;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
