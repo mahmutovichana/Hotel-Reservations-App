@@ -75,4 +75,29 @@ public class HotelDaoSQLImpl implements HotelDao {
         return null;
     }
 
+    @Override
+    public Hotel add(Hotel hotel) {
+        String insert = "INSERT INTO HOTELS(hotel_id,name,zipCode,city,country,starRating) VALUES(?,?,?,?,?,?)";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, hotel.getHotelId());
+            stmt.setString(2,hotel.getName());
+            stmt.setInt(3,hotel.getZipCode());
+            stmt.setString(4,hotel.getCity());
+            stmt.setString(5,hotel.getCountry());
+            stmt.setInt(6,hotel.getStarRating());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            while(rs.next()){
+                hotel.setName(rs.getString(2)); //set username to return it back
+            }
+            //rs.next(); // we know that there is one key
+
+            return hotel;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
