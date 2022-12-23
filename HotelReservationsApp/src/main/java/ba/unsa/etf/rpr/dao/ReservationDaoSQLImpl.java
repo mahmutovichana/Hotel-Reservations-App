@@ -97,4 +97,15 @@ public class ReservationDaoSQLImpl implements ReservationDao {
         }
     }
 
+    @Override
+    public void delete(Reservation reservation) {
+        String insert = "DELETE FROM RESERVATIONS WHERE username = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, reservation.getReservationId());
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
