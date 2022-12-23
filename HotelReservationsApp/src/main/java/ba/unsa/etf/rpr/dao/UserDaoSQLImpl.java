@@ -94,4 +94,16 @@ public class UserDaoSQLImpl implements UserDao {
         }
     }
 
+    @Override
+    public void delete(User user) {
+        String insert = "DELETE FROM USERS WHERE username = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, user.getUsername());
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }
