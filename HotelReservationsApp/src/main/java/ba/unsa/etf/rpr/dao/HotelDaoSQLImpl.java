@@ -100,4 +100,21 @@ public class HotelDaoSQLImpl implements HotelDao {
         return null;
     }
 
+    @Override
+    public Hotel update(Hotel hotel) {
+        String insert = "UPDATE HOTELS SET zipCode = ? AND city = ? AND country = ? AND starRating = ? WHERE name = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, hotel.getZipCode());
+            stmt.setObject(2, hotel.getCity());
+            stmt.setObject(3, hotel.getCountry());
+            stmt.setObject(4, hotel.getStarRating());
+            stmt.executeUpdate();
+            return hotel;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
