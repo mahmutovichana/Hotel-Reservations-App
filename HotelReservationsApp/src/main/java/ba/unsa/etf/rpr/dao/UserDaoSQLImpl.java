@@ -55,4 +55,26 @@ public class UserDaoSQLImpl implements UserDao {
         return null;
     }
 
+    @Override
+    public User add(User person) {
+        String insert = "INSERT INTO USERS(first_name,last_name,email,role,username,password) VALUES(?,?,?,?,?,?)";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, person.getFirstName());
+            stmt.setString(2,person.getLastName());
+            stmt.setString(3,person.getEmail());
+            stmt.setInt(4,person.getRole());
+            stmt.setString(5,person.getUsername());
+            stmt.setString(6,person.getPassword());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next(); // we know that there is one key
+            person.setUsername(rs.getString(1)); //set username to return it back
+            return person;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
