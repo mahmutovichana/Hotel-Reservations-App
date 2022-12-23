@@ -24,4 +24,9 @@ public class UserDaoSQLImpl implements UserDao {
         }
     }
 
+    @Override
+    public User getById(int id) {
+        return null;
+    }
+
 }
