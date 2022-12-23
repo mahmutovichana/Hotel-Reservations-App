@@ -50,5 +50,29 @@ public class HotelDaoSQLImpl implements HotelDao {
         return null;
     }
 
+    public Hotel getById(int hotelId){
+        String query = "SELECT * FROM HOTELS WHERE hotel_id = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(query);
+            stmt.setInt(1, hotelId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){ // result set is iterator.
+                Hotel hotel = new Hotel();
+                hotel.setHotelId(rs.getInt("hotel_id"));
+                hotel.setName(rs.getString("name"));
+                hotel.setZipCode(rs.getInt("zipCode"));
+                hotel.setCity(rs.getString("city"));
+                hotel.setCountry(rs.getString("country"));
+                hotel.setStarRating(rs.getInt("starRating"));
+                rs.close();
+                return hotel;
+            }else{
+                return null; // if there is no elements in the result set return null
+            }
+        }catch (SQLException e){
+            e.printStackTrace(); // poor error handling
+        }
+        return null;
+    }
 
 }
