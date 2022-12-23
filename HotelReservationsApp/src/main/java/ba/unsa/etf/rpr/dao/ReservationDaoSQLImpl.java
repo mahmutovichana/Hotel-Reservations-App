@@ -50,4 +50,9 @@ public class ReservationDaoSQLImpl implements ReservationDao {
         return null;
     }
 
+    @Override
+    public Reservation getByUsername(String username) {
+        return null;
+    }
+
 }
