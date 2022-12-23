@@ -94,4 +94,16 @@ public class RoomDaoSQLImpl implements RoomDao {
         }
     }
 
+    @Override
+    public void delete(Room room) {
+        String insert = "DELETE FROM ROOMS WHERE room_id = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, room.getRoomId());
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }
