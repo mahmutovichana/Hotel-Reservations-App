@@ -50,4 +50,9 @@ public class RoomDaoSQLImpl implements RoomDao {
         return null;
     }
 
+    @Override
+    public Room getByUsername(String username) {
+        return null;
+    }
+
 }
