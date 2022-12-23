@@ -129,4 +129,24 @@ public class HotelDaoSQLImpl implements HotelDao {
         }
     }
 
+    @Override
+    public List<Hotel> getAll() {
+        String query = "SELECT * FROM HOTELS";
+        List<Hotel> hotels = new ArrayList<>();
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){ // result set is iterator.
+                Hotel hotel = new Hotel();
+                hotel.setHotelId(rs.getInt("hotel_id"));
+                hotel.setName(rs.getString("name"));
+                hotels.add(hotel);
+            }
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace(); // poor error handling
+        }
+        return hotels;
+    }
+
 }
