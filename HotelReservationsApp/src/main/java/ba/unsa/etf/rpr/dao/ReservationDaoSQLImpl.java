@@ -55,4 +55,27 @@ public class ReservationDaoSQLImpl implements ReservationDao {
         return null;
     }
 
+    @Override
+    public Reservation add(Reservation reservation) {
+        String insert = "INSERT INTO RESERVATIONS(checkIn,checkOut,total,adults,children,room_id,username) VALUES(?,?,?,?,?,?,?)";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setDate(1, reservation.getCheckIn());
+            stmt.setDate(2, reservation.getCheckOut());
+            stmt.setInt(3,  reservation.getTotal());
+            stmt.setInt(4,  reservation.getAdults());
+            stmt.setInt(5,  reservation.getChildren());
+            stmt.setInt(6,  reservation.getRoomId().getRoomId());
+
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next(); // we know that there is one key
+            reservation.setUsername(new UserDaoSQLImpl().getByUsername(rs.getString("username"))); //set username to return it back
+            return reservation;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
