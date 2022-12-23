@@ -78,4 +78,23 @@ public class ReservationDaoSQLImpl implements ReservationDao {
         return null;
     }
 
+    @Override
+    public Reservation update(Reservation reservation) {
+        String insert = "UPDATE RESERVATIONS SET room_id = ? AND checkIN = ? AND checkOut = ? AND adults = ? AND children = ? AND total = ? WHERE username = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, reservation.getRoomId().getRoomId());
+            stmt.setObject(2, reservation.getCheckIn());
+            stmt.setObject(3, reservation.getCheckOut());
+            stmt.setObject(4, reservation.getAdults());
+            stmt.setObject(5, reservation.getChildren());
+            stmt.setObject(6, reservation.getTotal());
+            stmt.executeUpdate();
+            return reservation;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
