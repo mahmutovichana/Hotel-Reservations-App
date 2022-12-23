@@ -106,4 +106,25 @@ public class UserDaoSQLImpl implements UserDao {
         }
     }
 
+    @Override
+    public List<User> getAll() {
+        String query = "SELECT * FROM USERS";
+        List<User> users = new ArrayList<>();
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){ // result set is iterator.
+                User person = new User();
+                person.setUsername(rs.getString("username"));
+                person.setFirstName(rs.getString("first_name"));
+                person.setLastName(rs.getString("last_name"));
+                users.add(person);
+            }
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace(); // poor error handling
+        }
+        return users;
+    }
+
 }
