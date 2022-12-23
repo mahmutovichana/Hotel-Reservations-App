@@ -22,4 +22,32 @@ public class ReservationDaoSQLImpl implements ReservationDao {
         }
     }
 
+    @Override
+    public Reservation getById(int id) {
+        String query = "SELECT * FROM RESERVATIONS WHERE reservation_id = ?";
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){ // result set is iterator.
+                Reservation reservation = new Reservation();
+                reservation.setReservationId(rs.getInt("reservation_id"));
+                reservation.setCheckIn(rs.getDate("checkIn"));
+                reservation.setCheckOut(rs.getDate("checkOut"));
+                reservation.setTotal(rs.getInt("total"));
+                reservation.setChildren(rs.getInt("children"));
+                reservation.setAdults(rs.getInt("adults"));
+                reservation.setRoomId(new RoomDaoSQLImpl().getById(rs.getInt("room_id")));
+                reservation.setUsername(new UserDaoSQLImpl().getByUsername(rs.getString("username")));
+                rs.close();
+                return reservation;
+            }else{
+                return null; // if there is no elements in the result set return null
+            }
+        }catch (SQLException e){
+            e.printStackTrace(); // poor error handling
+        }
+        return null;
+    }
+
 }
