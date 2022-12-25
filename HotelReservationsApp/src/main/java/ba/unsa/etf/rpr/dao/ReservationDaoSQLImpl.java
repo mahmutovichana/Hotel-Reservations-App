@@ -66,7 +66,6 @@ public class ReservationDaoSQLImpl implements ReservationDao {
             stmt.setInt(4,  reservation.getAdults());
             stmt.setInt(5,  reservation.getChildren());
             stmt.setInt(6,  reservation.getRoomId().getRoomId());
-
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next(); // we know that there is one key
@@ -80,7 +79,7 @@ public class ReservationDaoSQLImpl implements ReservationDao {
 
     @Override
     public Reservation update(Reservation reservation) {
-        String insert = "UPDATE RESERVATIONS SET room_id = ? AND checkIN = ? AND checkOut = ? AND adults = ? AND children = ? AND total = ? WHERE username = ?";
+        String insert = "UPDATE RESERVATIONS SET room_id = ?, checkIN = ?, checkOut = ?, adults = ?, children = ?, total = ? WHERE username = ?";
         try{
             PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             stmt.setObject(1, reservation.getRoomId().getRoomId());
@@ -89,6 +88,7 @@ public class ReservationDaoSQLImpl implements ReservationDao {
             stmt.setObject(4, reservation.getAdults());
             stmt.setObject(5, reservation.getChildren());
             stmt.setObject(6, reservation.getTotal());
+            stmt.setObject(7, reservation.getUsername());
             stmt.executeUpdate();
             return reservation;
         }catch (SQLException e){

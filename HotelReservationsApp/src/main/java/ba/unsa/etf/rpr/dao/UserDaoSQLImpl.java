@@ -79,13 +79,14 @@ public class UserDaoSQLImpl implements UserDao {
 
     @Override
     public User update(User person) {
-        String insert = "UPDATE USERS SET first_name = ? AND last_name = ? AND email = ? AND password = ? WHERE username = ?";
+        String insert = "UPDATE USERS SET first_name = ?, last_name = ?, email = ?, password = ? WHERE username = ?";
         try{
             PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             stmt.setObject(1, person.getFirstName());
-            stmt.setObject(2, person.getUsername());
-            stmt.setObject(3,person.getEmail());
-            stmt.setObject(4,person.getPassword());
+            stmt.setObject(2, person.getLastName());
+            stmt.setObject(3, person.getEmail());
+            stmt.setObject(4, person.getPassword());
+            stmt.setObject(5, person.getUsername());
             stmt.executeUpdate();
             return person;
         }catch (SQLException e){

@@ -77,15 +77,14 @@ public class HotelDaoSQLImpl implements HotelDao {
 
     @Override
     public Hotel add(Hotel hotel) {
-        String insert = "INSERT INTO HOTELS(hotel_id,name,zipCode,city,country,starRating) VALUES(?,?,?,?,?,?)";
+        String insert = "INSERT INTO HOTELS(name,zipCode,city,country,starRating) VALUES(?,?,?,?,?)";
         try{
             PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, hotel.getHotelId());
-            stmt.setString(2,hotel.getName());
-            stmt.setInt(3,hotel.getZipCode());
-            stmt.setString(4,hotel.getCity());
-            stmt.setString(5,hotel.getCountry());
-            stmt.setInt(6,hotel.getStarRating());
+            stmt.setString(1,hotel.getName());
+            stmt.setInt(2,hotel.getZipCode());
+            stmt.setString(3,hotel.getCity());
+            stmt.setString(4,hotel.getCountry());
+            stmt.setInt(5,hotel.getStarRating());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             while(rs.next()){
@@ -102,13 +101,14 @@ public class HotelDaoSQLImpl implements HotelDao {
 
     @Override
     public Hotel update(Hotel hotel) {
-        String insert = "UPDATE HOTELS SET zipCode = ? AND city = ? AND country = ? AND starRating = ? WHERE name = ?";
+        String insert = "UPDATE HOTELS SET zipCode = ?, city = ?, country = ?, starRating = ? WHERE name = ?";
         try{
             PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             stmt.setObject(1, hotel.getZipCode());
             stmt.setObject(2, hotel.getCity());
             stmt.setObject(3, hotel.getCountry());
             stmt.setObject(4, hotel.getStarRating());
+            stmt.setObject(5, hotel.getName());
             stmt.executeUpdate();
             return hotel;
         }catch (SQLException e){
