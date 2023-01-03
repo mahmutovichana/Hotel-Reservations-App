@@ -97,6 +97,26 @@ public class AdminPanelPageController {
         return FXCollections.observableArrayList(dataList);
     }
 
+    // Inner class for storing table view, object type, and column names
+    private static class TableColumnPair {
+        private final TableView table;
+        private final Class type;
+        private final String[] columns;
 
+        public TableColumnPair(TableView table, Class type, String... columns) {
+            this.table = table;
+            this.type = type;
+            this.columns = columns;
+        }
+        public TableView getTable() {
+            return table;
+        }
+        public Class getType() {
+            return type;
+        }
+        public String[] getColumns() {
+            return columns;
+        }
+    }
 
 }
