@@ -38,6 +38,7 @@ public class RoomDaoSQLImpl implements RoomDao {
                 room.setCapacity(rs.getInt("capacity"));
                 room.setHasAirConditioning(rs.getInt("hasAirConditioning"));
                 room.setStatus(rs.getInt("status"));
+                room.setPrice(rs.getDouble("price"));
                 room.setHotelId(new HotelDaoSQLImpl().getById(rs.getInt(1)));
                 rs.close();
                 return room;
@@ -57,7 +58,7 @@ public class RoomDaoSQLImpl implements RoomDao {
 
     @Override
     public Room add(Room room) {
-        String insert = "INSERT INTO ROOMS(type,capacity,hasAirConditioning,status,hotel_id) VALUES(?,?,?,?,?)";
+        String insert = "INSERT INTO ROOMS(type,capacity,hasAirConditioning,status,hotel_id,price) VALUES(?,?,?,?,?,?)";
         try{
             PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, room.getType());
@@ -65,6 +66,7 @@ public class RoomDaoSQLImpl implements RoomDao {
             stmt.setInt(3,room.getHasAirConditioning());
             stmt.setInt(4,room.getStatus());
             stmt.setInt(5,room.getHotelId().getHotelId());
+            stmt.setDouble(6,room.getPrice());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next(); // we know that there is one key
@@ -78,7 +80,7 @@ public class RoomDaoSQLImpl implements RoomDao {
 
     @Override
     public Room update(Room room) {
-        String insert = "UPDATE ROOMS SET type = ?, capacity = ?, hasAirConditioning = ?, status = ?, hotel_id = ? WHERE room_id = ?";
+        String insert = "UPDATE ROOMS SET type = ?, capacity = ?, hasAirConditioning = ?, status = ?, hotel_id = ?, price = ? WHERE room_id = ?";
         try {
             PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             stmt.setObject(1, room.getType());
@@ -86,7 +88,8 @@ public class RoomDaoSQLImpl implements RoomDao {
             stmt.setObject(3, room.getHasAirConditioning());
             stmt.setObject(4, room.getStatus());
             stmt.setObject(5, room.getHotelId());
-            stmt.setObject(6, room.getRoomId());
+            stmt.setObject(6, room.getPrice());
+            stmt.setObject(7, room.getRoomId());
             stmt.executeUpdate();
             return room;
         } catch (SQLException e) {
@@ -122,6 +125,7 @@ public class RoomDaoSQLImpl implements RoomDao {
                 room.setHasAirConditioning(rs.getInt("hasAirConditioning"));
                 room.setStatus(rs.getInt("status"));
                 room.setHotelId(new HotelDaoSQLImpl().getById(rs.getInt("hotel_id")));
+                room.setPrice(rs.getDouble("price"));
                 rooms.add(room);
             }
             rs.close();
