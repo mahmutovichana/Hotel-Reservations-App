@@ -35,5 +35,105 @@ public class SignInController {
     @FXML
     public Label errorLabel;
 
+    @FXML
+    private void handleLogin() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        // Establish a connection to the database
+        UserDaoSQLImpl u = new UserDaoSQLImpl();
+        boolean loginSuccessful;
+        User user = new User();
+        // Validate the input
+        if (!username.isEmpty()) {
+            // Display an error message
+            badUsernameIN.setText("");
+        }
+        else{
+            badUsernameIN.setText("Username cannot be empty.");
+        }
+        if(!password.isEmpty()){
+            // Display an error message
+            badPasswordIN.setText("");
+            loginSuccessful=true;
+
+        }
+        else{
+            badPasswordIN.setText("Password cannot be empty");
+            loginSuccessful=false;
+        }
+        if(loginSuccessful){
+            // Check the input against the database
+            user = u.getByUsername(username);
+            errorLabel.setAlignment(Pos.CENTER);
+            if (user!=null) {
+                if(Objects.equals(user.getPassword(), password)){
+                    // Login successful
+                    errorLabel.setTextFill(Paint.valueOf("#13b92c"));
+                    errorLabel.setText("Login successful!");
+                } }else {
+                // Display an error message
+                errorLabel.setText("Invalid username or password!");
+                return;
+            }
+        }
+
+        if(loginSuccessful && Objects.requireNonNull(user).getRole()==1){
+            // Transfer to the new window after a delay
+            User finalUser = user;
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                // Create the new window
+                Stage stage = new Stage();
+                stage.setTitle("Admin Panel");
+                stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    URL url = getClass().getResource("/fxml/adminPanel/AdminPanelPage.fxml");
+                    fxmlLoader.setLocation(url);
+                    Parent root = fxmlLoader.load();
+                    AdminPanelPageController controller = fxmlLoader.getController();
+                    controller.setUser(finalUser);
+                    controller.initialize(); // call initialize after setting the user
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.setScene(new Scene(root));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+                stage.show();
+
+                // Close the login window
+                signInButton.getScene().getWindow().hide();
+            }));
+            timeline.play();
+        }else if(loginSuccessful){
+            // Transfer to the new window after a delay
+            User finalUser = user;
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                // Create the new window
+                Stage stage = new Stage();
+                stage.setTitle("Home Page");
+                stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    URL url = getClass().getResource("/fxml/homePage/HomePage.fxml");
+                    fxmlLoader.setLocation(url);
+                    Parent root = fxmlLoader.load();
+                    HomePageController controller = fxmlLoader.getController();
+                    controller.setUser(finalUser);
+                    controller.initialize(); // call initialize after setting the user
+                    stage.setScene(new Scene(root));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+                stage.show();
+
+                // Close the login window
+                signInButton.getScene().getWindow().hide();
+            }));
+            timeline.play();
+        }
+    }
 
 }
