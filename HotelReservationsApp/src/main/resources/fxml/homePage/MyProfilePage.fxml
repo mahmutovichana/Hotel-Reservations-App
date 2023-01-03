@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane prefHeight="600.0" prefWidth="850.0"
+      style="-fx-background-color: #0A1A3B; -fx-background-image: images\shapesBackground;"
+      stylesheets="@/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ba.unsa.etf.rpr.controllers.MyProfilePageController">
+    <ScrollPane cacheShape="false" fitToHeight="true" fitToWidth="true" layoutX="-12.0" layoutY="-3.0" pannable="true"
+                pickOnBounds="false" prefHeight="610.0" prefWidth="866.0"
+                style="-fx-border-color: transparent; -fx-background-color: #0A1A3B;">
+        <Pane disable="true" focusTraversable="true" pickOnBounds="false" prefHeight="569.0" prefWidth="806.0"
+              snapToPixel="false" style="-fx-border-color: transparent; -fx-background-color: transparent;">
+            <ImageView fitHeight="628.0" fitWidth="928.0" layoutX="-54.0" layoutY="-16.0" pickOnBounds="true">
+                <Image url="@../../images/shapeBackground.jpg"/>
+            </ImageView>
+            <Text fill="WHITE" layoutX="40.0" layoutY="153.0" lineSpacing="9.0" strokeLineJoin="ROUND"
+                  strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Welcome to our hotel booking app, Hana Avis! We are a team of travel enthusiasts and techies based in the beautiful city of Sarajevo, Bosnia and Herzegovina."
+                  textOrigin="CENTER" wrappingWidth="463.20257568359375">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Text>
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="40.0" layoutY="280.0" lineSpacing="9.0"
+                  strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Founded in 2017, our company was created with the goal of revolutionizing the way people book their hotel rooms. Inspired by the Latin word &quot;avis,&quot; meaning &quot;bird,&quot; our name represents the freedom and flexibility we offer our customers to fly to their desired destination and choose from a wide range of hotels."
+                  textOrigin="CENTER" wrappingWidth="481.86932373046875">
+                <font>
+                    <Font size="13.0"/>
+                </font>
+            </Text>
+            <ImageView fitHeight="38.0" fitWidth="65.0" layoutX="787.0" layoutY="21.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../../images/HanaAvisTransLogoWhite.png"/>
+            </ImageView>
+            <Text fill="#180d51" layoutX="571.0" layoutY="94.0" lineSpacing="6.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0"
+                  text="So why wait? Start planning your next vacation today and book your dream hotel room with us!"
+                  textAlignment="RIGHT" wrappingWidth="269.32936096191406"/>
+            <Text fill="#1e0e40" layoutX="685.0" layoutY="187.0" lineSpacing="3.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0"
+                  text="Phone: +387123456 Email: info@hanavis.com Address: 123 Main Street, Sarajevo, Bosnia and Herzegovina"
+                  textAlignment="RIGHT" wrappingWidth="151.72412109375">
+                <font>
+                    <Font size="13.0"/>
+                </font>
+            </Text>
+            <ImageView fitHeight="347.0" fitWidth="342.0" layoutX="522.0" layoutY="257.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../../images/womanMob.png"/>
+            </ImageView>
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="40.0" layoutY="430.0" lineSpacing="9.0"
+                  strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Since our launch, we have grown to become one of the most trusted and widely used hotel booking apps in Bosnia and Herzegovina. Our user-friendly interface and intuitive search filters make it easy for you to find the perfect room at the perfect price. We also offer a 24/7 customer support team to help you with any questions or issues you might have.So why wait? Start planning your next vacation today and book your dream hotel room with us!"
+                  textOrigin="CENTER" wrappingWidth="499.20263671875">
+                <font>
+                    <Font size="13.0"/>
+                </font>
+            </Text>
+        </Pane>
+    </ScrollPane>
+    <ImageView fx:id="goBack" fitHeight="38.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+        <effect>
+            <ColorAdjust brightness="1.0" contrast="-1.0" hue="-0.41" saturation="-1.0"/>
+        </effect>
+        <Image url="@../../images/goBackIcon.png"/>
+    </ImageView>
+</Pane>
