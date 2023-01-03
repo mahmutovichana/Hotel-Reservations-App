@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>-->
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="484.0" styleClass="blue-panel" stylesheets="@/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.SignInController">
+    <Label ellipsisString="" text="Log in" textFill="#2196f3">
+        <font>
+            <Font size="20.0" />
+        </font>
+        <VBox.margin>
+            <Insets bottom="30.0" left="20.0" top="-30.0" />
+        </VBox.margin>
+    </Label>
+    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+        <VBox.margin>
+            <Insets left="15.0" right="15.0" top="15.0" />
+        </VBox.margin>
+        <TextField fx:id="usernameField" promptText="Username" styleClass="tf_box" HBox.hgrow="ALWAYS" />
+        <!--<FontAwesomeIconView fill="WHITE" glyphName="USER" size="1.3em" />-->
+    </HBox>
+    <Label fx:id="badUsernameIN" ellipsisString="" styleClass="badUsername" textFill="RED">
+        <VBox.margin>
+            <Insets left="20.0" />
+        </VBox.margin>
+    </Label>
+    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+        <VBox.margin>
+            <Insets left="15.0" right="15.0" top="20.0" />
+        </VBox.margin>
+        <PasswordField fx:id="passwordField" prefHeight="26.0" prefWidth="457.0" promptText="Password" styleClass="tf_box" />
+        <ImageView fitHeight="19.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../images/showPasswordEyeIcon.png"/>
+        </ImageView>
+        <!--<FontAwesomeIconView fill="WHITE" glyphName="LOCK" size="1.3em" />-->
+    </HBox>
+    <Label fx:id="badPasswordIN" ellipsisString="" styleClass="badPassword" text=" " textFill="RED">
+        <VBox.margin>
+            <Insets left="20.0" />
+        </VBox.margin>
+    </Label>
+    <Button fx:id="signInButton" mnemonicParsing="false" onMouseClicked="#handleLogin" prefHeight="38.0" prefWidth="449.0" styleClass="blue-btn" text="Sign In" textFill="WHITE">
+        <font>
+            <Font size="17.0" />
+        </font>
+        <VBox.margin>
+            <Insets left="15.0" top="20.0" />
+        </VBox.margin>
+    </Button>
+    <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" prefHeight="18.0" prefWidth="484.0" styleClass="errorLabel" stylesheets="@/stylesheets/styles.css" textAlignment="CENTER" textFill="#13b92c">
+        <VBox.margin>
+            <Insets left="20.0" right="20.0" top="10.0" />
+        </VBox.margin>
+        <opaqueInsets>
+            <Insets />
+        </opaqueInsets>
+    </Label>
+</VBox>
