@@ -36,6 +36,29 @@ public class SignInController {
     public Label errorLabel;
 
     @FXML
+    public void initialize() {
+        usernameField.setOnAction(this::moveToNextTextField);
+        passwordField.setOnAction(this::moveToTheSignIn);
+        /* I will implement this later to work fully
+        passwordEyeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            passwordField.setText(passwordField.getText());
+            passwordField.setVisible(!passwordField.isVisible());
+        });
+        */
+    }
+    @FXML
+    public void moveToNextTextField(ActionEvent event) {
+        passwordField.requestFocus();
+    }
+    @FXML // currently not working as expected but will fix it later
+    public void moveToTheSignIn(ActionEvent event){
+        signInButton.setDisable(false); // enable the button
+        signInButton.setVisible(true); // show the button
+        signInButton.fire();
+    }
+
+
+    @FXML
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
