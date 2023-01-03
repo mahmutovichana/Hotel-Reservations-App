@@ -1,3 +1,8 @@
+/**
+ The Room class represents a hotel room with its room ID, type, capacity, hasAirConditioning attribute, status and hotel ID.
+ It has getters and setters for each of its attributes, as well as methods for checking equality and generating a string representation of the object.
+ */
+
 package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
