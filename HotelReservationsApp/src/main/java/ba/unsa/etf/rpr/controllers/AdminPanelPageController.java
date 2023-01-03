@@ -78,4 +78,25 @@ public class AdminPanelPageController {
         return user;
     }
 
+
+
+    private <T> ObservableList<T> getData(Class<T> type) {
+        // Use a Map to store the mapping between object types and DAOs
+        Map<Class<?>, Dao<?>> daoMap = new HashMap<>();
+        daoMap.put(Hotel.class, DaoFactory.hotelDao());
+        daoMap.put(Room.class, DaoFactory.roomDao());
+        daoMap.put(User.class, DaoFactory.userDao());
+        daoMap.put(Reservation.class, DaoFactory.reservationDao());
+
+        // Use the Map to get the correct DAO for the desired object type
+        Dao<T> dao;
+        dao = (Dao<T>) daoMap.get(type);
+
+        // Retrieve the data from the database using the DAO
+        List<T> dataList = dao.getAll();
+        return FXCollections.observableArrayList(dataList);
+    }
+
+
+
 }
