@@ -1,6 +1,3 @@
-.parent{
-    -fx-background-color: transparent;
-}
 .pane{
     -fx-background-image: url("../images/shapeBackground.jpg");
     -fx-background-size: 100%;
@@ -37,5 +34,50 @@
     -fx-text-fill: #ffffff;
 }
 
-.badName {
+.closeButtonWhenHovered{
+    -fx-opacity: 0.8;
+}
+
+.closeButtonStyle{
+    -fx-background-color: #151928;
+    -fx-text-fill: white bold;
+    -fx-opacity: 0.3;
+}
+
+.minimizeButtonStyle{
+    -fx-background-color: #151928;
+    -fx-text-fill: white bold;
+    -fx-opacity: 0.4;
+}
+
+.minimizeButtonWhenHovered {
+    -fx-opacity: 0.8;
+}
+
+.badName .badPassword .badUsername .badSurname .badEmail {
+    -fx-text-fill: red;
+}
+
+.errorLabel {
+    -fx-text-fill: red;
+}
+
+.parent{
+    -fx-background-radius: 10;
+    -fx-background-color: transparent;
+}
+
+.root{
+    -fx-background-radius: 10;
+    -fx-background-color: transparent;
+    -fx-font-family: 'Fontspace';
+}
+
+@font-face {
+    font-family: 'Fontspace';
+    src: url('/fonts/Fontspace.ttf');
+}
+
+.adminButton{
+    -fx-border-bottom-color: #0A1A3B;
 }
