@@ -2,13 +2,14 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.User;
 
+import java.awt.*;
 import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class UserDaoSQLImpl implements UserDao {
+public class UserDaoSQLImpl extends Component implements UserDao {
 
     private Connection connection;
 
@@ -68,8 +69,7 @@ public class UserDaoSQLImpl implements UserDao {
             stmt.setString(6,person.getPassword());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            rs.next(); // we know that there is one key
-            person.setUsername(rs.getString(1)); //set username to return it back
+            if(rs.next()){person.setUsername(rs.getString(1)); return person;}//set username to return it back
             return person;
         }catch (SQLException e){
             e.printStackTrace();
@@ -119,6 +119,7 @@ public class UserDaoSQLImpl implements UserDao {
                 person.setUsername(rs.getString("username"));
                 person.setFirstName(rs.getString("first_name"));
                 person.setLastName(rs.getString("last_name"));
+                person.setEmail(rs.getString("email"));
                 users.add(person);
             }
             rs.close();
