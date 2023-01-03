@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
@@ -67,5 +68,34 @@ public class SignUpController extends Component {
             // Clear the error message when the email field is changed
             badEmail.setText("");
         });
+    }
+
+    public void showPopupBox(String message) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main/PopupBox.fxml"));
+            Parent root = fxmlLoader.load();
+            PopupBoxController controller = fxmlLoader.getController();
+            controller.setMessage(message);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
+
+            stage.show();
+
+            // Add a slide animation to the popup box
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), root);
+            transition.setFromY(root.getLayoutY() + root.getLayoutBounds().getHeight());
+            transition.setToY(root.getLayoutY());
+            transition.play();
+
+            // Close the popup box after 2 seconds
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> stage.close()));
+
+            timeline.play();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
