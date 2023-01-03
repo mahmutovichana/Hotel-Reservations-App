@@ -119,4 +119,47 @@ public class AdminPanelPageController {
         }
     }
 
+    @FXML
+    public void initialize() {
+        logOutButton.setOnMouseClicked(event -> logOut());
+
+        // load users data from database to admin panel tab Users in usersTable
+        /* professor's way of adding data from a table, it would need to be applied 3 more times, which is a bit inefficient
+        usersTable.setItems(getData(User.class));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        */
+
+        // Define a list of tables and their corresponding columns
+        List<TableColumnPair> tables = new ArrayList<>();
+        tables.add(new TableColumnPair(usersTable, User.class, "firstName", "lastName", "username", "email"));
+        tables.add(new TableColumnPair(reservationsTable, Reservation.class, "reservationId", "checkIn", "checkOut", "total", "adults", "children", "roomId", "username"));
+        tables.add(new TableColumnPair(hotelsTable, Hotel.class, "name", "zipCode", "city", "country", "starRating"));
+        tables.add(new TableColumnPair(roomsTable, Room.class, "roomId", "status", "type", "capacity", "hasAirConditioning", "hotelId"));
+        // Add more tables and columns as needed
+
+        // Iterate over the list of tables and columns
+        for (TableColumnPair pair : tables) {
+            TableView table = pair.getTable();
+            Class type = pair.getType();
+            String[] columns = pair.getColumns();
+
+            // Load the data from the database and set it as the items for the table
+            table.setItems(getData(type));
+
+            for (int i = 0; i < table.getColumns().size(); i++) {
+                TableColumn tableColumn = (TableColumn) table.getColumns().get(i);
+                String column = columns[i];
+                tableColumn.setCellValueFactory(new PropertyValueFactory<>(column));
+            }
+
+        }
+        //welcomeLabel.setText("Welcome " + user.getUsername()); // set the text of the label to display the welcome message
+    }
+
+
+
+
 }
