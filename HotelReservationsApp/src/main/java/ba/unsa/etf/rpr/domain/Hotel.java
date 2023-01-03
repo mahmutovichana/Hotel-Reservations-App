@@ -1,3 +1,8 @@
+/**
+ The Hotel class represents a hotel with its name, zip code, city, country, and star rating.
+ It has getters and setters for each of its attributes, as well as methods for checking equality and generating a string representation of the object.
+ */
+
 package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
