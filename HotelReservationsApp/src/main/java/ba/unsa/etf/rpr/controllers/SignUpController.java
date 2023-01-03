@@ -1,3 +1,10 @@
+/**
+ The SignUpController class is responsible for handling the sign-up form for new users.
+ It allows the user to enter their name, surname, email, username, and password.
+ It validates the user input and displays error messages if necessary.
+ If the input is valid, it creates a new User object and adds it to the database.
+ */
+
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.dao.UserDaoSQLImpl;
@@ -16,7 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,6 +32,9 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+/**
+ FXML controller for the sign-up form.
+ */
 public class SignUpController extends Component {
 
     public TextField name;
@@ -42,6 +51,9 @@ public class SignUpController extends Component {
     public Label badUsername;
     public Label badPassword;
 
+    /**
+     Initializes the form by adding event listeners to the form fields.
+     */
     public void initialize(){
         // Add an event listener to the name field
         name.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -69,7 +81,11 @@ public class SignUpController extends Component {
             badEmail.setText("");
         });
     }
-
+    /**
+     Handles the action for when the sign-up button is clicked.
+     Retrieves user input from form fields, validates the input, and adds the user to the database if the input is valid.
+     Displays error messages if the input is invalid or there is an error adding the user to the database.
+     */
     @FXML
     private void signUpButtonActionPerformed() {
 
@@ -154,6 +170,10 @@ public class SignUpController extends Component {
         }
     }
 
+    /**
+     Displays a pop-up box with the given message.
+     @param message the message to display in the pop-up box
+     */
     public void showPopupBox(String message) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main/PopupBox.fxml"));
