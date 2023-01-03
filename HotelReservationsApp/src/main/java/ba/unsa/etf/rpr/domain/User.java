@@ -1,3 +1,8 @@
+/**
+ The User class represents a user with its first name, last name, email, role, username and password.
+ It has getters and setters for each of its attributes, as well as methods for checking equality and generating a string representation of the object.
+ */
+
 package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
