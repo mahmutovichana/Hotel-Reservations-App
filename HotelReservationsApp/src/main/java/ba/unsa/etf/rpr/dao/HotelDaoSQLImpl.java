@@ -1,7 +1,6 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Hotel;
-
 import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
@@ -147,6 +146,25 @@ public class HotelDaoSQLImpl implements HotelDao {
             e.printStackTrace(); // poor error handling
         }
         return hotels;
+    }
+
+    public List<String> getAllNames() {
+        String query = "SELECT * FROM HOTELS";
+        List<String> hotelNames = new ArrayList<>();
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){ // result set is iterator.
+                Hotel hotel = new Hotel();
+                hotel.setHotelId(rs.getInt("hotel_id"));
+                hotel.setName(rs.getString("name"));
+                hotelNames.add(hotel.getName());
+            }
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace(); // poor error handling
+        }
+        return hotelNames;
     }
 
 }
