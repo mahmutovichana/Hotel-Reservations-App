@@ -1,3 +1,8 @@
+/**
+ The Reservation class represents a reservation with its reservation ID, check in, check out, total, adults, children, room ID and username of the user.
+ It has getters and setters for each of its attributes, as well as methods for checking equality and generating a string representation of the object.
+ */
+
 package ba.unsa.etf.rpr.domain;
 
 import java.util.Date;
