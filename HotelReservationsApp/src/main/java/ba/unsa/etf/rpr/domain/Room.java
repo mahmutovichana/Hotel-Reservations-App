@@ -9,17 +9,20 @@ public class Room {
     private int hasAirConditioning;
     private int status;
     private Hotel hotelId;
+    private double price;
 
-    public Room(int roomId, String type, int capacity, int hasAirConditioning, int status, Hotel hotelId) {
+    public Room(int roomId, String type, int capacity, int hasAirConditioning, int status, Hotel hotelId, double price) {
         this.roomId = roomId;
         this.type = type;
         this.capacity = capacity;
         this.hasAirConditioning = hasAirConditioning;
         this.status = status;
         this.hotelId = hotelId;
+        this.price = price;
     }
 
-    public Room() {}
+    public Room() {
+    }
 
     public int getRoomId() {
         return roomId;
@@ -46,13 +49,15 @@ public class Room {
     }
 
     public int getHasAirConditioning() {
-        if(hasAirConditioning!=0) return 1; else return 0;
+        return hasAirConditioning;
     }
 
-    public void setHasAirConditioning(int hasAirConditioning) {this.hasAirConditioning = hasAirConditioning;}
+    public void setHasAirConditioning(int hasAirConditioning) {
+        this.hasAirConditioning = hasAirConditioning;
+    }
 
     public int getStatus() {
-        if(status!=0) return 1; else return 0;
+        return status;
     }
 
     public void setStatus(int status) {
@@ -67,17 +72,25 @@ public class Room {
         this.hotelId = hotelId;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return roomId == room.roomId && capacity == room.capacity && hasAirConditioning == room.hasAirConditioning && status == room.status && hotelId == room.hotelId && type.equals(room.type);
+        return roomId == room.roomId && capacity == room.capacity && hasAirConditioning == room.hasAirConditioning && status == room.status && Double.compare(room.price, price) == 0 && type.equals(room.type) && hotelId.equals(room.hotelId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(roomId, type, capacity, hasAirConditioning, status, hotelId);
+        return Objects.hash(roomId, type, capacity, hasAirConditioning, status, hotelId, price);
     }
 
     @Override
@@ -89,6 +102,7 @@ public class Room {
                 ", hasAirConditioning=" + hasAirConditioning +
                 ", status=" + status +
                 ", hotelId=" + hotelId +
+                ", price=" + price +
                 '}';
     }
 }
