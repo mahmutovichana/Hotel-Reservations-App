@@ -82,3 +82,25 @@ public class HomePageController extends Parent {
                 e.printStackTrace();
             }
         });
+
+
+        myProfileButton.setOnAction(event -> {
+            // Close the current window
+            Stage stage = (Stage) myProfileButton.getScene().getWindow();
+            stage.close();
+            // Open the about us page window
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/MyProfilePage.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage aboutUsStage = new Stage();
+                aboutUsStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+                aboutUsStage.initStyle(StageStyle.TRANSPARENT);
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                aboutUsStage.setScene(scene);
+                aboutUsStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
