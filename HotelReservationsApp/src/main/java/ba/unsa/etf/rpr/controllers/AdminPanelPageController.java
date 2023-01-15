@@ -121,6 +121,10 @@ public class AdminPanelPageController {
     @FXML
     public void initialize() {
 
+        usernameLabel.setText(user.getUsername());
+
+        logOutButton.setOnMouseClicked(event -> logOut());
+
         // load users data from database to admin panel tab Users in usersTable
         /* professor's way of adding data from a table, it would need to be applied 3 more times, which is a bit inefficient
         usersTable.setItems(getData(User.class));
@@ -154,6 +158,17 @@ public class AdminPanelPageController {
             }
 
         }
+        welcomeLabel.setText("Welcome " + user.getFirstName()); // set the text of the label to display the welcome message
+
+        closeButton.setOnAction(this::closeButtonAction);
+        closeButton.setOnMouseEntered(this::closeButtonMouseEntered);
+        closeButton.setOnMouseExited(this::closeButtonMouseExited);
+
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(quotes.length);
+        randomQuote.setText(quotes[randomIndex]);
+
+        addButton.setOnMouseClicked(this::handleAddHotel);
     }
 
 }
