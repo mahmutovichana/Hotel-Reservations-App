@@ -17,6 +17,16 @@ public class Hotel {
 
     public Hotel(){}
 
+    /**
+     * Constructs a new Hotel object with the specified values.
+     *
+     * @param hotelId the unique identifier for this hotel
+     * @param name the name of this hotel
+     * @param zipCode the zip code for this hotel's location
+     * @param city the city where this hotel is located
+     * @param country the country where this hotel is located
+     * @param starRating the star rating for this hotel
+     */
     public Hotel(int hotelId, String name, int zipCode, String city, String country, int starRating) {
         this.hotelId = hotelId;
         this.name = name;
