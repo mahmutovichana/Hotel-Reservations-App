@@ -43,6 +43,27 @@ public class AdminPanelPageController {
     public TableView<Hotel> hotelsTable;
     public TableView<Room> roomsTable;
     @FXML
+    private Label randomQuote;
+    private final String[] quotes = { "Today's the day, let's make it count!",
+            "Another day, another opportunity to shine!",
+            "What about turning our goals into reality today?",
+            "Dream big, work hard",
+            "Create your own success story",
+            "Make it happen, today",
+            "Today's the day, let's make it extraordinary",
+            "Elevate your game, today",
+            "Let's make today the best one yet",
+            "It's time to rock this",
+            "Let's show them what we're made of today",
+            "Let's make today legendary",
+            "Let's turn today into a masterpiece",
+            "Let's make today unforgettable",
+            "Let's make today a day to remember" };
+
+    private Button addButton;
+    private Button deleteButton;
+    private Button updateButton;
+    @FXML
     private User user;
     @FXML
     private Button closeButton;
@@ -60,7 +81,6 @@ public class AdminPanelPageController {
     public User getUser() {
         return user;
     }
-
     private <T> ObservableList<T> getData(Class<T> type) {
         // Use a Map to store the mapping between object types and DAOs
         Map<Class<?>, Dao<?>> daoMap = new HashMap<>();
