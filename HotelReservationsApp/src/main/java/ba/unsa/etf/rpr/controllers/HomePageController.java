@@ -32,3 +32,26 @@ public class HomePageController extends Parent {
     @FXML
     public Label welcomeLabel = new Label();
 
+    private User user = new User();
+
+    public HomePageController(User finalUser){
+        this.user = finalUser;
+    }
+
+    public HomePageController() {
+    }
+
+    @FXML
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @FXML
+    public User getUser() {
+        return user;
+    }
+
+    @FXML
+    public void initialize() {
+
+        welcomeLabel.setText("Welcome " + user.getFirstName()); // set the text of the label to display the welcome message
