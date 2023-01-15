@@ -171,4 +171,18 @@ public class AdminPanelPageController {
         addButton.setOnMouseClicked(this::handleAddHotel);
     }
 
+    @FXML
+    private void closeButtonAction(ActionEvent event) {
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+    @FXML
+    private void closeButtonMouseExited(MouseEvent mouseEvent) {
+        closeButton.getStyleClass().remove("closeButtonWhenHovered");
+    }
+    @FXML
+    private void closeButtonMouseEntered(MouseEvent mouseEvent) {
+        closeButton.getStyleClass().add("closeButtonStyle");
+        closeButton.getStyleClass().add("closeButtonWhenHovered");
+    }
+
 }
