@@ -104,3 +104,22 @@ public class HomePageController extends Parent {
             }
         });
     }
+
+    private void logOut() {
+        // Close the current window
+        Stage stage = (Stage) logOutButton.getScene().getWindow();
+        stage.close();
+        // Open the login window
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main/Main.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage loginStage = new Stage();
+            loginStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+            loginStage.setScene(new Scene(root, Color.TRANSPARENT));
+            loginStage.initStyle(StageStyle.TRANSPARENT);
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
