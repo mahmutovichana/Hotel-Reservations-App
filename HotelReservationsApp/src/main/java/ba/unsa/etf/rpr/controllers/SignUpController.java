@@ -188,7 +188,7 @@ public class SignUpController extends Component {
             stage.show();
 
             // Add a slide animation to the popup box
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), root);
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.6), root);
             transition.setFromY(root.getLayoutY() + root.getLayoutBounds().getHeight());
             transition.setToY(root.getLayoutY());
             transition.play();
