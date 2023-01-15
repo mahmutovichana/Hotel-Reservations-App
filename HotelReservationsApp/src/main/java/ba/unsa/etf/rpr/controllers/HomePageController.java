@@ -55,3 +55,30 @@ public class HomePageController extends Parent {
     public void initialize() {
 
         welcomeLabel.setText("Welcome " + user.getFirstName()); // set the text of the label to display the welcome message
+
+
+        //HotelDaoSQLImpl hotelDaoSQL = new HotelDaoSQLImpl();
+        //List<String> hotels = hotelDaoSQL.getAllNames();
+        //comboBox.getItems().addAll(hotels);
+
+        logOutButton.setOnMouseClicked(event -> logOut());
+
+        aboutUsButton.setOnAction(event -> {
+            // Close the current window
+            Stage stage = (Stage) aboutUsButton.getScene().getWindow();
+            stage.close();
+            // Open the about us page window
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/AboutUsPage.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage aboutUsStage = new Stage();
+                aboutUsStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+                aboutUsStage.initStyle(StageStyle.TRANSPARENT);
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                aboutUsStage.setScene(scene);
+                aboutUsStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
