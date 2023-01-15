@@ -81,6 +81,7 @@ public class AdminPanelPageController {
     public User getUser() {
         return user;
     }
+
     private <T> ObservableList<T> getData(Class<T> type) {
         // Use a Map to store the mapping between object types and DAOs
         Map<Class<?>, Dao<?>> daoMap = new HashMap<>();
@@ -184,5 +185,53 @@ public class AdminPanelPageController {
         closeButton.getStyleClass().add("closeButtonStyle");
         closeButton.getStyleClass().add("closeButtonWhenHovered");
     }
+
+    private void logOut() {
+        // Close the current window
+        Stage stage = (Stage) logOutButton.getScene().getWindow();
+        stage.close();
+        // Open the login window
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main/Main.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage loginStage = new Stage();
+            loginStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+            loginStage.setScene(new Scene(root, Color.TRANSPARENT));
+            loginStage.initStyle(StageStyle.TRANSPARENT);
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleAddHotel(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/adminPanel/AddHotelDialog.fxml"));
+            GridPane page = loader.load();
+
+            AddHotelDialogController controller = loader.getController();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add Hotel");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(hotelsTable.getScene().getWindow());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            Hotel hotel = new Hotel();
+            controller.setHotel(hotel);
+
+            dialogStage.showAndWait();
+
+            if (controller.isOkClicked()) {
+                DaoFactory.hotelDao().add(hotel);
+                hotelsTable.setItems(getData(Hotel.class));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
