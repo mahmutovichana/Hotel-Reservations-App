@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.dao.UserDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.User;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -15,13 +16,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
+
+/**
+ * The controller class for the sign-in window of the application.
+ * It handles the user input and interaction with the sign-in window, and attempts to sign the user in by
+ * checking their input against the database.
+ *
+ * @author Hana Mahmutović
+ */
 
 public class SignInController {
     public TextField usernameField;
@@ -113,12 +120,38 @@ public class SignInController {
         if(loginSuccessful){
             // Check the input against the database
             user = u.getByUsername(username);
+
             errorLabel.setAlignment(Pos.CENTER);
             if (user!=null) {
                 if(Objects.equals(user.getPassword(), password)){
-                    // Login successful
-                    errorLabel.setTextFill(Paint.valueOf("#13b92c"));
-                    errorLabel.setText("Login successful!");
+                    try {
+                        // Load the popup box FXML file
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main/PopupBox.fxml"));
+                        Parent root = loader.load();
+                        // Get the controller for the popup box
+                        PopupBoxController popupBoxController = loader.getController();
+                        // Set the message to be displayed in the popup box
+                        popupBoxController.setMessage("You have successfully logged in!");
+                        // Create the scene for the stage
+                        Scene scene = new Scene(root);
+                        // Create the stage for the popup box
+                        Stage stage = new Stage();
+                        stage.initStyle(StageStyle.TRANSPARENT);
+                        stage.setScene(scene);
+                        stage.show();
+                        // Create the timeline for the animation
+                        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), ev -> stage.close()));
+                        timeline.play();
+
+                        FadeTransition ft = new FadeTransition(Duration.seconds(1), root);
+                        ft.setFromValue(1);
+                        ft.setToValue(0);
+                        ft.setOnFinished(e -> stage.close());
+                        ft.play();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } }else {
                 // Display an error message
                 errorLabel.setText("Invalid username or password!");
@@ -136,15 +169,11 @@ public class SignInController {
                 stage.setTitle("Admin Panel");
                 stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    URL url = getClass().getResource("/fxml/adminPanel/AdminPanelPage.fxml");
-                    fxmlLoader.setLocation(url);
-                    Parent root = fxmlLoader.load();
-                    AdminPanelPageController controller = fxmlLoader.getController();
-                    controller.setUser(finalUser);
-                    controller.initialize(); // call initialize after setting the user
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/adminPanel/AdminPanelPage.fxml"));
+                    AdminPanelPageController controller = new AdminPanelPageController(finalUser);
                     stage.initStyle(StageStyle.UNDECORATED);
-                    stage.setScene(new Scene(root));
+                    fxmlLoader.setController(controller);
+                    stage.setScene(new Scene(fxmlLoader.load()));
                 } catch (IOException e) {
                     e.printStackTrace();
                     throw new RuntimeException(e);
@@ -159,20 +188,18 @@ public class SignInController {
         else if(loginSuccessful){
             // Transfer to the new window after a delay
             User finalUser = user;
+            System.out.println(finalUser.getFirstName());
+            System.out.println(finalUser.getUsername());
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
                 // Create the new window
                 Stage stage = new Stage();
                 stage.setTitle("Home Page");
                 stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    URL url = getClass().getResource("/fxml/homePage/HomePage.fxml");
-                    fxmlLoader.setLocation(url);
-                    Parent root = fxmlLoader.load();
-                    HomePageController controller = fxmlLoader.getController();
-                    controller.setUser(finalUser);
-                    controller.initialize(); // call initialize after setting the user
-                    stage.setScene(new Scene(root));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/HomePage.fxml"));
+                    HomePageController controller = new HomePageController(finalUser);
+                    fxmlLoader.setController(controller);
+                    stage.setScene(new Scene(fxmlLoader.load()));
                 } catch (IOException e) {
                     e.printStackTrace();
                     throw new RuntimeException(e);
