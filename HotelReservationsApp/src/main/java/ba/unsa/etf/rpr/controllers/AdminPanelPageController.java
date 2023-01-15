@@ -8,64 +8,47 @@ import ba.unsa.etf.rpr.domain.Room;
 import ba.unsa.etf.rpr.domain.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class AdminPanelPageController {
 
     @FXML
-    public javafx.scene.control.Label welcomeLabel;
-
+    public Label welcomeLabel;
+    @FXML
+    public Label usernameLabel;
     @FXML
     public ImageView logOutButton;
     public TableView<User> usersTable;
-    public TableColumn<Object, Object> firstNameColumn;
-    public TableColumn<Object, Object> lastNameColumn;
-    public TableColumn<Object, Object> usernameColumn;
-    public TableColumn<Object, Object> emailColumn;
     public TableView<Reservation> reservationsTable;
-    public TableColumn reservationIdColumn;
-    public TableColumn checkInColumn;
-    public TableColumn checkOutColumn;
-    public TableColumn totalColumn;
-    public TableColumn adultsColumn;
-    public TableColumn childrenColumn;
-    public TableColumn roomIdColumn;
-    public TableColumn username2Column;
-    public TableView hotelsTable;
-    public TableColumn name2Column;
-    public TableColumn zipCodeColumn;
-    public TableColumn cityColumn;
-    public TableColumn countryColumn;
-    public TableColumn starRatingColumn;
-    public TableView roomsTable;
-    public TableColumn statusColumn;
-    public TableColumn typeColumn;
-    public TableColumn capacityColumn;
-    public TableColumn airCondColumn;
-    public TableColumn hotelNameColumn;
-
+    public TableView<Hotel> hotelsTable;
+    public TableView<Room> roomsTable;
     @FXML
     private User user;
+    @FXML
+    private Button closeButton;
 
-    public AdminPanelPageController(){
-        new User();
+    public AdminPanelPageController(User finalUser){
+        this.user = finalUser;
     }
 
     @FXML
@@ -78,8 +61,6 @@ public class AdminPanelPageController {
         return user;
     }
 
-
-
     private <T> ObservableList<T> getData(Class<T> type) {
         // Use a Map to store the mapping between object types and DAOs
         Map<Class<?>, Dao<?>> daoMap = new HashMap<>();
@@ -89,14 +70,12 @@ public class AdminPanelPageController {
         daoMap.put(Reservation.class, DaoFactory.reservationDao());
 
         // Use the Map to get the correct DAO for the desired object type
-        Dao<T> dao;
-        dao = (Dao<T>) daoMap.get(type);
+        Dao<T> dao = (Dao<T>) daoMap.get(type);
 
         // Retrieve the data from the database using the DAO
         List<T> dataList = dao.getAll();
         return FXCollections.observableArrayList(dataList);
     }
-
     // Inner class for storing table view, object type, and column names
     private static class TableColumnPair {
         private final TableView table;
@@ -121,7 +100,6 @@ public class AdminPanelPageController {
 
     @FXML
     public void initialize() {
-        logOutButton.setOnMouseClicked(event -> logOut());
 
         // load users data from database to admin panel tab Users in usersTable
         /* professor's way of adding data from a table, it would need to be applied 3 more times, which is a bit inefficient
@@ -156,26 +134,6 @@ public class AdminPanelPageController {
             }
 
         }
-        //welcomeLabel.setText("Welcome " + user.getUsername()); // set the text of the label to display the welcome message
     }
-
-    private void logOut() {
-        // Close the current window
-        Stage stage = (Stage) logOutButton.getScene().getWindow();
-        stage.close();
-        // Open the login window
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main/Main.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage loginStage = new Stage();
-            loginStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
-            loginStage.setScene(new Scene(root, Color.TRANSPARENT));
-            loginStage.initStyle(StageStyle.TRANSPARENT);
-            loginStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }
