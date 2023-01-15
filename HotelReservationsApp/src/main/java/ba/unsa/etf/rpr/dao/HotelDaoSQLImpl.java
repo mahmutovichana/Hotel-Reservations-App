@@ -139,6 +139,10 @@ public class HotelDaoSQLImpl implements HotelDao {
                 Hotel hotel = new Hotel();
                 hotel.setHotelId(rs.getInt("hotel_id"));
                 hotel.setName(rs.getString("name"));
+                hotel.setZipCode(rs.getInt("zipCode"));
+                hotel.setCity(rs.getString("city"));
+                hotel.setCountry(rs.getString("country"));
+                hotel.setStarRating(rs.getInt("starRating"));
                 hotels.add(hotel);
             }
             rs.close();
