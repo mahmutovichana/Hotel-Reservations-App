@@ -20,10 +20,9 @@ With Hana Avis, you can say goodbye to the hassle of browsing multiple websites 
 
 ## Running the App
 
-To run the Hana Avis app, you will need to have the following software installed on your computer:
-- IntelliJ IDEA
-- Scene Builder
-- MySQL Workbench
+To run the Hana Avis app through an enviroment, you will need to have the following softwares installed on your computer:
+- IntelliJ IDEA / Eclipse / NetBeans / Apache NetBeans / Visual Studio Code / Spring Tools Suite
+- MySQL Workbench / phpMyAdmin / Sequel Pro / DBeaver / SQLyog / HeidiSQL
 
 1. Clone the repository to your local machine by running the following command in your command line:
 ```bash
@@ -36,7 +35,6 @@ git clone https://github.com/mahmutovichana/Hotel-Reservations-App.git
 You should now see the Hana Avis app open on your screen.
 
 To run the Hana Avis app from the command line, you will need to have the following software installed on your computer:
-
 - Java Development Kit (JDK)
 - MySQL
 
@@ -51,6 +49,7 @@ javac -cp "path/to/mysql-connector-java.jar" Main.java
 java -cp "path/to/mysql-connector-java.jar;." Main
 ```
 
+Please make sure to replace path/to/mysql-connector-java.jar with the actual path to the mysql connector jar file on your computer.
 
 ## Screenshots
 Hana Avis Screenshots
@@ -64,8 +63,3 @@ Have any questions or feedback? Feel free to reach out to us at hmahmutovi3@etf.
 We would love to hear from you and help you plan your next trip! 💬
 
 Thank you for choosing Hana Avis for your next hotel booking. We're confident that you'll love our app and have a great time on your trip! 🌟
-
-
-
-Please make sure to replace path/to/mysql-connector-java.jar with the actual path to the mysql connector jar file on your computer.
-
