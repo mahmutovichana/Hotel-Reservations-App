@@ -7,6 +7,7 @@ public class PopupBoxController {
     @FXML
     private Label messageLabel;
 
+    @FXML
     public void setMessage(String message) {
         messageLabel.setText(message);
     }
