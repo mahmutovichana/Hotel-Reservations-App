@@ -6,15 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.util.Objects;
 
-/**
- * Hello world!
- *
- */
 public class App extends Application
 {
     public static void main(String[] args) {
@@ -23,7 +20,7 @@ public class App extends Application
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Main.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/main/Main.fxml")));
         primaryStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
         /*
             primaryStage.setTitle("Hana Avis");
@@ -32,10 +29,13 @@ public class App extends Application
             - we don't technically need this because we set our scene to be transparent, but I left it, so I can
             remember how the syntax is to set the title in the title bar, same thing for the dimension of the app window
         */
+        //root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/styles.css")).toExternalForm());
         Scene scene = new Scene(root);
+        Font.loadFont(getClass().getResourceAsStream("/resources/fonts/Fontspace.ttf"), 14);
         scene.getStylesheets().add("/stylesheets/styles.css");
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
+
     }}
