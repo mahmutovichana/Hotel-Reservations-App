@@ -8,8 +8,8 @@ package ba.unsa.etf.rpr.domain;
 import java.util.Date;
 import java.util.Objects;
 
-public class Reservation {
-    private int reservationId;
+public class Reservation implements Idable{
+    private int id;
     private Date checkIn;
     private Date checkOut;
     private int total;
@@ -20,8 +20,8 @@ public class Reservation {
 
     public Reservation() { }
 
-    public Reservation(int reservationId, Date checkIn, Date checkOut, int total, int adults, int children, Room roomId, User username) {
-        this.reservationId = reservationId;
+    public Reservation(int id, Date checkIn, Date checkOut, int total, int adults, int children, Room roomId, User username) {
+        this.id = id;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.total = total;
@@ -31,12 +31,12 @@ public class Reservation {
         this.username = username;
     }
 
-    public int getReservationId() {
-        return reservationId;
+    public int getId() {
+        return id;
     }
 
-    public void setReservationId(int reservationId) {
-        this.reservationId = reservationId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public java.sql.Date getCheckIn() {
@@ -100,18 +100,18 @@ public class Reservation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reservation that = (Reservation) o;
-        return reservationId == that.reservationId && total == that.total && adults == that.adults && children == that.children && checkIn.equals(that.checkIn) && checkOut.equals(that.checkOut) && roomId.equals(that.roomId) && username.equals(that.username);
+        return id == that.id && total == that.total && adults == that.adults && children == that.children && checkIn.equals(that.checkIn) && checkOut.equals(that.checkOut) && roomId.equals(that.roomId) && username.equals(that.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reservationId, checkIn, checkOut, total, adults, children, roomId, username);
+        return Objects.hash(id, checkIn, checkOut, total, adults, children, roomId, username);
     }
 
     @Override
     public String toString() {
         return "Reservation{" +
-                "reservationId=" + reservationId +
+                "id=" + id +
                 ", checkIn=" + checkIn +
                 ", checkOut=" + checkOut +
                 ", total=" + total +
