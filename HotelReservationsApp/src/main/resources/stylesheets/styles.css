@@ -70,14 +70,17 @@
 .root{
     -fx-background-radius: 10;
     -fx-background-color: transparent;
-    -fx-font-family: 'Fontspace';
-}
-
-@font-face {
-    font-family: 'Fontspace';
-    src: url('/fonts/Fontspace.ttf');
 }
 
 .adminButton{
     -fx-border-bottom-color: #0A1A3B;
+}
+
+.sideOption {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.sideOption:hover {
+    -fx-background-color: #6FB2D8;
 }
