@@ -1,136 +1,74 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Reservation;
+import ba.unsa.etf.rpr.exceptions.HotelException;
 
-import java.io.FileReader;
-import java.sql.*;
-import java.util.*;
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class ReservationDaoSQLImpl implements ReservationDao {
+/**
+ * MySQL Implementation of DAO
+ * @author Hana Mahmutović
+ */
+public class ReservationDaoSQLImpl extends AbstractDao<Reservation> implements ReservationDao {
 
-    private Connection connection;
+    private static ReservationDaoSQLImpl instance = null;
+    private ReservationDaoSQLImpl() {
+        super("RESERVATIONS");
+    }
 
-    public ReservationDaoSQLImpl() {
+    /**
+     * @author Hana Mahmutović
+     * @return QuoteDaoSQLImpl
+     * We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton
+     * This method will call private constructor in instance==null and then return that instance
+     */
+    public static ReservationDaoSQLImpl getInstance(){
+        if(instance==null)
+            instance = new ReservationDaoSQLImpl();
+        return instance;
+    }
+
+    public static void removeInstance(){
+        if(instance!=null)
+            instance=null;
+    }
+
+    @Override
+    public Reservation row2object(ResultSet rs) throws HotelException{
         try {
-            FileReader reader = new FileReader("src/main/resources/db.properties");
-            Properties p = new Properties();
-            p.load(reader);
-            String s1 = p.getProperty("username"), s2 = p.getProperty("password"), s3 = p.getProperty("server");
-            this.connection = DriverManager.getConnection(s3, s1, s2);
+            Reservation reservation = new Reservation();
+            reservation.setId(rs.getInt("id"));
+            reservation.setAdults(rs.getInt("adults"));
+            reservation.setChildren(rs.getInt("children"));
+            reservation.setRoomId(DaoFactory.roomDao().getById(rs.getInt("room_id")));
+            reservation.setUsername(DaoFactory.userDao().getById(rs.getInt("user_id")));
+            reservation.setCheckIn(rs.getDate("checkIn"));
+            reservation.setCheckOut(rs.getDate("checkOut"));
+            reservation.setTotal(rs.getInt("total"));
+            return reservation;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new HotelException(e.getMessage(), e);
         }
     }
 
+    /**
+     * @param object - object to be mapped
+     * @return map representation of object
+     */
     @Override
-    public Reservation getById(int id) {
-        String query = "SELECT * FROM RESERVATIONS WHERE reservation_id = ?";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(query);
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()){ // result set is iterator.
-                Reservation reservation = new Reservation();
-                reservation.setReservationId(rs.getInt("reservation_id"));
-                reservation.setCheckIn(rs.getDate("checkIn"));
-                reservation.setCheckOut(rs.getDate("checkOut"));
-                reservation.setTotal(rs.getInt("total"));
-                reservation.setChildren(rs.getInt("children"));
-                reservation.setAdults(rs.getInt("adults"));
-                reservation.setRoomId(new RoomDaoSQLImpl().getById(rs.getInt("room_id")));
-                reservation.setUsername(new UserDaoSQLImpl().getByUsername(rs.getString("username")));
-                rs.close();
-                return reservation;
-            }else{
-                return null; // if there is no elements in the result set return null
-            }
-        }catch (SQLException e){
-            e.printStackTrace(); // poor error handling
-        }
-        return null;
-    }
-
-    @Override
-    public Reservation getByUsername(String username) {
-        return null;
-    }
-
-    @Override
-    public Reservation add(Reservation reservation) {
-        String insert = "INSERT INTO RESERVATIONS(checkIn,checkOut,total,adults,children,room_id,username) VALUES(?,?,?,?,?,?,?)";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-            stmt.setDate(1, reservation.getCheckIn());
-            stmt.setDate(2, reservation.getCheckOut());
-            stmt.setInt(3,  reservation.getTotal());
-            stmt.setInt(4,  reservation.getAdults());
-            stmt.setInt(5,  reservation.getChildren());
-            stmt.setInt(6,  reservation.getRoomId().getRoomId());
-            stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            rs.next(); // we know that there is one key
-            reservation.setUsername(new UserDaoSQLImpl().getByUsername(rs.getString("username"))); //set username to return it back
-            return reservation;
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public Reservation update(Reservation reservation) {
-        String insert = "UPDATE RESERVATIONS SET room_id = ?, checkIN = ?, checkOut = ?, adults = ?, children = ?, total = ? WHERE username = ?";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-            stmt.setObject(1, reservation.getRoomId().getRoomId());
-            stmt.setObject(2, reservation.getCheckIn());
-            stmt.setObject(3, reservation.getCheckOut());
-            stmt.setObject(4, reservation.getAdults());
-            stmt.setObject(5, reservation.getChildren());
-            stmt.setObject(6, reservation.getTotal());
-            stmt.setObject(7, reservation.getUsername());
-            stmt.executeUpdate();
-            return reservation;
-        }catch (SQLException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public void delete(Reservation reservation) {
-        String insert = "DELETE FROM RESERVATIONS WHERE username = ?";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-            stmt.setObject(1, reservation.getReservationId());
-            stmt.executeUpdate();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public List<Reservation> getAll() {
-        String query = "SELECT * FROM RESERVATIONS";
-        List<Reservation> reservations = new ArrayList<>();
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()){ // result set is iterator.
-                Reservation reservation = new Reservation();
-                reservation.setAdults(rs.getInt("adults"));
-                reservation.setChildren(rs.getInt("children"));
-                reservation.setRoomId(new RoomDaoSQLImpl().getById((rs.getInt("room_id"))));
-                reservation.setUsername(new UserDaoSQLImpl().getByUsername((rs.getString("username"))));
-                reservation.setCheckIn(rs.getDate("checkIn"));
-                reservation.setCheckOut(rs.getDate("checkOut"));
-                reservation.setTotal(rs.getInt("total"));
-                reservations.add(reservation);
-            }
-            rs.close();
-        }catch (SQLException e){
-            e.printStackTrace(); // poor error handling
-        }
-        return reservations;
+    public Map<String, Object> object2row(Reservation object) {
+        Map<String, Object> item = new TreeMap<>();
+        item.put("id", object.getId());
+        item.put("adults", object.getAdults());
+        item.put("children", object.getChildren());
+        item.put("total",object.getTotal());
+        item.put("checkIn",object.getCheckIn());
+        item.put("checkOut",object.getCheckOut());
+        item.put("user_id", object.getId());
+        item.put("room_id",object.getRoomId());
+        return item;
     }
 }
