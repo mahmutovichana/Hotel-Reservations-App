@@ -153,4 +153,30 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
     }
 
 
+    /**
+     * Utility method for executing any kind of query
+     * @param query - SQL query
+     * @param params - params for query
+     * @return List of objects from database
+     * @throws HotelException in case of error with db
+     */
+    public List<T> executeQuery(String query, Object[] params) throws HotelException{
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+            if (params != null){
+                for(int i = 1; i <= params.length; i++){
+                    stmt.setObject(i, params[i-1]);
+                }
+            }
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<T> resultList = new ArrayList<>();
+            while (rs.next()) {
+                resultList.add(row2object(rs));
+            }
+            return resultList;
+        } catch (SQLException e) {
+            throw new HotelException(e.getMessage(), e);
+        }
+    }
+
 }
