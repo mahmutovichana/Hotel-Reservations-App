@@ -6,19 +6,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
 
+import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
+
 
 public class HomePageController extends Parent {
+
     @FXML
-    public ComboBox<String> comboBox;
+    public Pane root;
 
     @FXML
     public ImageView logOutButton;
@@ -83,7 +86,6 @@ public class HomePageController extends Parent {
             }
         });
 
-
         myProfileButton.setOnAction(event -> {
             // Close the current window
             Stage stage = (Stage) myProfileButton.getScene().getWindow();
@@ -122,4 +124,16 @@ public class HomePageController extends Parent {
             e.printStackTrace();
         }
     }
+/*
+    private void openDialog(String title, String file, Object controller) throws IOException {
+        final Stage homeStage = (Stage) root.getScene().getWindow();
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
+        loader.setController(controller);
+        stage.setTitle(title);
+        stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        stage.setResizable(false);
+        homeStage.hide();
+        stage.show();
+    }*/
 }
