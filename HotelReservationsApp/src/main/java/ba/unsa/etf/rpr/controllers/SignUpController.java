@@ -7,6 +7,7 @@
 
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.business.UserManager;
 import ba.unsa.etf.rpr.dao.UserDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.User;
 import javafx.animation.KeyFrame;
@@ -36,6 +37,8 @@ import java.util.regex.Pattern;
  FXML controller for the sign-up form.
  */
 public class SignUpController extends Component {
+
+    private UserManager u = new UserManager();
 
     public TextField name;
     public Label badName;
@@ -140,7 +143,7 @@ public class SignUpController extends Component {
             user.setEmail(emailInput);
             user.setUsername(usernameInput);
             user.setPassword(passwordInput);
-            UserDaoSQLImpl u = new UserDaoSQLImpl();
+            //UserDaoSQLImpl u = new UserDaoSQLImpl();
 
             try {
                 FileReader reader = new FileReader("src/main/resources/db.properties");
