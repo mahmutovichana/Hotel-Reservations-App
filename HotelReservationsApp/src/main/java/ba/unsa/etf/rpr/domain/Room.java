@@ -7,8 +7,8 @@ package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
 
-public class Room {
-    private int roomId;
+public class Room implements Idable{
+    private int id;
     private String type;
     private int capacity;
     private int hasAirConditioning;
@@ -16,8 +16,8 @@ public class Room {
     private Hotel hotelId;
     private double price;
 
-    public Room(int roomId, String type, int capacity, int hasAirConditioning, int status, Hotel hotelId, double price) {
-        this.roomId = roomId;
+    public Room(int id, String type, int capacity, int hasAirConditioning, int status, Hotel hotelId, double price) {
+        this.id = id;
         this.type = type;
         this.capacity = capacity;
         this.hasAirConditioning = hasAirConditioning;
@@ -29,12 +29,12 @@ public class Room {
     public Room() {
     }
 
-    public int getRoomId() {
-        return roomId;
+    public int getId() {
+        return id;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -90,18 +90,18 @@ public class Room {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return roomId == room.roomId && capacity == room.capacity && hasAirConditioning == room.hasAirConditioning && status == room.status && Double.compare(room.price, price) == 0 && type.equals(room.type) && hotelId.equals(room.hotelId);
+        return id == room.id && capacity == room.capacity && hasAirConditioning == room.hasAirConditioning && status == room.status && Double.compare(room.price, price) == 0 && type.equals(room.type) && hotelId.equals(room.hotelId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(roomId, type, capacity, hasAirConditioning, status, hotelId, price);
+        return Objects.hash(id, type, capacity, hasAirConditioning, status, hotelId, price);
     }
 
     @Override
     public String toString() {
         return "Room{" +
-                "roomId=" + roomId +
+                "id=" + id +
                 ", type='" + type + '\'' +
                 ", capacity=" + capacity +
                 ", hasAirConditioning=" + hasAirConditioning +
