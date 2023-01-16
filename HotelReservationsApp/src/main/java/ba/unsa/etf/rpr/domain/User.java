@@ -7,7 +7,17 @@ package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
 
-public class User {
+public class User implements Idable{
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -31,7 +41,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
@@ -41,16 +52,8 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return role == user.role && firstName.equals(user.firstName) && lastName.equals(user.lastName) && Objects.equals(email, user.email) && username.equals(user.username) && password.equals(user.password);
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, email, role, username, password);
+        return Objects.hash(id, firstName, lastName, email, role, username, password);
     }
 
     public String getFirstName() {
