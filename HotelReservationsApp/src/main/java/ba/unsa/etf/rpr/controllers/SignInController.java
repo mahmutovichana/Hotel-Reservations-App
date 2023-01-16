@@ -1,7 +1,8 @@
 package ba.unsa.etf.rpr.controllers;
 
-import ba.unsa.etf.rpr.dao.UserDaoSQLImpl;
+import ba.unsa.etf.rpr.business.UserManager;
 import ba.unsa.etf.rpr.domain.User;
+import ba.unsa.etf.rpr.exceptions.HotelException;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -41,7 +43,7 @@ public class SignInController {
     @FXML
     public Label errorLabel;
 
-
+    private UserManager u = new UserManager();
     /**
      * This method is called by the JavaFX framework when the FXML file is loaded.
      * It is used to set up the controller and initialize any instance variables or UI elements.
@@ -92,23 +94,22 @@ public class SignInController {
      * or displays an error message if the login was unsuccessful.
      */
     @FXML
-    private void handleLogin() {
+    private void handleLogin() throws HotelException {
 
         String username = usernameField.getText();
         String password = passwordField.getText();
 
         // Establish a connection to the database
-        UserDaoSQLImpl u = new UserDaoSQLImpl();
         boolean loginSuccessful;
         User user = new User();
 
         // Validate the input
-        if (!username.isEmpty()) {
+        if (!username.trim().isEmpty()) {
             // Display an error message
             badUsernameIN.setText("");
         }else badUsernameIN.setText("Username cannot be empty.");
 
-        if(!password.isEmpty()){
+        if(!password.trim().isEmpty()){
             // Display an error message
             badPasswordIN.setText("");
             loginSuccessful=true;
@@ -119,7 +120,7 @@ public class SignInController {
 
         if(loginSuccessful){
             // Check the input against the database
-            user = u.getByUsername(username);
+            user = u.findUsername(username);
 
             errorLabel.setAlignment(Pos.CENTER);
             if (user!=null) {
