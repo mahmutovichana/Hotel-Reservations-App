@@ -94,4 +94,36 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
         }
     }
 
+    public T add(T item) throws HotelException{
+        Map<String, Object> row = object2row(item);
+        Map.Entry<String, String> columns = prepareInsertParts(row);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("INSERT INTO ").append(tableName);
+        builder.append(" (").append(columns.getKey()).append(") ");
+        builder.append("VALUES (").append(columns.getValue()).append(")");
+
+        try{
+            PreparedStatement stmt = getConnection().prepareStatement(builder.toString(), Statement.RETURN_GENERATED_KEYS);
+            // bind params. IMPORTANT treeMap is used to keep columns sorted so params are bind correctly
+            int counter = 1;
+            for (Map.Entry<String, Object> entry: row.entrySet()) {
+                if (entry.getKey().equals("id")) continue; // skip ID
+                stmt.setObject(counter, entry.getValue());
+                counter++;
+            }
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next(); // we know that there is one key
+            item.setId(rs.getInt(1)); //set id to return it back */
+
+            return item;
+        }catch (SQLException e){
+            throw new HotelException(e.getMessage(), e);
+        }
+    }
+
+
+
 }
