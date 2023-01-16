@@ -1,132 +1,90 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.User;
+import ba.unsa.etf.rpr.exceptions.HotelException;
 
-import java.awt.*;
-import java.io.FileReader;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class UserDaoSQLImpl extends Component implements UserDao {
+/**
+ * MySQL Implementation of DAO
+ * @author Hana Mahmutović
+ */
+public class UserDaoSQLImpl extends AbstractDao<User> implements UserDao {
 
-    private Connection connection;
+    private static UserDaoSQLImpl instance = null;
+    private UserDaoSQLImpl() {
+        super("USERS");
+    }
 
-    public UserDaoSQLImpl() {
+    /**
+     * @author Hana Mahmutović
+     * @return QuoteDaoSQLImpl
+     * We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton
+     * This method will call private constructor in instance==null and then return that instance
+     */
+    public static UserDaoSQLImpl getInstance(){
+        if(instance==null)
+            instance = new UserDaoSQLImpl();
+        return instance;
+    }
+
+    public static void removeInstance(){
+        if(instance!=null)
+            instance=null;
+    }
+
+    @Override
+    public User row2object(ResultSet rs) throws HotelException{
         try {
-            FileReader reader = new FileReader("src/main/resources/db.properties");
-            Properties p = new Properties();
-            p.load(reader);
-            String s1 = p.getProperty("username"), s2 = p.getProperty("password"), s3 = p.getProperty("server");
-            this.connection = DriverManager.getConnection(s3, s1, s2);
+            User person = new User();
+            person.setId(rs.getInt("id"));
+            person.setUsername(rs.getString("username"));
+            person.setFirstName(rs.getString("first_name"));
+            person.setLastName(rs.getString("last_name"));
+            person.setEmail(rs.getString("email"));
+            person.setRole(rs.getInt("role"));
+            person.setPassword(rs.getString("password"));
+            return person;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new HotelException(e.getMessage(), e);
         }
     }
 
+    /**
+     * @param object - object to be mapped
+     * @return map representation of object
+     */
     @Override
-    public User getById(int id) {
-        return null;
+    public Map<String, Object> object2row(User object) {
+        Map<String, Object> item = new TreeMap<>();
+        item.put("id", object.getId());
+        item.put("username", object.getUsername());
+        item.put("first_name", object.getFirstName());
+        item.put("last_name", object.getLastName());
+        item.put("email", object.getEmail());
+        item.put("role", object.getRole());
+        item.put("password", object.getPassword());
+        return item;
     }
 
     @Override
-    public User getByUsername(String username) {
-        String query = "SELECT * FROM USERS WHERE username = ?";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(query);
-            stmt.setString(1, username);
+    public User findUsername(String usernameField) throws HotelException{
+        String insert = "SELECT id from USERS where username='" + usernameField +"'";
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()){ // result set is iterator.
-                User user = new User();
-                user.setUsername(rs.getString("username"));
-                user.setFirstName(rs.getString("first_name"));
-                user.setLastName(rs.getString("last_name"));
-                user.setEmail(rs.getString("email"));
-                user.setRole(rs.getInt("role"));
-                user.setPassword(rs.getString("password"));
-                rs.close();
-                return user;
-            }else{
-                return null; // if there is no elements in the result set return null
-            }
-        }catch (SQLException e){
-            e.printStackTrace(); // poor error handling
-        }
-        return null;
-    }
-
-    @Override
-    public User add(User person) {
-        String insert = "INSERT INTO USERS(first_name,last_name,email,role,username,password) VALUES(?,?,?,?,?,?)";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, person.getFirstName());
-            stmt.setString(2,person.getLastName());
-            stmt.setString(3,person.getEmail());
-            stmt.setInt(4,person.getRole());
-            stmt.setString(5,person.getUsername());
-            stmt.setString(6,person.getPassword());
-            stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if(rs.next()){person.setUsername(rs.getString(1)); return person;}//set username to return it back
-            return person;
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public User update(User person) {
-        String insert = "UPDATE USERS SET first_name = ?, last_name = ?, email = ?, password = ? WHERE username = ?";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-            stmt.setObject(1, person.getFirstName());
-            stmt.setObject(2, person.getLastName());
-            stmt.setObject(3, person.getEmail());
-            stmt.setObject(4, person.getPassword());
-            stmt.setObject(5, person.getUsername());
-            stmt.executeUpdate();
-            return person;
-        }catch (SQLException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public void delete(User user) {
-        String insert = "DELETE FROM USERS WHERE username = ?";
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-            stmt.setObject(1, user.getUsername());
-            stmt.executeUpdate();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public List<User> getAll() {
-        String query = "SELECT * FROM USERS";
-        List<User> users = new ArrayList<>();
-        try{
-            PreparedStatement stmt = this.connection.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()){ // result set is iterator.
-                User person = new User();
-                person.setUsername(rs.getString("username"));
-                person.setFirstName(rs.getString("first_name"));
-                person.setLastName(rs.getString("last_name"));
-                person.setEmail(rs.getString("email"));
-                users.add(person);
+            if(rs.next()) { // result set is iterator.
+                return getById(rs.getInt(1));
             }
             rs.close();
-        }catch (SQLException e){
-            e.printStackTrace(); // poor error handling
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return users;
+        return null;
     }
-
 }
