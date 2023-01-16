@@ -82,7 +82,6 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
         return executeQuery("SELECT * FROM "+ tableName, null);
     }
 
-
     public void delete(int id) throws HotelException {
         String sql = "DELETE FROM "+tableName+" WHERE id = ?";
         try{
@@ -124,8 +123,6 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
         }
     }
 
-
-
     public T update(T item) throws HotelException{
         Map<String, Object> row = object2row(item);
         String updateColumns = prepareUpdateParts(row);
@@ -152,7 +149,6 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
         }
     }
 
-
     /**
      * Utility method for executing any kind of query
      * @param query - SQL query
@@ -178,6 +174,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
             throw new HotelException(e.getMessage(), e);
         }
     }
+
     /**
      * Utility for query execution that always return single record
      * @param query - query that returns single record
