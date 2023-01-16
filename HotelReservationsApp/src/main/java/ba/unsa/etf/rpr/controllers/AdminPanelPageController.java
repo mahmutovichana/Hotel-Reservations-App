@@ -6,6 +6,7 @@ import ba.unsa.etf.rpr.domain.Hotel;
 import ba.unsa.etf.rpr.domain.Reservation;
 import ba.unsa.etf.rpr.domain.Room;
 import ba.unsa.etf.rpr.domain.User;
+import ba.unsa.etf.rpr.exceptions.HotelException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,8 +60,8 @@ public class AdminPanelPageController {
             "Let's turn today into a masterpiece",
             "Let's make today unforgettable",
             "Let's make today a day to remember" };
-
-    private Button addButton;
+    @FXML
+    public Button addButton;
     private Button deleteButton;
     private Button updateButton;
     @FXML
@@ -82,7 +83,7 @@ public class AdminPanelPageController {
         return user;
     }
 
-    private <T> ObservableList<T> getData(Class<T> type) {
+    private <T> ObservableList<T> getData(Class<T> type) throws HotelException {
         // Use a Map to store the mapping between object types and DAOs
         Map<Class<?>, Dao<?>> daoMap = new HashMap<>();
         daoMap.put(Hotel.class, DaoFactory.hotelDao());
@@ -120,7 +121,7 @@ public class AdminPanelPageController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws HotelException {
 
         usernameLabel.setText(user.getUsername());
 
@@ -138,9 +139,9 @@ public class AdminPanelPageController {
         // Define a list of tables and their corresponding columns
         List<TableColumnPair> tables = new ArrayList<>();
         tables.add(new TableColumnPair(usersTable, User.class, "firstName", "lastName", "username", "email"));
-        tables.add(new TableColumnPair(reservationsTable, Reservation.class, "reservationId", "checkIn", "checkOut", "total", "adults", "children", "roomId", "username"));
+        tables.add(new TableColumnPair(reservationsTable, Reservation.class, "id", "checkIn", "checkOut", "total", "adults", "children", "roomId", "username"));
         tables.add(new TableColumnPair(hotelsTable, Hotel.class, "name", "zipCode", "city", "country", "starRating"));
-        tables.add(new TableColumnPair(roomsTable, Room.class, "roomId", "status", "type", "capacity", "hasAirConditioning", "hotelId"));
+        tables.add(new TableColumnPair(roomsTable, Room.class, "id", "status", "type", "capacity", "hasAirConditioning", "hotelId"));
         // Add more tables and columns as needed
 
         // Iterate over the list of tables and columns
@@ -228,7 +229,7 @@ public class AdminPanelPageController {
                 DaoFactory.hotelDao().add(hotel);
                 hotelsTable.setItems(getData(Hotel.class));
             }
-        } catch (IOException e) {
+        } catch (IOException | HotelException e) {
             e.printStackTrace();
         }
     }
