@@ -7,8 +7,8 @@ package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
 
-public class Hotel {
-    private int hotelId;
+public class Hotel implements Idable{
+    private int id;
     private String name;
     private int zipCode;
     private String city;
@@ -17,8 +17,8 @@ public class Hotel {
 
     public Hotel(){}
 
-    public Hotel(int hotelId, String name, int zipCode, String city, String country, int starRating) {
-        this.hotelId = hotelId;
+    public Hotel(int id, String name, int zipCode, String city, String country, int starRating) {
+        this.id = id;
         this.name = name;
         this.zipCode = zipCode;
         this.city = city;
@@ -26,12 +26,13 @@ public class Hotel {
         this.starRating = starRating;
     }
 
-    public int getHotelId() {
-        return hotelId;
+
+    public int getId() {
+        return id;
     }
 
-    public void setHotelId(int hotelId) {
-        this.hotelId = hotelId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() { return name; }
@@ -73,13 +74,13 @@ public class Hotel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Hotel hotel = (Hotel) o;
-        return hotelId == hotel.hotelId && name.equals(hotel.name) && zipCode == hotel.zipCode && starRating == hotel.starRating && city.equals(hotel.city) && country.equals(hotel.country);
+        return id == hotel.id && name.equals(hotel.name) && zipCode == hotel.zipCode && starRating == hotel.starRating && city.equals(hotel.city) && country.equals(hotel.country);
     }
 
     @Override
     public String toString() {
         return "Hotel{" +
-                "hotelId=" + hotelId +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", zipCode=" + zipCode +
                 ", city='" + city + '\'' +
@@ -90,7 +91,7 @@ public class Hotel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(hotelId, name, zipCode, city, country, starRating);
+        return Objects.hash(id, name, zipCode, city, country, starRating);
     }
 
 }
