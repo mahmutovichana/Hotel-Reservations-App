@@ -1,5 +1,8 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.business.HotelManager;
+import ba.unsa.etf.rpr.business.RoomManager;
+import ba.unsa.etf.rpr.business.UserManager;
 import ba.unsa.etf.rpr.dao.Dao;
 import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Hotel;
@@ -26,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -95,6 +99,12 @@ public class AdminPanelPageController {
     private User user;
     @FXML
     private Button closeButton;
+
+    HotelManager h = new HotelManager();
+
+    RoomManager r = new RoomManager();
+
+    UserManager u = new UserManager();
 
     public AdminPanelPageController(User finalUser){
         this.user = finalUser;
@@ -247,6 +257,7 @@ public class AdminPanelPageController {
         randomQuote.setText(quotes[randomIndex]);
 
         addHotelButton.setOnMouseClicked(this::handleAddHotel);
+        updateHotelButton.setOnMouseClicked(this::handleUpdateHotel);
         deleteHotelButton.setOnAction(this::handleDeleteHotel);
 
         addRoomButton.setOnMouseClicked(this::handleAddRoom);
@@ -291,11 +302,38 @@ public class AdminPanelPageController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/adminPanel/AddHotelDialog.fxml"));
             GridPane page = loader.load();
-
             AddHotelDialogController controller = loader.getController();
-
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Add Hotel");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(hotelsTable.getScene().getWindow());
+            dialogStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            Hotel hotel = new Hotel();
+            controller.setHotel(hotel);
+            dialogStage.showAndWait();
+            if (controller.isOkClicked()) {
+                h.add(hotel);
+                hotelsTable.setItems(getData(Hotel.class));
+                int totalHotels = DaoFactory.hotelDao().totalHotels();
+                totalHotelsRegistered.setText(String.valueOf(totalHotels));
+            }
+        } catch (IOException | HotelException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void handleUpdateHotel(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/adminPanel/UpdateHotelDialog.fxml"));
+            VBox page = loader.load();
+            UpdateHotelController controller = loader.getController();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Update Hotel");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(hotelsTable.getScene().getWindow());
             dialogStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
@@ -308,7 +346,7 @@ public class AdminPanelPageController {
             dialogStage.showAndWait();
 
             if (controller.isOkClicked()) {
-                DaoFactory.hotelDao().add(hotel);
+                h.update(hotel);
                 hotelsTable.setItems(getData(Hotel.class));
                 int totalHotels = DaoFactory.hotelDao().totalHotels();
                 totalHotelsRegistered.setText(String.valueOf(totalHotels));
@@ -319,15 +357,14 @@ public class AdminPanelPageController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     private void handleDeleteHotel(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/adminPanel/DeleteHotelDialog.fxml"));
             GridPane page = loader.load();
-
             DeleteHotelDialogController controller = loader.getController();
-
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Delete Hotel");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -341,7 +378,7 @@ public class AdminPanelPageController {
             dialogStage.showAndWait();
 
             if (controller.isOkClicked()) {
-                DaoFactory.hotelDao().delete(controller.getSelectedHotel().getId());
+                h.delete(controller.getSelectedHotel().getId());
                 hotelsTable.setItems(getData(Hotel.class));
                 int totalHotels = DaoFactory.hotelDao().totalHotels();
                 totalHotelsRegistered.setText(String.valueOf(totalHotels));
@@ -358,9 +395,7 @@ public class AdminPanelPageController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/adminPanel/AddRoomDialog.fxml"));
             GridPane page = loader.load();
-
             AddRoomDialogController controller = loader.getController();
-
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Add Room");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -368,14 +403,11 @@ public class AdminPanelPageController {
             dialogStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
             Room room = new Room();
             controller.setRoom(room);
-
             dialogStage.showAndWait();
-
             if (controller.isOkClicked()) {
-                DaoFactory.roomDao().add(room);
+                r.add(room);
                 roomsTable.setItems(getData(Room.class));
                 int totalRooms = DaoFactory.roomDao().totalRooms();
                 totalRoomsRegistered.setText(String.valueOf(totalRooms));
@@ -392,9 +424,7 @@ public class AdminPanelPageController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/adminPanel/DeleteRoomDialog.fxml"));
             GridPane page = loader.load();
-
             DeleteRoomDialogController controller = loader.getController();
-
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Delete Hotel");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -402,13 +432,10 @@ public class AdminPanelPageController {
             dialogStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
-            controller.setRooms(DaoFactory.roomDao().getAll());
-
+            controller.setRooms(r.getAll());
             dialogStage.showAndWait();
-
             if (controller.isOkClicked()) {
-                DaoFactory.roomDao().delete(controller.getSelectedRoom().getId());
+                r.delete(controller.getSelectedRoom().getId());
                 roomsTable.setItems(getData(Room.class));
                 int totalRooms = DaoFactory.roomDao().totalRooms();
                 totalRoomsRegistered.setText(String.valueOf(totalRooms));
