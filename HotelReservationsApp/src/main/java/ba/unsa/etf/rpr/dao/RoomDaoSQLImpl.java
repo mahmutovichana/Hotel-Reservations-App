@@ -3,7 +3,9 @@ package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.Room;
 import ba.unsa.etf.rpr.exceptions.HotelException;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -45,7 +47,7 @@ public class RoomDaoSQLImpl extends AbstractDao<Room> implements RoomDao {
             room.setHasAirConditioning(rs.getInt("hasAirConditioning"));
             room.setStatus(rs.getInt("status"));
             room.setHotelId(DaoFactory.hotelDao().getById(rs.getInt("hotel_id")));
-            room.setPrice(rs.getDouble("price"));
+            room.setPrice(rs.getInt("price"));
             return room;
         } catch (Exception e) {
             throw new HotelException(e.getMessage(), e);
@@ -67,5 +69,14 @@ public class RoomDaoSQLImpl extends AbstractDao<Room> implements RoomDao {
         item.put("hotel_id",object.getHotelId().getId());
         item.put("price", object.getPrice());
         return item;
+    }
+    public int totalRooms() throws SQLException {
+        int total = 0;
+        String query = "SELECT count(id) AS total_rooms FROM ROOMS";
+        try (PreparedStatement st = AbstractDao.getConnection().prepareStatement(query)) {
+            ResultSet result = st.executeQuery();
+            if (result.next()) total = result.getInt("total_rooms");
+        }
+        return total;
     }
 }
