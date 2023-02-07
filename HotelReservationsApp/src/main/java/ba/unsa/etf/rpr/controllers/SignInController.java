@@ -43,7 +43,7 @@ public class SignInController {
     @FXML
     public Label errorLabel;
 
-    private UserManager u = new UserManager();
+    private final UserManager u = new UserManager();
     /**
      * This method is called by the JavaFX framework when the FXML file is loaded.
      * It is used to set up the controller and initialize any instance variables or UI elements.
@@ -189,8 +189,6 @@ public class SignInController {
         else if(loginSuccessful){
             // Transfer to the new window after a delay
             User finalUser = user;
-            System.out.println(finalUser.getFirstName());
-            System.out.println(finalUser.getUsername());
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
                 // Create the new window
                 Stage stage = new Stage();
