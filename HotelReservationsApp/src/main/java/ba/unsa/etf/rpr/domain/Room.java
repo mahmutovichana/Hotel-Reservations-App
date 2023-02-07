@@ -14,10 +14,9 @@ public class Room implements Idable{
     private int hasAirConditioning;
     private int status;
     private Hotel hotelId;
-    private double price;
+    private int price;
 
-    public Room(int id, String type, int capacity, int hasAirConditioning, int status, Hotel hotelId, double price) {
-        this.id = id;
+    public Room(String type, int capacity, int hasAirConditioning, int status, Hotel hotelId, int price) {
         this.type = type;
         this.capacity = capacity;
         this.hasAirConditioning = hasAirConditioning;
@@ -77,11 +76,11 @@ public class Room implements Idable{
         this.hotelId = hotelId;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
