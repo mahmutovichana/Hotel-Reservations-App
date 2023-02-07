@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<GridPane fx:controller="ba.unsa.etf.rpr.controllers.AddRoomDialogController"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <Label text="Type" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="typeComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Studio"/>
+                <String fx:value="Villa"/>
+                <String fx:value="Bungaloo"/>
+                <String fx:value="Duplex"/>
+                <String fx:value="Suite"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <Label text="Capacity" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="capacityField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Label text="Air conditioning" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <HBox GridPane.rowIndex="2" GridPane.columnIndex="1">
+        <RadioButton fx:id="yesRadioButton" text="Yes"/>
+        <RadioButton fx:id="noRadioButton" text="No"/>
+    </HBox>
+    <Label text="Price" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="priceField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    <Label text="Hotel" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="hotelComboBox" GridPane.rowIndex="4" GridPane.columnIndex="1">
+    </ComboBox>
+    <HBox alignment="center" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.columnSpan="2">
+        <Button text="Save" fx:id="saveButton" onAction="#saveRoom"/>
+        <Button text="Cancel" fx:id="cancelButton" onAction="#cancelRoom"/>
+    </HBox>
+</GridPane>
