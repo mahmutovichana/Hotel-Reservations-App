@@ -25,8 +25,6 @@ public class Hotel implements Idable{
         this.country = country;
         this.starRating = starRating;
     }
-
-
     public int getId() {
         return id;
     }
