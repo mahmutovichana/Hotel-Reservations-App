@@ -3,8 +3,9 @@ package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.Reservation;
 import ba.unsa.etf.rpr.exceptions.HotelException;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -70,5 +71,15 @@ public class ReservationDaoSQLImpl extends AbstractDao<Reservation> implements R
         item.put("user_id", object.getId());
         item.put("room_id",object.getRoomId());
         return item;
+    }
+
+    public int totalIncome() throws SQLException {
+        int totalIncome = 0;
+        String query = "SELECT SUM(total) AS total_price FROM RESERVATIONS";
+        try (PreparedStatement st = AbstractDao.getConnection().prepareStatement(query)) {
+            ResultSet result = st.executeQuery();
+            if (result.next()) totalIncome = result.getInt("total_price");
+        }
+        return totalIncome;
     }
 }
