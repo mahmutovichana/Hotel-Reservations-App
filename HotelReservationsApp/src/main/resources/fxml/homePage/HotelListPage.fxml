@@ -1,0 +1,52 @@
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" style="-fx-background-radius: 20; -fx-background-color: transparent;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.HotelListController">
+    <cursor>
+        <Cursor fx:constant="S_RESIZE" />
+    </cursor>
+    <Pane prefHeight="720.0" prefWidth="140.0" style="-fx-background-color: #89C4E1;">
+        <Button layoutY="350.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="My Profile" />
+        <Button layoutY="300.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="Reservations" />
+        <Button layoutY="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="Book a room" />
+        <Label fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutY="110.0" prefHeight="100.0" prefWidth="146.0" style="-fx-text-fill: #123456;" text="Welcome" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Button fx:id="myProfileButton" layoutY="400.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="My Profile" />
+        <Button fx:id="aboutUsButton" layoutY="450.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="About us" />
+    </Pane>
+    <ImageView fx:id="logOutButton" fitHeight="37.0" fitWidth="25.0" layoutX="22.0" layoutY="659.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../images/logOutIcon.png" />
+    </ImageView>
+    <ImageView fitHeight="62.0" fitWidth="106.0" layoutX="20.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../images/HanaAvisTransLogoBlue.png" />
+    </ImageView>
+    <Label ellipsisString="" layoutX="73.0" layoutY="64.0" prefHeight="32.0" prefWidth="42.0" style="-fx-text-fill: #18254B;" text="Avis" wrapText="true">
+        <font>
+            <Font size="22.0" />
+        </font>
+    </Label>
+    <Label ellipsisString="" layoutX="18.0" layoutY="64.0" prefHeight="32.0" prefWidth="55.0" style="-fx-text-fill: #18254B;" text="Hana" wrapText="true">
+        <font>
+            <Font name="System Bold" size="22.0" />
+        </font>
+    </Label>
+    <Label layoutX="15.0" layoutY="90.0" style="-fx-text-fill: #18254B;" text="MEET YOU THERE" textAlignment="CENTER" wrapText="true">
+        <font>
+            <Font size="13.0" />
+        </font>
+        <effect>
+            <InnerShadow />
+        </effect>
+    </Label>
+    <ScrollPane fx:id="scroller" layoutX="152.0" layoutY="12.0" prefHeight="693.0" prefWidth="815.0" />
+</Pane>
