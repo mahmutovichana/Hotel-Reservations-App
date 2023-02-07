@@ -11,11 +11,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AboutUsPageController {
-
     @FXML
     private ImageView goBack;
 
     public void initialize() {
+
         goBack.setOnMouseClicked(event -> {
             // Close the current window
             Stage stage = (Stage) goBack.getScene().getWindow();
@@ -23,6 +23,8 @@ public class AboutUsPageController {
             // Open the previous window
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/HomePage.fxml"));
+                HomePageController controller = new HomePageController();
+                fxmlLoader.setController(controller);
                 Parent root = fxmlLoader.load();
                 Stage homeStage = new Stage();
                 homeStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
