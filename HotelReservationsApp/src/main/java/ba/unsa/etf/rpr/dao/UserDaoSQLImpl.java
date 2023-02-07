@@ -87,4 +87,14 @@ public class UserDaoSQLImpl extends AbstractDao<User> implements UserDao {
         }
         return null;
     }
+
+    public int totalUsers() throws SQLException{
+        int total = 0;
+        String query = "SELECT count(username) AS total_users FROM USERS";
+        try (PreparedStatement st = AbstractDao.getConnection().prepareStatement(query)) {
+            ResultSet result = st.executeQuery();
+            if (result.next()) total = result.getInt("total_users");
+        }
+        return total;
+    }
 }
