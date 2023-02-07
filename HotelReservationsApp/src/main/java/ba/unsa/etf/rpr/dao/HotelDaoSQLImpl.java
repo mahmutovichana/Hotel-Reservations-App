@@ -3,10 +3,8 @@ package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.Hotel;
 import ba.unsa.etf.rpr.exceptions.HotelException;
 
-import java.sql.ResultSet;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.sql.*;
+import java.util.*;
 
 /**
  * MySQL Implementation of DAO
@@ -71,5 +69,87 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
     @Override
     public List<String> getAllNames() {
         return null;
+    }
+
+    @Override
+    public Set<String> fetchCities() {
+            Set<String> cities = new HashSet<>();
+            try (Connection connection = AbstractDao.getConnection()) {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT DISTINCT city FROM HOTELS");
+                while (resultSet.next()) {
+                    cities.add(resultSet.getString("city"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return cities;
+        }
+
+    @Override
+    public List<Hotel> fetchHotelsByCity(String city) {
+        List<Hotel> hotels = new ArrayList<>();
+        // Connect to the database
+        try (Connection connection = AbstractDao.getConnection()) {
+            // Prepare a statement to execute the query
+            String query = "SELECT * FROM HOTELS WHERE city = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, city);
+            // Execute the query and get the result set
+            ResultSet resultSet = statement.executeQuery();
+            // Iterate over the result set and add each hotel to the list
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int zipCode = resultSet.getInt("zipCode");
+                String cityy = resultSet.getString("city");
+                String country = resultSet.getString("country");
+                int starRating = resultSet.getInt("starRating");
+                Hotel hotel = new Hotel(id, name, zipCode, cityy, country, starRating);
+                hotels.add(hotel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Return the list of hotels
+        return hotels;
+    }
+
+    @Override
+    public List<Hotel> fetchHotels() {
+        List<Hotel> hotels = new ArrayList<>();
+        // Connect to the database
+        try (Connection connection = AbstractDao.getConnection()) {
+            // Prepare a statement to execute the query
+            String query = "SELECT * FROM HOTELS";
+            PreparedStatement statement = connection.prepareStatement(query);
+            // Execute the query and get the result set
+            ResultSet resultSet = statement.executeQuery();
+            // Iterate over the result set and add each hotel to the list
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int zipCode = resultSet.getInt("zipCode");
+                String cityy = resultSet.getString("city");
+                String country = resultSet.getString("country");
+                int starRating = resultSet.getInt("starRating");
+                Hotel hotel = new Hotel(id, name, zipCode, cityy, country, starRating);
+                hotels.add(hotel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Return the list of hotels
+        return hotels;
+    }
+
+    public int totalHotels() throws SQLException{
+        int total = 0;
+        String query = "SELECT count(id) AS total_hotels FROM HOTELS";
+        try (PreparedStatement st = AbstractDao.getConnection().prepareStatement(query)) {
+            ResultSet result = st.executeQuery();
+            if (result.next()) total = result.getInt("total_hotels");
+        }
+        return total;
     }
 }
