@@ -1,75 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.effect.ColorAdjust?>
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<Pane prefHeight="600.0" prefWidth="850.0"
-      style="-fx-background-color: #0A1A3B; -fx-background-image: images\shapesBackground;"
-      stylesheets="@/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ba.unsa.etf.rpr.controllers.MyProfilePageController">
-    <ScrollPane cacheShape="false" fitToHeight="true" fitToWidth="true" layoutX="-12.0" layoutY="-3.0" pannable="true"
-                pickOnBounds="false" prefHeight="610.0" prefWidth="866.0"
-                style="-fx-border-color: transparent; -fx-background-color: #0A1A3B;">
-        <Pane disable="true" focusTraversable="true" pickOnBounds="false" prefHeight="569.0" prefWidth="806.0"
-              snapToPixel="false" style="-fx-border-color: transparent; -fx-background-color: transparent;">
-            <ImageView fitHeight="628.0" fitWidth="928.0" layoutX="-54.0" layoutY="-16.0" pickOnBounds="true">
-                <Image url="@../../images/shapeBackground.jpg"/>
-            </ImageView>
-            <Text fill="WHITE" layoutX="40.0" layoutY="153.0" lineSpacing="9.0" strokeLineJoin="ROUND"
-                  strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Welcome to our hotel booking app, Hana Avis! We are a team of travel enthusiasts and techies based in the beautiful city of Sarajevo, Bosnia and Herzegovina."
-                  textOrigin="CENTER" wrappingWidth="463.20257568359375">
-                <font>
-                    <Font size="14.0"/>
-                </font>
-            </Text>
-            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="40.0" layoutY="280.0" lineSpacing="9.0"
-                  strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Founded in 2017, our company was created with the goal of revolutionizing the way people book their hotel rooms. Inspired by the Latin word &quot;avis,&quot; meaning &quot;bird,&quot; our name represents the freedom and flexibility we offer our customers to fly to their desired destination and choose from a wide range of hotels."
-                  textOrigin="CENTER" wrappingWidth="481.86932373046875">
-                <font>
-                    <Font size="13.0"/>
-                </font>
-            </Text>
-            <ImageView fitHeight="38.0" fitWidth="65.0" layoutX="787.0" layoutY="21.0" pickOnBounds="true"
-                       preserveRatio="true">
-                <Image url="@../../images/HanaAvisTransLogoWhite.png"/>
-            </ImageView>
-            <Text fill="#180d51" layoutX="571.0" layoutY="94.0" lineSpacing="6.0" strokeType="OUTSIDE"
-                  strokeWidth="0.0"
-                  text="So why wait? Start planning your next vacation today and book your dream hotel room with us!"
-                  textAlignment="RIGHT" wrappingWidth="269.32936096191406"/>
-            <Text fill="#1e0e40" layoutX="685.0" layoutY="187.0" lineSpacing="3.0" strokeType="OUTSIDE"
-                  strokeWidth="0.0"
-                  text="Phone: +387123456 Email: info@hanavis.com Address: 123 Main Street, Sarajevo, Bosnia and Herzegovina"
-                  textAlignment="RIGHT" wrappingWidth="151.72412109375">
-                <font>
-                    <Font size="13.0"/>
-                </font>
-            </Text>
-            <ImageView fitHeight="347.0" fitWidth="342.0" layoutX="522.0" layoutY="257.0" pickOnBounds="true"
-                       preserveRatio="true">
-                <Image url="@../../images/womanMob.png"/>
-            </ImageView>
-            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="40.0" layoutY="430.0" lineSpacing="9.0"
-                  strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Since our launch, we have grown to become one of the most trusted and widely used hotel booking apps in Bosnia and Herzegovina. Our user-friendly interface and intuitive search filters make it easy for you to find the perfect room at the perfect price. We also offer a 24/7 customer support team to help you with any questions or issues you might have.So why wait? Start planning your next vacation today and book your dream hotel room with us!"
-                  textOrigin="CENTER" wrappingWidth="499.20263671875">
-                <font>
-                    <Font size="13.0"/>
-                </font>
-            </Text>
-        </Pane>
-    </ScrollPane>
-    <ImageView fx:id="goBack" fitHeight="38.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-        <effect>
-            <ColorAdjust brightness="1.0" contrast="-1.0" hue="-0.41" saturation="-1.0"/>
-        </effect>
-        <Image url="@../../images/goBackIcon.png"/>
-    </ImageView>
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" style="-fx-background-radius: 20; -fx-background-color: white;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <cursor>
+      <Cursor fx:constant="S_RESIZE" />
+   </cursor>
+   <Pane prefHeight="720.0" prefWidth="140.0" style="-fx-background-color: #89C4E1;">
+      <Button fx:id="reservationsButton" layoutY="300.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="Reservations" />
+      <Button layoutY="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="Book a room" />
+      <Button fx:id="myProfileButton" layoutY="350.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="My Profile" />
+      <Button fx:id="aboutUsButton" layoutY="400.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="About us" />
+   </Pane>
+   <ImageView fx:id="logOutButton" fitHeight="37.0" fitWidth="25.0" layoutX="22.0" layoutY="659.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../images/logOutIcon.png" />
+   </ImageView>
+   <ImageView fitHeight="62.0" fitWidth="106.0" layoutX="20.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../images/HanaAvisTransLogoBlue.png" />
+   </ImageView>
+   <Label ellipsisString="" layoutX="73.0" layoutY="64.0" prefHeight="32.0" prefWidth="42.0" style="-fx-text-fill: #18254B;" text="Avis" wrapText="true">
+      <font>
+         <Font size="22.0" />
+      </font>
+   </Label>
+   <Label ellipsisString="" layoutX="18.0" layoutY="64.0" prefHeight="32.0" prefWidth="55.0" style="-fx-text-fill: #18254B;" text="Hana" wrapText="true">
+      <font>
+         <Font name="System Bold" size="22.0" />
+      </font>
+   </Label>
+   <Label layoutX="15.0" layoutY="90.0" style="-fx-text-fill: #18254B;" text="MEET YOU THERE" textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font size="13.0" />
+      </font>
+      <effect>
+         <InnerShadow />
+      </effect>
+   </Label>
+   <Label layoutX="240.0" layoutY="160.0" style="-fx-text-fill: #123456;" text="First Name" textFill="#123456">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="240.0" layoutY="220.0" style="-fx-text-fill: #123456;" text="Last Name">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="240.0" layoutY="300.0" style="-fx-text-fill: #123456;" text="Username">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="240.0" layoutY="350.0" style="-fx-text-fill: #123456;" text="Email">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label fx:id="firstNameLabel" layoutX="429.0" layoutY="169.0" text="myName">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Label fx:id="lastNameLabel" layoutX="429.0" layoutY="224.0" text="myName">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Label fx:id="usernameLabel" layoutX="429.0" layoutY="304.0" text="myName">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Label fx:id="emailLabel" layoutX="429.0" layoutY="354.0" text="myName">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Button id="closeButton" fx:id="closeButton" layoutX="935.0" minWidth="25.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-text-fill: navy;" stylesheets="@/stylesheets/styles.css" text="X" textFill="#0e0746">
+      <font>
+         <Font name="Yu Gothic Bold" size="15.0" />
+      </font>
+      <styleClass>
+         <String fx:value="closeButtonStyle" />
+         <String fx:value="closeButtonWhenHovered" />
+      </styleClass>
+   </Button>
 </Pane>
