@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="742.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="742.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <ImageView fitHeight="42.0" fitWidth="64.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../images/HanaAvisTransLogoBlue.png" />
     </ImageView>
@@ -53,7 +53,7 @@
       <Pane layoutX="8.0" layoutY="350.0" prefHeight="192.0" prefWidth="148.0" style="-fx-background-color: #233770; -fx-background-radius: 15;">
          <Label fx:id="randomQuote" layoutX="11.0" layoutY="14.0" prefHeight="168.0" prefWidth="128.0" style="-fx-text-fill: white;" textFill="WHITE" wrapText="true">
             <font>
-               <Font name="Segoe UI Light" size="24.0" />
+               <Font name="Segoe UI Light" size="21.0" />
             </font>
          </Label>
       </Pane>
@@ -71,23 +71,38 @@
       <Tab style="-fx-background-color: transparent;" text="Overview">
          <Pane prefHeight="377.0" prefWidth="539.0">
             <Pane layoutX="10.0" layoutY="30.0" prefHeight="178.0" prefWidth="220.0" style="-fx-background-radius: 10; -fx-background-color: #EB6F66; -fx-opacity: 1;">
-               <Label ellipsisString="" layoutX="35.0" layoutY="44.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Income">
+               <Label ellipsisString="" layoutX="42.0" layoutY="20.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Income">
                   <font>
                      <Font name="System Bold" size="22.0" />
                   </font>
                </Label>
+               <Label fx:id="totalIncome" alignment="CENTER" layoutX="-6.0" layoutY="89.0" prefHeight="31.0" prefWidth="234.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                     <Font size="35.0" />
+                  </font>
+               </Label>
             </Pane>
             <Pane layoutX="245.0" layoutY="30.0" prefHeight="178.0" prefWidth="130.0" style="-fx-background-radius: 10; -fx-background-color: #EB6F66; -fx-opacity: 1;">
-               <Label ellipsisString="" layoutX="8.0" layoutY="29.0" prefHeight="87.0" prefWidth="114.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Hotels Registered" textAlignment="CENTER" wrapText="true">
+               <Label ellipsisString="" layoutX="8.0" prefHeight="87.0" prefWidth="114.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Hotels Registered" textAlignment="CENTER" wrapText="true">
                   <font>
                      <Font name="System Bold" size="18.0" />
                   </font>
                </Label>
+               <Label fx:id="totalHotelsRegistered" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="90.0" prefHeight="45.0" prefWidth="140.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                     <Font size="30.0" />
+                  </font>
+               </Label>
             </Pane>
             <Pane layoutX="390.0" layoutY="30.0" prefHeight="178.0" prefWidth="130.0" style="-fx-background-radius: 10; -fx-background-color: #FBC233; -fx-opacity: 1;">
-               <Label ellipsisString="" layoutX="8.0" layoutY="29.0" prefHeight="87.0" prefWidth="114.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Rooms Registered" textAlignment="CENTER" wrapText="true">
+               <Label ellipsisString="" layoutX="8.0" prefHeight="87.0" prefWidth="114.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Rooms Registered" textAlignment="CENTER" wrapText="true">
                   <font>
                      <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="totalRoomsRegistered" alignment="CENTER" layoutX="-4.0" layoutY="90.0" prefHeight="31.0" prefWidth="138.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                     <Font size="30.0" />
                   </font>
                </Label>
             </Pane>
@@ -97,11 +112,21 @@
                      <Font name="System Bold" size="22.0" />
                   </font>
                </Label>
+               <Label fx:id="mostReservedHotel" layoutX="94.0" layoutY="78.0" text="puno para" textFill="WHITE">
+                  <font>
+                     <Font size="21.0" />
+                  </font>
+               </Label>
             </Pane>
             <Pane layoutX="293.0" layoutY="245.0" prefHeight="180.0" prefWidth="227.0" style="-fx-background-radius: 10; -fx-background-color: #EB6F66; -fx-opacity: 1;">
                <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="-4.0" layoutY="20.0" prefHeight="27.0" prefWidth="234.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Users Registered" textAlignment="CENTER">
                   <font>
                      <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="totalUsersRegistered" alignment="CENTER" layoutX="-5.0" layoutY="75.0" prefHeight="51.0" prefWidth="236.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                     <Font size="35.0" />
                   </font>
                </Label>
             </Pane>
@@ -144,9 +169,9 @@
                   <TableColumn minWidth="80.0" text="Star Rating" />
                </columns>
             </TableView>
-            <Button fx:id="addButton" layoutX="100.0" layoutY="385.0" mnemonicParsing="false" prefWidth="100.0" text="ADD" />
-            <Button fx:id="deleteButton" layoutX="225.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="UPDATE" />
-            <Button fx:id="updateButton" layoutX="350.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="DELETE" />
+            <Button fx:id="addHotelButton" layoutX="100.0" layoutY="385.0" mnemonicParsing="false" prefWidth="100.0" text="ADD" />
+            <Button fx:id="updateHotelButton" layoutX="225.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="UPDATE" />
+            <Button fx:id="deleteHotelButton" layoutX="350.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="DELETE" />
          </AnchorPane>
       </Tab>
       <Tab fx:id="roomTab" text="Rooms">
@@ -161,14 +186,14 @@
                   <TableColumn minWidth="100.0" prefWidth="150.0" text="Hotel Name" />
                </columns>
             </TableView>
-            <Button layoutX="100.0" layoutY="385.0" mnemonicParsing="false" prefWidth="100.0" text="ADD" />
-            <Button layoutX="225.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="UPDATE" />
-            <Button layoutX="350.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="DELETE" />
+            <Button fx:id="addRoomButton" layoutX="100.0" layoutY="385.0" mnemonicParsing="false" prefWidth="100.0" text="ADD" />
+            <Button fx:id="updateRoomButton" layoutX="225.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="UPDATE" />
+            <Button fx:id="deleteRoomButton" layoutX="350.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="DELETE" />
          </AnchorPane>
       </Tab>
    </TabPane>
-   <Button layoutX="425.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" text="Home" />
-   <Button id="adminButtons" layoutX="489.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" styleClass="adminButton" stylesheets="@../../stylesheets/styles.css" text="Account" />
+   <Button fx:id="homeButton" layoutX="425.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-text-fill: #0A1A3B;" text="Home" />
+   <Button id="adminButtons" fx:id="myProfileButton" layoutX="489.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" styleClass="adminButton" stylesheets="@../../stylesheets/styles.css" text="Account" />
    <Label layoutX="470.0" layoutY="75.0" style="-fx-text-fill: #0A1A3B;" text="Manage">
       <font>
          <Font name="System Bold" size="20.0" />
