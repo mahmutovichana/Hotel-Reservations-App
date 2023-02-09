@@ -13,7 +13,7 @@ import java.util.*;
  */
 public abstract class AbstractDao<T extends Idable> implements Dao<T>{
     private static Connection connection = null;
-    private String tableName;
+    private final String tableName;
 
     public AbstractDao(String tableName) {
         this.tableName = tableName;
@@ -29,9 +29,16 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
                 String username = p.getProperty("username");
                 String password = p.getProperty("password");
                 AbstractDao.connection = DriverManager.getConnection(url, username, password);
-            } catch (Exception e) {
+            }  catch (Exception e) {
                 e.printStackTrace();
-                System.exit(0);
+            }finally {
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }));
             }
         }
     }
