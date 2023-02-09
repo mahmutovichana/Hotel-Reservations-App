@@ -66,9 +66,22 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
         return item;
     }
 
-    @Override
-    public List<String> getAllNames() {
-        return null;
+    public int getByName(String hotelName){
+        int id=0;
+        try (Connection connection = AbstractDao.getConnection()) {
+            // Prepare a statement to execute the query
+            PreparedStatement statement = connection.prepareStatement("SELECT HOTELS.id FROM HOTELS WHERE name = ?");
+            statement.setString(1, hotelName);
+            // Execute the query and get the result set
+            ResultSet resultSet = statement.executeQuery();
+            // Iterate over the result set and add each hotel to the list
+            while (resultSet.next()) {
+                id = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 
     @Override
@@ -99,13 +112,12 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
             ResultSet resultSet = statement.executeQuery();
             // Iterate over the result set and add each hotel to the list
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int zipCode = resultSet.getInt("zipCode");
                 String cityy = resultSet.getString("city");
                 String country = resultSet.getString("country");
                 int starRating = resultSet.getInt("starRating");
-                Hotel hotel = new Hotel(id, name, zipCode, cityy, country, starRating);
+                Hotel hotel = new Hotel(name, zipCode, cityy, country, starRating);
                 hotels.add(hotel);
             }
         } catch (SQLException e) {
@@ -127,13 +139,12 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
             ResultSet resultSet = statement.executeQuery();
             // Iterate over the result set and add each hotel to the list
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int zipCode = resultSet.getInt("zipCode");
                 String cityy = resultSet.getString("city");
                 String country = resultSet.getString("country");
                 int starRating = resultSet.getInt("starRating");
-                Hotel hotel = new Hotel(id, name, zipCode, cityy, country, starRating);
+                Hotel hotel = new Hotel(name, zipCode, cityy, country, starRating);
                 hotels.add(hotel);
             }
         } catch (SQLException e) {
