@@ -17,8 +17,7 @@ public class Hotel implements Idable{
 
     public Hotel(){}
 
-    public Hotel(int id, String name, int zipCode, String city, String country, int starRating) {
-        this.id = id;
+    public Hotel(String name, int zipCode, String city, String country, int starRating) {
         this.name = name;
         this.zipCode = zipCode;
         this.city = city;
