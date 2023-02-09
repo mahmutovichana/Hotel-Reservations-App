@@ -14,8 +14,7 @@ import java.util.Set;
 public interface HotelDao extends Dao<Hotel>{
 
     /* here we insert methods that are special only for that table, the implementation of it we do in SQL Impl file */
-
-    List<String> getAllNames();
+    int getByName(String hotelName);
 
     Set<String> fetchCities();
 
