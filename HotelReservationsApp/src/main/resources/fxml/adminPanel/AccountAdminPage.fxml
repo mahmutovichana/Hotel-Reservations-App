@@ -50,8 +50,8 @@
          <Image url="@../../images/logOutIcon.png" />
       </ImageView>
    </Pane>
-   <Button fx:id="homeButton" layoutX="425.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" text="Home" />
-   <Button fx:id="accountButton" id="adminButtons" layoutX="489.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" styleClass="adminButton" stylesheets="@../../stylesheets/styles.css" text="Account" />
+   <Button layoutX="425.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" text="Home" />
+   <Button id="adminButtons" layoutX="489.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" styleClass="adminButton" stylesheets="@../../stylesheets/styles.css" text="Account" />
    <Label layoutX="10.0" layoutY="70.0" style="-fx-text-fill: #18254B;" text="MEET YOU THERE" textAlignment="CENTER" wrapText="true">
       <font>
          <Font size="9.0" />
@@ -89,22 +89,22 @@
          <Font size="16.0" />
       </font>
    </Label>
-   <Label fx:id="nameField" layoutX="200.0" layoutY="220.0" text="Label">
+   <Label layoutX="200.0" layoutY="220.0" text="Label">
       <font>
          <Font size="18.0" />
       </font>
    </Label>
-   <Label fx:id="surnameField" layoutX="200.0" layoutY="280.0" text="Label">
+   <Label layoutX="200.0" layoutY="280.0" text="Label">
       <font>
          <Font size="18.0" />
       </font>
    </Label>
-   <Label fx:id="usernameField" layoutX="200.0" layoutY="340.0" text="Label">
+   <Label layoutX="200.0" layoutY="340.0" text="Label">
       <font>
          <Font size="18.0" />
       </font>
    </Label>
-   <Label fx:id="emailField" layoutX="200.0" layoutY="400.0" text="Label">
+   <Label layoutX="200.0" layoutY="400.0" text="Label">
       <font>
          <Font size="18.0" />
       </font>
