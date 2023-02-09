@@ -23,6 +23,10 @@ public class HotelManager {
         return DaoFactory.hotelDao().add(h);
     }
 
+    public int getByName(String hotelName) throws HotelException {
+        return DaoFactory.hotelDao().getByName(hotelName);
+    }
+
     public Hotel getById(int id) throws HotelException {
         return DaoFactory.hotelDao().getById(id);
     }
