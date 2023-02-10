@@ -22,6 +22,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 /**
@@ -94,7 +95,7 @@ public class SignInController {
      * or displays an error message if the login was unsuccessful.
      */
     @FXML
-    private void handleLogin() throws HotelException {
+    private void handleLogin() throws HotelException, NoSuchAlgorithmException {
 
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -121,10 +122,11 @@ public class SignInController {
         if(loginSuccessful){
             // Check the input against the database
             user = u.findUsername(username);
-
             errorLabel.setAlignment(Pos.CENTER);
             if (user!=null) {
-                if(Objects.equals(user.getPassword(), password)){
+                // hashing the password then comparing it with the one in the database
+                String hashedPassword = UserManager.hashPassword(password);
+                if(Objects.equals(user.getPassword(), hashedPassword)){
                     try {
                         // Load the popup box FXML file
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main/PopupBox.fxml"));
@@ -149,7 +151,6 @@ public class SignInController {
                         ft.setToValue(0);
                         ft.setOnFinished(e -> stage.close());
                         ft.play();
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
