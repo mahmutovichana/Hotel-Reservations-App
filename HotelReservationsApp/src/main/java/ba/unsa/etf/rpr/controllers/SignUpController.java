@@ -8,7 +8,6 @@
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.business.UserManager;
-import ba.unsa.etf.rpr.dao.UserDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -24,9 +23,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Objects;
@@ -38,7 +39,7 @@ import java.util.regex.Pattern;
  */
 public class SignUpController extends Component {
 
-    private UserManager u = new UserManager();
+    private final UserManager u = new UserManager();
 
     public TextField name;
     public Label badName;
@@ -90,7 +91,7 @@ public class SignUpController extends Component {
      Displays error messages if the input is invalid or there is an error adding the user to the database.
      */
     @FXML
-    private void signUpButtonActionPerformed() {
+    private void signUpButtonActionPerformed() throws NoSuchAlgorithmException {
 
         // Retrieve user input from form fields
         String nameInput = name.getText();
@@ -142,7 +143,7 @@ public class SignUpController extends Component {
             user.setLastName(surnameInput);
             user.setEmail(emailInput);
             user.setUsername(usernameInput);
-            user.setPassword(passwordInput);
+            user.setPassword(UserManager.hashPassword(passwordInput));
             //UserDaoSQLImpl u = new UserDaoSQLImpl();
 
             try {
