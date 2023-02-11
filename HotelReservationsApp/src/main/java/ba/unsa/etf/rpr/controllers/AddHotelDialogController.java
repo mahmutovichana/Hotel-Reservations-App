@@ -1,17 +1,23 @@
 package ba.unsa.etf.rpr.controllers;
 
-import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Hotel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.sql.SQLException;
-
+/**
+ * The type Add hotel dialog controller.
+ */
 public class AddHotelDialogController {
 
+    /**
+     * The Save button.
+     */
     public Button saveButton;
+    /**
+     * The Cancel button.
+     */
     public Button cancelButton;
     @FXML
     private TextField nameField;
@@ -24,12 +30,20 @@ public class AddHotelDialogController {
     @FXML
     private TextField starRatingField;
 
-    private Hotel hotel=new Hotel();
+    private Hotel hotel = new Hotel();
     private boolean okClicked = false;
 
+    /**
+     * Instantiates a new Add hotel dialog controller.
+     */
     public AddHotelDialogController() {
     }
 
+    /**
+     * Instantiates a new Add hotel dialog controller.
+     *
+     * @param hotel the hotel
+     */
     public AddHotelDialogController(Hotel hotel) {
         this.hotel = hotel;
     }
@@ -44,14 +58,13 @@ public class AddHotelDialogController {
     }
 
     @FXML
-    private void saveHotel() throws SQLException {
+    private void saveHotel(){
         hotel.setName(nameField.getText());
         hotel.setZipCode(Integer.parseInt(zipCodeField.getText()));
         hotel.setCity(cityField.getText());
         hotel.setCountry(countryField.getText());
         hotel.setStarRating(Integer.parseInt(starRatingField.getText()));
         okClicked = true;
-        int totalHotels = DaoFactory.hotelDao().totalHotels();
         ((Stage) saveButton.getScene().getWindow()).close();
     }
     @FXML
@@ -59,7 +72,11 @@ public class AddHotelDialogController {
         ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
-
+    /**
+     * Sets hotel.
+     *
+     * @param hotel the hotel
+     */
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
         nameField.setText(hotel.getName());
@@ -68,6 +85,12 @@ public class AddHotelDialogController {
         countryField.setText(hotel.getCountry());
         starRatingField.setText(Integer.toString(hotel.getStarRating()));
     }
+
+    /**
+     * Is ok clicked boolean.
+     *
+     * @return the boolean
+     */
     public boolean isOkClicked() {
         return okClicked;
     }
