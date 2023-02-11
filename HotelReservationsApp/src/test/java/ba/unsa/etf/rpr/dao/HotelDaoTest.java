@@ -40,7 +40,6 @@ class HotelDaoTest {
         verify(hotelDao).add(hotel);
     }
 
-
     @Test
     void updateTest() throws Exception {
         hotel.setName("Hotel Mocky");
