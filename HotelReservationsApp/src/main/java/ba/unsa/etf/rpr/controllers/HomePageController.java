@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
-import ba.unsa.etf.rpr.dao.DaoFactory;
+import ba.unsa.etf.rpr.business.HotelManager;
 import ba.unsa.etf.rpr.domain.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,26 +26,48 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 
+/**
+ * The type Home page controller.
+ */
 public class HomePageController{
 
+    /**
+     * The Root.
+     */
     @FXML
     public Pane root;
+    /**
+     * The Log out button.
+     */
     @FXML
     public ImageView logOutButton;
+    /**
+     * The About us button.
+     */
     @FXML
     public Button aboutUsButton;
+    /**
+     * The My profile button.
+     */
     @FXML
     public Button myProfileButton;
+    /**
+     * The Welcome label.
+     */
     @FXML
     public Label welcomeLabel = new Label();
+    /**
+     * The Scroller.
+     */
     @FXML
     public ScrollPane scroller;
+
+    private final HotelManager h = new HotelManager();
 
     private void openHotelListForCity(String city) {
         try {
@@ -53,6 +75,7 @@ public class HomePageController{
             Parent root = loader.load();
             HotelListController controller = loader.getController();
             controller.setCity(city);
+            controller.setUser(user);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
@@ -63,6 +86,9 @@ public class HomePageController{
 
     }
 
+    /**
+     * The City map.
+     */
     public final Map<String, String> cityMap = new HashMap<String, String>() {{
         put("Sarajevo", "/images/cities/sarajevo.jpg");
         put("Mostar", "/images/cities/mostar.jpg");
@@ -78,8 +104,13 @@ public class HomePageController{
         put("Venecija","/images/cities/venecija.jpg");
     }};
 
+    /**
+     * City divs.
+     *
+     * @param cityImageMap the city image map
+     */
     public void CityDivs(Map<String, String> cityImageMap) {
-        Set<String> cities = DaoFactory.hotelDao().fetchCities();
+        Set<String> cities = h.fetchCities();
         GridPane cityPane = new GridPane();
         cityPane.setHgap(20);
         cityPane.setVgap(20);
@@ -94,10 +125,9 @@ public class HomePageController{
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(170);
             imageView.setFitWidth(250);
-
             Rectangle rect = new Rectangle(imageView.getFitWidth(), imageView.getFitHeight(),
-                    new LinearGradient(0, 1.3, 0, 0, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
-                            new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.TRANSPARENT)}));
+                    new LinearGradient(0, 1.4, 0, 0, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
+                            new Stop(0, Color.BLACK), new Stop(1, Color.TRANSPARENT)));
             rect.setArcHeight(10);
             rect.setArcWidth(10);
 
@@ -110,10 +140,7 @@ public class HomePageController{
             stackPane.getChildren().addAll(imageView, rect, cityName);
             stackPane.setAlignment(Pos.CENTER);
 
-            imageView.setOnMouseClicked(event -> {
-                    openHotelListForCity(city);
-            });
-
+            stackPane.setOnMouseClicked(event -> openHotelListForCity(city));
             cityPane.add(stackPane, column, row);
             column++;
             if (column == 3) {
@@ -123,23 +150,48 @@ public class HomePageController{
         }
         scroller.setContent(cityPane);
     }
+
+
     private User user = new User();
 
+    /**
+     * Instantiates a new Home page controller.
+     *
+     * @param finalUser the final user
+     */
     public HomePageController(User finalUser){
         this.user = finalUser;
     }
+
+    /**
+     * Instantiates a new Home page controller.
+     */
     public HomePageController() {
     }
+
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
     @FXML
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     @FXML
     public User getUser() {
         return user;
     }
 
+    /**
+     * Initialize.
+     */
     @FXML
     public void initialize() {
 
