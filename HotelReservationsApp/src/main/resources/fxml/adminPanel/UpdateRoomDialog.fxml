@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.adminPanel.UpdateRoomDialog"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<GridPane alignment="center" hgap="10" prefHeight="324.0" prefWidth="321.0" vgap="10" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.UpdateRoomController">
+    <Label text="Select Room" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <ComboBox fx:id="roomComboBox" prefHeight="26.0" prefWidth="151.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+    </ComboBox>
+    <Label text="Type" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <ComboBox fx:id="typeComboBox" prefHeight="26.0" prefWidth="82.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Studio" />
+                <String fx:value="Villa" />
+                <String fx:value="Bungaloo" />
+                <String fx:value="Duplex" />
+                <String fx:value="Suite" />
+            </FXCollections>
+        </items>
+      <GridPane.margin>
+         <Insets left="70.0" />
+      </GridPane.margin>
+    </ComboBox>
+    <Label text="Capacity" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="capacityField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label text="Air conditioning" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <RadioButton fx:id="yesRadioButton" text="Yes">
+         <padding>
+            <Insets left="5.0" />
+         </padding></RadioButton>
+        <RadioButton fx:id="noRadioButton" text="No">
+         <padding>
+            <Insets left="30.0" />
+         </padding></RadioButton>
+    </HBox>
+    <Label text="Price" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Label text="Hotel" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    <ComboBox fx:id="hotelComboBox" GridPane.columnIndex="1" GridPane.rowIndex="5">
+    </ComboBox>
+<HBox alignment="center" prefHeight="26.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
+      <GridPane.margin>
+         <Insets />
+      </GridPane.margin>
+</HBox>
+<Button fx:id="updateButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleOk" text="Update" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6">
+      <GridPane.margin>
+         <Insets left="15.0" />
+      </GridPane.margin>
+   </Button>
+<Button fx:id="cancelButton" onAction="#handleCancel" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="6">
+      <GridPane.margin>
+         <Insets left="85.0" />
+      </GridPane.margin>
+   </Button>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+        </GridPane>

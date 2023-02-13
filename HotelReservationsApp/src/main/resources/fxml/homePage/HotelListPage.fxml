@@ -1,28 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" style="-fx-background-radius: 20; -fx-background-color: transparent;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.HotelListController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" style="-fx-background-radius: 20; -fx-background-color: transparent;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <cursor>
         <Cursor fx:constant="S_RESIZE" />
     </cursor>
     <Pane prefHeight="720.0" prefWidth="140.0" style="-fx-background-color: #89C4E1;">
-        <Button layoutY="350.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="My Profile" />
-        <Button layoutY="300.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="Reservations" />
-        <Button layoutY="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="Book a room" />
-        <Label fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutY="110.0" prefHeight="100.0" prefWidth="146.0" style="-fx-text-fill: #123456;" text="Welcome" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-        <Button fx:id="myProfileButton" layoutY="400.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="My Profile" />
-        <Button fx:id="aboutUsButton" layoutY="450.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="About us" />
+        <Button fx:id="reservationsButton" layoutY="300.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="Reservations" />
+        <Button fx:id="homeButton" layoutY="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="Book a room" />
+        <Button fx:id="myProfileButton" layoutY="350.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="My Profile" />
+        <Button fx:id="aboutUsButton" layoutY="400.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="sideOption" text="About us" />
     </Pane>
     <ImageView fx:id="logOutButton" fitHeight="37.0" fitWidth="25.0" layoutX="22.0" layoutY="659.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../images/logOutIcon.png" />
@@ -48,5 +45,11 @@
             <InnerShadow />
         </effect>
     </Label>
-    <ScrollPane fx:id="scroller" layoutX="152.0" layoutY="12.0" prefHeight="693.0" prefWidth="815.0" />
+    <ScrollPane fx:id="scroller" layoutX="152.0" layoutY="12.0" prefHeight="661.0" prefWidth="815.0" />
+    <ImageView fx:id="goBack" fitHeight="38.0" fitWidth="213.0" layoutX="150.0" layoutY="670.0" preserveRatio="true">
+        <effect>
+            <ColorAdjust brightness="-1.0" contrast="-1.0" hue="-0.41" saturation="-1.0" />
+        </effect>
+        <Image url="@../../images/goBackIcon.png" />
+    </ImageView>
 </Pane>
