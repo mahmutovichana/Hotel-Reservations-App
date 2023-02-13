@@ -7,14 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserDaoTest {
     @Test
     public void testUserConstructor() {
-        User user = new User("John", "Doe", "john.doe@example.com", 1, "johndoe", "password");
-
+        User user = new User("John", "Doe", "john.doe@example.com", 1, "johndoe");
         assertEquals("John", user.getFirstName());
         assertEquals("Doe", user.getLastName());
         assertEquals("john.doe@example.com", user.getEmail());
         assertEquals(1, user.getRole());
         assertEquals("johndoe", user.getUsername());
-        assertEquals("password", user.getPassword());
     }
 
     @Test
