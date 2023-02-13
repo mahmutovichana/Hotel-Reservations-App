@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 /**
  * controller for the main page which opens first when the app loads
+ *
  * @author Hana Mahmutovic
  */
 public class MainController implements Initializable {
@@ -53,8 +54,6 @@ public class MainController implements Initializable {
                 System.out.println("Can't load file");
             }
         });
-
-
 
         minimizeButton.setOnAction(event -> {
             Stage stage = (Stage) minimizeButton.getScene().getWindow();

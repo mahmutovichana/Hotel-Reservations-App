@@ -6,14 +6,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.util.Objects;
 
+/**
+ * The type App fx.
+ */
 public class AppFX extends Application
 {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         // Here you can work with args - command line parameters
         Application.launch(args);
@@ -31,7 +38,6 @@ public class AppFX extends Application
         */
         //root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/styles.css")).toExternalForm());
         Scene scene = new Scene(root);
-        Font.loadFont(getClass().getResourceAsStream("/resources/fonts/Fontspace.ttf"), 14);
         scene.getStylesheets().add("/stylesheets/styles.css");
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);

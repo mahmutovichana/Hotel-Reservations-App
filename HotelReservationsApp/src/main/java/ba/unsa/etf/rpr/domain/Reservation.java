@@ -5,22 +5,41 @@
 
 package ba.unsa.etf.rpr.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * The type Reservation.
+ */
 public class Reservation implements Idable{
     private int id;
-    private Date checkIn;
-    private Date checkOut;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
     private int total;
     private int adults;
     private int children;
     private Room roomId;
     private User username;
 
+    /**
+     * Instantiates a new Reservation.
+     */
     public Reservation() { }
 
-    public Reservation(int id, Date checkIn, Date checkOut, int total, int adults, int children, Room roomId, User username) {
+    /**
+     * Instantiates a new Reservation.
+     *
+     * @param id       the id
+     * @param checkIn  the check in
+     * @param checkOut the check out
+     * @param total    the total
+     * @param adults   the adults
+     * @param children the children
+     * @param roomId   the room id
+     * @param username the username
+     */
+    public Reservation(int id, LocalDate checkIn, LocalDate checkOut, int total, int adults, int children, Room roomId, User username) {
         this.id = id;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -39,58 +58,128 @@ public class Reservation implements Idable{
         this.id = id;
     }
 
-    public java.sql.Date getCheckIn() {
-        return (java.sql.Date) checkIn;
+    /**
+     * Gets check in.
+     *
+     * @return the check in
+     */
+    public LocalDate getCheckIn() {
+        return checkIn;
     }
 
-    public void setCheckIn(Date checkIn) {
+    /**
+     * Sets check in.
+     *
+     * @param checkIn the check in
+     */
+    public void setCheckIn(LocalDate checkIn) {
         this.checkIn = checkIn;
     }
 
-    public java.sql.Date getCheckOut() {
-        return (java.sql.Date) checkOut;
+    /**
+     * Gets check out.
+     *
+     * @return the check out
+     */
+    public LocalDate getCheckOut() {
+        return checkOut;
     }
 
-    public void setCheckOut(Date checkOut) {
+    /**
+     * Sets check out.
+     *
+     * @param checkOut the check out
+     */
+    public void setCheckOut(LocalDate checkOut) {
         this.checkOut = checkOut;
     }
 
+    /**
+     * Gets total.
+     *
+     * @return the total
+     */
     public int getTotal() {
         return total;
     }
 
+    /**
+     * Sets total.
+     *
+     * @param total the total
+     */
     public void setTotal(int total) {
         this.total = total;
     }
 
+    /**
+     * Gets adults.
+     *
+     * @return the adults
+     */
     public int getAdults() {
         return adults;
     }
 
+    /**
+     * Sets adults.
+     *
+     * @param adults the adults
+     */
     public void setAdults(int adults) {
         this.adults = adults;
     }
 
+    /**
+     * Gets children.
+     *
+     * @return the children
+     */
     public int getChildren() {
         return children;
     }
 
+    /**
+     * Sets children.
+     *
+     * @param children the children
+     */
     public void setChildren(int children) {
         this.children = children;
     }
 
+    /**
+     * Gets room id.
+     *
+     * @return the room id
+     */
     public Room getRoomId() {
         return roomId;
     }
 
+    /**
+     * Sets room id.
+     *
+     * @param roomId the room id
+     */
     public void setRoomId(Room roomId) {
         this.roomId = roomId;
     }
 
+    /**
+     * Gets username.
+     *
+     * @return the username
+     */
     public User getUsername() {
         return username;
     }
 
+    /**
+     * Sets username.
+     *
+     * @param username the username
+     */
     public void setUsername(User username) {
         this.username = username;
     }
@@ -105,7 +194,7 @@ public class Reservation implements Idable{
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, checkIn, checkOut, total, adults, children, roomId, username);
+        return Objects.hash(id, total, adults, children, checkIn, checkOut, roomId, username);
     }
 
     @Override
@@ -121,4 +210,5 @@ public class Reservation implements Idable{
                 ", username=" + username +
                 '}';
     }
+
 }

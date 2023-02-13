@@ -8,6 +8,7 @@ import java.util.*;
 
 /**
  * MySQL Implementation of DAO
+ *
  * @author Hana Mahmutović
  */
 public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
@@ -18,10 +19,10 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
     }
 
     /**
+     * Get instance hotel dao sql.
+     *
+     * @return QuoteDaoSQLImpl  We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton This method will call private constructor in instance==null and then return that instance
      * @author Hana Mahmutović
-     * @return QuoteDaoSQLImpl
-     * We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton
-     * This method will call private constructor in instance==null and then return that instance
      */
     public static HotelDaoSQLImpl getInstance(){
         if(instance==null)
@@ -29,6 +30,9 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
         return instance;
     }
 
+    /**
+     * Remove instance.
+     */
     public static void removeInstance(){
         if(instance!=null)
             instance=null;
@@ -68,9 +72,9 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
 
     public int getByName(String hotelName){
         int id=0;
-        try (Connection connection = AbstractDao.getConnection()) {
+        try{
             // Prepare a statement to execute the query
-            PreparedStatement statement = connection.prepareStatement("SELECT HOTELS.id FROM HOTELS WHERE name = ?");
+            PreparedStatement statement = getConnection().prepareStatement("SELECT HOTELS.id FROM HOTELS WHERE name = ?");
             statement.setString(1, hotelName);
             // Execute the query and get the result set
             ResultSet resultSet = statement.executeQuery();
@@ -87,9 +91,8 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
     @Override
     public Set<String> fetchCities() {
             Set<String> cities = new HashSet<>();
-            try (Connection connection = AbstractDao.getConnection()) {
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT DISTINCT city FROM HOTELS");
+            try{
+                ResultSet resultSet = getConnection().createStatement().executeQuery("SELECT DISTINCT city FROM HOTELS");
                 while (resultSet.next()) {
                     cities.add(resultSet.getString("city"));
                 }
@@ -101,13 +104,15 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
 
     @Override
     public List<Hotel> fetchHotelsByCity(String city) {
+        System.out.println(city);
         List<Hotel> hotels = new ArrayList<>();
         // Connect to the database
-        try (Connection connection = AbstractDao.getConnection()) {
+        try{
             // Prepare a statement to execute the query
             String query = "SELECT * FROM HOTELS WHERE city = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = getConnection().prepareStatement(query);
             statement.setString(1, city);
+            System.out.println("usla u sqlimpl");
             // Execute the query and get the result set
             ResultSet resultSet = statement.executeQuery();
             // Iterate over the result set and add each hotel to the list
@@ -119,6 +124,7 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
                 int starRating = resultSet.getInt("starRating");
                 Hotel hotel = new Hotel(name, zipCode, cityy, country, starRating);
                 hotels.add(hotel);
+                System.out.println(hotel.toString()+"postoji");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,38 +134,32 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
     }
 
     @Override
-    public List<Hotel> fetchHotels() {
-        List<Hotel> hotels = new ArrayList<>();
-        // Connect to the database
-        try (Connection connection = AbstractDao.getConnection()) {
-            // Prepare a statement to execute the query
-            String query = "SELECT * FROM HOTELS";
-            PreparedStatement statement = connection.prepareStatement(query);
-            // Execute the query and get the result set
-            ResultSet resultSet = statement.executeQuery();
+    public List<String> fetchHotelNames() {
+        List<String> result = new ArrayList<>();
+        String sql = "SELECT name FROM HOTELS";
+            try {
+                PreparedStatement stmt = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ResultSet resultSet = stmt.executeQuery();
             // Iterate over the result set and add each hotel to the list
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
-                int zipCode = resultSet.getInt("zipCode");
-                String cityy = resultSet.getString("city");
-                String country = resultSet.getString("country");
-                int starRating = resultSet.getInt("starRating");
-                Hotel hotel = new Hotel(name, zipCode, cityy, country, starRating);
-                hotels.add(hotel);
+                result.add(name);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // Return the list of hotels
-        return hotels;
+        // Return the list of hotel names
+        return result;
     }
 
     public int totalHotels() throws SQLException{
         int total = 0;
         String query = "SELECT count(id) AS total_hotels FROM HOTELS";
-        try (PreparedStatement st = AbstractDao.getConnection().prepareStatement(query)) {
-            ResultSet result = st.executeQuery();
+        try{
+            ResultSet result = getConnection().prepareStatement(query).executeQuery();
             if (result.next()) total = result.getInt("total_hotels");
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return total;
     }

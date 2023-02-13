@@ -9,18 +9,25 @@ import java.util.*;
 /**
  * Abstract class that implements core DAO CRUD methods for every entity
  *
+ * @param <T> the type parameter
  * @author Hana Mahmutović
  */
 public abstract class AbstractDao<T extends Idable> implements Dao<T>{
     private static Connection connection = null;
     private final String tableName;
 
+    /**
+     * Instantiates a new Abstract dao.
+     *
+     * @param tableName the table name
+     */
     public AbstractDao(String tableName) {
         this.tableName = tableName;
-        if(connection==null) createConnection();
+        createConnection();
     }
 
     private static void createConnection(){
+        System.out.println("kreirano");
         if(AbstractDao.connection==null) {
             try {
                 Properties p = new Properties();
@@ -43,31 +50,24 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
         }
     }
 
+    /**
+     * Get connection connection.
+     *
+     * @return the connection
+     */
     public static Connection getConnection(){
+
+        System.out.println("get");
         return AbstractDao.connection;
     }
 
-    /**
+    /*
      * For singleton pattern, we have only one connection on the database which will be closed automatically when our program ends
-     * But if we want to close connection manually, then we will call this method which should be called from finally block
      */
-
-    public static void closeConnection() {
-        System.out.println("pozvana metoda za zatvaranje konekcije");
-        if(connection!=null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                //throw new RuntimeException(e);
-                e.printStackTrace();
-                System.out.println("REMOVE CONNECTION METHOD ERROR: Unable to close connection on database");
-            }
-        }
-    }
-
 
     /**
      * Method for mapping ResultSet into Object
+     *
      * @param rs - result set from database
      * @return a Bean object for specific table
      * @throws HotelException in case of error with db
@@ -76,6 +76,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
 
     /**
      * Method for mapping Object into Map
+     *
      * @param object - a bean object for specific table
      * @return key, value sorted map of object
      */
@@ -115,6 +116,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
             int counter = 1;
             for (Map.Entry<String, Object> entry: row.entrySet()) {
                 if (entry.getKey().equals("id")) continue; // skip ID
+                System.out.println(entry.getValue());
                 stmt.setObject(counter, entry.getValue());
                 counter++;
             }
@@ -129,7 +131,6 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
             throw new HotelException(e.getMessage(), e);
         }
     }
-
     public T update(T item) throws HotelException{
         Map<String, Object> row = object2row(item);
         String updateColumns = prepareUpdateParts(row);
@@ -158,7 +159,8 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
 
     /**
      * Utility method for executing any kind of query
-     * @param query - SQL query
+     *
+     * @param query  - SQL query
      * @param params - params for query
      * @return List of objects from database
      * @throws HotelException in case of error with db
@@ -184,9 +186,10 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T>{
 
     /**
      * Utility for query execution that always return single record
-     * @param query - query that returns single record
+     *
+     * @param query  - query that returns single record
      * @param params - list of params for sql query
-     * @return Object
+     * @return Object t
      * @throws HotelException in case when object is not found
      */
     public T executeQueryUnique(String query, Object[] params) throws HotelException{

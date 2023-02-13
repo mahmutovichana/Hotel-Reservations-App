@@ -13,13 +13,42 @@ import java.util.Set;
  */
 public interface HotelDao extends Dao<Hotel>{
 
+    /**
+     * Gets by name.
+     *
+     * @param hotelName the hotel name
+     * @return the by name
+     */
     /* here we insert methods that are special only for that table, the implementation of it we do in SQL Impl file */
     int getByName(String hotelName);
 
+    /**
+     * Fetch cities set.
+     *
+     * @return the set
+     */
     Set<String> fetchCities();
 
+    /**
+     * Fetch hotels by city list.
+     *
+     * @param city the city
+     * @return the list
+     */
     List<Hotel> fetchHotelsByCity(String city);
-    List<Hotel> fetchHotels();
 
+    /**
+     * Fetch hotels list.
+     *
+     * @return the list
+     */
+    List<String> fetchHotelNames();
+
+    /**
+     * Total hotels int.
+     *
+     * @return the int
+     * @throws SQLException the sql exception
+     */
     int totalHotels() throws SQLException;
 }

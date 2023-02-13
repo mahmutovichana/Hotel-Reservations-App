@@ -1,6 +1,14 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.business.HotelManager;
+import ba.unsa.etf.rpr.business.ReservationManager;
+import ba.unsa.etf.rpr.business.RoomManager;
+import ba.unsa.etf.rpr.domain.Hotel;
+import ba.unsa.etf.rpr.domain.Reservation;
+import ba.unsa.etf.rpr.domain.Room;
 import ba.unsa.etf.rpr.domain.User;
+import ba.unsa.etf.rpr.exceptions.HotelException;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +16,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,27 +28,144 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.Date;
 
+/**
+ * The type List of reservations page controller.
+ */
 public class ListOfReservationsPageController {
 
+    /**
+     * The Root.
+     */
     public Pane root;
+    /**
+     * The About us button.
+     */
+    @FXML
     public Button aboutUsButton;
+
+    /**
+     * The Home button.
+     */
+    @FXML
+    public Button homeButton;
+
+    /**
+     * The Log out button.
+     */
+    @FXML
     public ImageView logOutButton;
+    /**
+     * The My profile button.
+     */
+    @FXML
     public Button myProfileButton;
+    /**
+     * The Close button.
+     */
     @FXML
     public Button closeButton;
 
     private User user;
+
+    /**
+     * Instantiates a new List of reservations page controller.
+     *
+     * @param u the u
+     */
     public ListOfReservationsPageController(User u){this.user=u;}
+
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
     @FXML
     public void setUser(User user) {
         this.user = user;
     }
+
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     @FXML
     public User getUser() {
         return user;
     }
+
+    /**
+     * The My reservations table.
+     */
+    @FXML
+    public TableView<Reservation> myReservationsTable;
+    /**
+     * The Room type column.
+     */
+    @FXML
+    public TableColumn<Room, String> roomTypeColumn;
+    /**
+     * The Check in column.
+     */
+    @FXML
+    public TableColumn<Reservation, Date> checkInColumn;
+    /**
+     * The Check out column.
+     */
+    @FXML
+    public TableColumn<Reservation, Date> checkOutColumn;
+    /**
+     * The Adults column.
+     */
+    @FXML
+    public TableColumn<Reservation, Integer> adultsColumn;
+    /**
+     * The Children column.
+     */
+    @FXML
+    public TableColumn<Reservation, Integer> childrenColumn;
+    /**
+     * The Total column.
+     */
+    @FXML
+    public TableColumn<Reservation, Integer> totalColumn;
+    /**
+     * The Hotel name column.
+     */
+    @FXML
+    public TableColumn<Hotel, String> hotelNameColumn;
+
+    private final ReservationManager r = new ReservationManager();
+    private final RoomManager rm = new RoomManager();
+    private final HotelManager h = new HotelManager();
+
+    /**
+     * Refresh table.
+     */
+    void refreshTable(){
+        try {
+            myReservationsTable.setItems(FXCollections.observableList(r.getAll()));
+            myReservationsTable.refresh();
+        } catch (HotelException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Initialize.
+     */
     public void initialize() {
+
+        roomTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        checkInColumn.setCellValueFactory(new PropertyValueFactory<>("checkIn"));
+        checkOutColumn.setCellValueFactory(new PropertyValueFactory<>("checkOut"));
+        adultsColumn.setCellValueFactory(new PropertyValueFactory<>("adults"));
+        childrenColumn.setCellValueFactory(new PropertyValueFactory<>("children"));
+        totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        hotelNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        refreshTable();
 
         logOutButton.setOnMouseClicked(event -> logOut());
 
@@ -52,6 +180,9 @@ public class ListOfReservationsPageController {
             // Open the about us page window
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/AboutUsPage.fxml"));
+                AboutUsPageController controller = new AboutUsPageController();
+                controller.setUser(user);
+                fxmlLoader.setController(controller);
                 Parent root = fxmlLoader.load();
                 Stage aboutUsStage = new Stage();
                 aboutUsStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
@@ -78,11 +209,33 @@ public class ListOfReservationsPageController {
                 MyProfilePageController controller = new MyProfilePageController(user);
                 fxmlLoader.setController(controller);
                 Parent root = fxmlLoader.load();
-
                 Scene scene = new Scene(root);
                 scene.setFill(Color.TRANSPARENT);
                 myProfileStage.setScene(scene);
                 myProfileStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        homeButton.setOnAction(event -> {
+            // Close the current window
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            stage.close();
+            // Open the about us page window
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/HomePage.fxml"));
+                HomePageController controller = new HomePageController();
+                controller.setUser(user);
+                fxmlLoader.setController(controller);
+                Parent root = fxmlLoader.load();
+                Stage stage2 = new Stage();
+                stage2.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+                stage2.initStyle(StageStyle.TRANSPARENT);
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                stage2.setScene(scene);
+                stage2.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }

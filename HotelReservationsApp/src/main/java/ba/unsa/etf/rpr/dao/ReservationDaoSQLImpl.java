@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 /**
  * MySQL Implementation of DAO
+ *
  * @author Hana Mahmutović
  */
 public class ReservationDaoSQLImpl extends AbstractDao<Reservation> implements ReservationDao {
@@ -21,10 +22,10 @@ public class ReservationDaoSQLImpl extends AbstractDao<Reservation> implements R
     }
 
     /**
+     * Get instance reservation dao sql.
+     *
+     * @return QuoteDaoSQLImpl We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton This method will call private constructor in instance==null and then return that instance
      * @author Hana Mahmutović
-     * @return QuoteDaoSQLImpl
-     * We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton
-     * This method will call private constructor in instance==null and then return that instance
      */
     public static ReservationDaoSQLImpl getInstance(){
         if(instance==null)
@@ -32,6 +33,9 @@ public class ReservationDaoSQLImpl extends AbstractDao<Reservation> implements R
         return instance;
     }
 
+    /**
+     * Remove instance.
+     */
     public static void removeInstance(){
         if(instance!=null)
             instance=null;
@@ -46,8 +50,8 @@ public class ReservationDaoSQLImpl extends AbstractDao<Reservation> implements R
             reservation.setChildren(rs.getInt("children"));
             reservation.setRoomId(DaoFactory.roomDao().getById(rs.getInt("room_id")));
             reservation.setUsername(DaoFactory.userDao().getById(rs.getInt("user_id")));
-            reservation.setCheckIn(rs.getDate("checkIn"));
-            reservation.setCheckOut(rs.getDate("checkOut"));
+            reservation.setCheckIn(rs.getDate("checkIn").toLocalDate());
+            reservation.setCheckOut(rs.getDate("checkOut").toLocalDate());
             reservation.setTotal(rs.getInt("total"));
             return reservation;
         } catch (Exception e) {
@@ -68,8 +72,8 @@ public class ReservationDaoSQLImpl extends AbstractDao<Reservation> implements R
         item.put("total",object.getTotal());
         item.put("checkIn",object.getCheckIn());
         item.put("checkOut",object.getCheckOut());
-        item.put("user_id", object.getId());
-        item.put("room_id",object.getRoomId());
+        item.put("user_id", object.getUsername().getId());
+        item.put("room_id",object.getRoomId().getId());
         return item;
     }
 

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="742.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="742.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: white; -fx-border-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <ImageView fitHeight="42.0" fitWidth="64.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../images/HanaAvisTransLogoBlue.png" />
     </ImageView>
@@ -30,7 +30,7 @@
          <Font name="System Bold" size="14.0" />
       </font>
    </Label>
-   <Pane layoutX="579.0" layoutY="-6.0" prefHeight="610.0" prefWidth="163.0" style="-fx-background-color: #19274F;">
+   <Pane layoutX="579.0" layoutY="-6.0" prefHeight="610.0" prefWidth="163.0" style="-fx-background-color: #19274F; -fx-background-radius: 20; -fx-border-radius: 20;">
       <Pane layoutX="8.0" layoutY="65.0" prefHeight="143.0" prefWidth="148.0" style="-fx-background-color: #233770; -fx-background-radius: 15;">
          <Label fx:id="welcomeLabel" layoutX="25.0" layoutY="20.0" prefHeight="104.0" prefWidth="98.0" style="-fx-text-fill: white;" text="Welcome + username" wrapText="true">
             <font>
@@ -70,63 +70,51 @@
       </padding>
       <Tab style="-fx-background-color: transparent;" text="Overview">
          <Pane prefHeight="377.0" prefWidth="539.0">
-            <Pane layoutX="10.0" layoutY="30.0" prefHeight="178.0" prefWidth="220.0" style="-fx-background-radius: 10; -fx-background-color: #EB6F66; -fx-opacity: 1;">
-               <Label ellipsisString="" layoutX="42.0" layoutY="20.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Income">
+            <Pane layoutX="16.0" layoutY="245.0" prefHeight="178.0" prefWidth="507.0" style="-fx-background-radius: 10; -fx-background-color: #EB6F66; -fx-opacity: 1;">
+               <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="-5.0" layoutY="20.0" prefHeight="32.0" prefWidth="518.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Income" textAlignment="CENTER">
                   <font>
                      <Font name="System Bold" size="22.0" />
                   </font>
                </Label>
-               <Label fx:id="totalIncome" alignment="CENTER" layoutX="-6.0" layoutY="89.0" prefHeight="31.0" prefWidth="234.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
+               <Label fx:id="totalIncome" alignment="CENTER" contentDisplay="CENTER" layoutX="-6.0" layoutY="58.0" prefHeight="104.0" prefWidth="520.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
                   <font>
                      <Font size="35.0" />
                   </font>
                </Label>
             </Pane>
-            <Pane layoutX="245.0" layoutY="30.0" prefHeight="178.0" prefWidth="130.0" style="-fx-background-radius: 10; -fx-background-color: #EB6F66; -fx-opacity: 1;">
-               <Label ellipsisString="" layoutX="8.0" prefHeight="87.0" prefWidth="114.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Hotels Registered" textAlignment="CENTER" wrapText="true">
+            <Pane layoutX="190.0" layoutY="30.0" prefHeight="178.0" prefWidth="160.0" style="-fx-background-radius: 10; -fx-background-color: #EB6F66; -fx-opacity: 1;">
+               <Label ellipsisString="" layoutX="-5.0" prefHeight="87.0" prefWidth="169.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Hotels Registered" textAlignment="CENTER" wrapText="true">
                   <font>
                      <Font name="System Bold" size="18.0" />
                   </font>
                </Label>
-               <Label fx:id="totalHotelsRegistered" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="90.0" prefHeight="45.0" prefWidth="140.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
+               <Label fx:id="totalHotelsRegistered" alignment="CENTER" contentDisplay="CENTER" layoutX="-5.0" layoutY="89.0" prefHeight="45.0" prefWidth="169.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
                   <font>
                      <Font size="30.0" />
                   </font>
                </Label>
             </Pane>
-            <Pane layoutX="390.0" layoutY="30.0" prefHeight="178.0" prefWidth="130.0" style="-fx-background-radius: 10; -fx-background-color: #FBC233; -fx-opacity: 1;">
-               <Label ellipsisString="" layoutX="8.0" prefHeight="87.0" prefWidth="114.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Rooms Registered" textAlignment="CENTER" wrapText="true">
+            <Pane layoutX="365.0" layoutY="30.0" prefHeight="178.0" prefWidth="160.0" style="-fx-background-radius: 10; -fx-background-color: #FBC233; -fx-opacity: 1;">
+               <Label ellipsisString="" layoutX="-1.0" prefHeight="87.0" prefWidth="163.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Rooms Registered" textAlignment="CENTER" wrapText="true">
                   <font>
                      <Font name="System Bold" size="18.0" />
                   </font>
                </Label>
-               <Label fx:id="totalRoomsRegistered" alignment="CENTER" layoutX="-4.0" layoutY="90.0" prefHeight="31.0" prefWidth="138.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
+               <Label fx:id="totalRoomsRegistered" alignment="CENTER" layoutX="-5.0" layoutY="89.0" prefHeight="45.0" prefWidth="169.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
                   <font>
                      <Font size="30.0" />
                   </font>
                </Label>
             </Pane>
-            <Pane layoutX="10.0" layoutY="245.0" prefHeight="180.0" prefWidth="269.0" style="-fx-background-radius: 10; -fx-background-color: #FBC233; -fx-opacity: 1;">
-               <Label ellipsisString="" layoutX="30.0" layoutY="30.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Most Reserved Hotel">
-                  <font>
-                     <Font name="System Bold" size="22.0" />
-                  </font>
-               </Label>
-               <Label fx:id="mostReservedHotel" layoutX="94.0" layoutY="78.0" text="naj hotel" textFill="WHITE">
-                  <font>
-                     <Font size="21.0" />
-                  </font>
-               </Label>
-            </Pane>
-            <Pane layoutX="293.0" layoutY="245.0" prefHeight="180.0" prefWidth="227.0" style="-fx-background-radius: 10; -fx-background-color: #EB6F66; -fx-opacity: 1;">
-               <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="-4.0" layoutY="20.0" prefHeight="27.0" prefWidth="234.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Users Registered" textAlignment="CENTER">
+            <Pane layoutX="14.0" layoutY="29.0" prefHeight="180.0" prefWidth="160.0" style="-fx-background-radius: 10; -fx-background-color: #FBC233; -fx-opacity: 1;">
+               <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="-4.0" layoutY="-3.0" prefHeight="87.0" prefWidth="171.0" style="-fx-text-fill: white; -fx-opacity: 1;" text="Total Users Registered" textAlignment="CENTER" wrapText="true">
                   <font>
                      <Font name="System Bold" size="18.0" />
                   </font>
                </Label>
-               <Label fx:id="totalUsersRegistered" alignment="CENTER" layoutX="-5.0" layoutY="75.0" prefHeight="51.0" prefWidth="236.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
+               <Label fx:id="totalUsersRegistered" alignment="CENTER" contentDisplay="CENTER" layoutX="-5.0" layoutY="89.0" prefHeight="51.0" prefWidth="171.0" text="puno para" textAlignment="CENTER" textFill="WHITE">
                   <font>
-                     <Font size="35.0" />
+                     <Font size="30.0" />
                   </font>
                </Label>
             </Pane>
@@ -154,7 +142,7 @@
                <TableColumn minWidth="50.0" prefWidth="50.0" text="Adults" />
                <TableColumn minWidth="50.0" prefWidth="60.0" text="Children" />
                <TableColumn minWidth="60.0" prefWidth="60.0" text="Room ID" />
-               <TableColumn minWidth="100.0" prefWidth="100.0" text="Username" />
+               <TableColumn minWidth="100.0" prefWidth="100.0" text="User" />
             </columns>
          </TableView>
       </Tab>
@@ -165,8 +153,8 @@
                   <TableColumn minWidth="100.0" prefWidth="120.0" text="Name" />
                   <TableColumn minWidth="70.0" prefWidth="70.0" text="Zip Code" />
                   <TableColumn minWidth="100.0" prefWidth="120.0" text="City" />
-                  <TableColumn minWidth="100.0" prefWidth="150.0" text="Country" />
-                  <TableColumn minWidth="80.0" text="Star Rating" />
+                  <TableColumn minWidth="100.0" prefWidth="137.0" text="Country" />
+                  <TableColumn minWidth="80.0" prefWidth="91.0" text="Star Rating" />
                </columns>
             </TableView>
             <Button fx:id="addHotelButton" layoutX="100.0" layoutY="385.0" mnemonicParsing="false" prefWidth="100.0" text="ADD" />
@@ -179,11 +167,12 @@
             <TableView fx:id="roomsTable" prefHeight="370.0" prefWidth="539.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" stylesheets="@../../stylesheets/styles.css">
                <columns>
                   <TableColumn minWidth="60.0" prefWidth="60.0" text="Room ID" />
-                  <TableColumn minWidth="50.0" prefWidth="50.0" text="Status" />
-                  <TableColumn minWidth="100.0" prefWidth="70.0" text="Type" />
-                  <TableColumn minWidth="60.0" prefWidth="50.0" text="Capacity" />
-                  <TableColumn minWidth="125.0" prefWidth="125.0" text="Has Air Conditioning" />
-                  <TableColumn minWidth="100.0" prefWidth="150.0" text="Hotel Name" />
+                  <TableColumn minWidth="50.0" prefWidth="50.0" text="Price" />
+                  <TableColumn minWidth="46.0" prefWidth="49.0" text="Status" />
+                  <TableColumn minWidth="58.0" prefWidth="58.0" text="Type" />
+                  <TableColumn minWidth="61.0" prefWidth="61.0" text="Capacity" />
+                  <TableColumn minWidth="100.0" prefWidth="133.0" text="Has Air Conditioning" />
+                  <TableColumn minWidth="89.0" prefWidth="127.0" text="Hotel Name" />
                </columns>
             </TableView>
             <Button fx:id="addRoomButton" layoutX="100.0" layoutY="385.0" mnemonicParsing="false" prefWidth="100.0" text="ADD" />
@@ -207,7 +196,7 @@
          <InnerShadow />
       </effect>
    </Label>
-   <Button id="closeButton" fx:id="closeButton" layoutX="705.0" minWidth="25.0" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@/stylesheets/styles.css" text="X">
+   <Button id="closeButton" fx:id="closeButton" layoutX="695.0" minWidth="25.0" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@/stylesheets/styles.css" text="X">
       <font>
          <Font name="Yu Gothic Bold" size="15.0" />
       </font>

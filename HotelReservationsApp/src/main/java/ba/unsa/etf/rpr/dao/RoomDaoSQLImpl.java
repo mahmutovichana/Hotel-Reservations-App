@@ -1,16 +1,19 @@
 package ba.unsa.etf.rpr.dao;
 
+import ba.unsa.etf.rpr.domain.Hotel;
 import ba.unsa.etf.rpr.domain.Room;
 import ba.unsa.etf.rpr.exceptions.HotelException;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
  * MySQL Implementation of DAO
+ *
  * @author Hana Mahmutović
  */
 public class RoomDaoSQLImpl extends AbstractDao<Room> implements RoomDao {
@@ -21,10 +24,10 @@ public class RoomDaoSQLImpl extends AbstractDao<Room> implements RoomDao {
     }
 
     /**
+     * Get instance room dao sql.
+     *
+     * @return QuoteDaoSQLImpl We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton This method will call private constructor in instance==null and then return that instance
      * @author Hana Mahmutović
-     * @return QuoteDaoSQLImpl
-     * We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton
-     * This method will call private constructor in instance==null and then return that instance
      */
     public static RoomDaoSQLImpl getInstance(){
         if(instance==null)
@@ -32,6 +35,9 @@ public class RoomDaoSQLImpl extends AbstractDao<Room> implements RoomDao {
         return instance;
     }
 
+    /**
+     * Remove instance.
+     */
     public static void removeInstance(){
         if(instance!=null)
             instance=null;
@@ -70,13 +76,26 @@ public class RoomDaoSQLImpl extends AbstractDao<Room> implements RoomDao {
         item.put("price", object.getPrice());
         return item;
     }
-    public int totalRooms() throws SQLException {
+    public int totalRooms(){
         int total = 0;
         String query = "SELECT count(id) AS total_rooms FROM ROOMS";
-        try (PreparedStatement st = AbstractDao.getConnection().prepareStatement(query)) {
-            ResultSet result = st.executeQuery();
+        try {
+            ResultSet result = getConnection().prepareStatement(query).executeQuery();
             if (result.next()) total = result.getInt("total_rooms");
+        }catch(SQLException e){
+            e.printStackTrace();
         }
         return total;
+    }
+
+    @Override
+    public List<Room> getByHotel(Hotel hotel) throws HotelException {
+        List<Room> roomsInHotel = new ArrayList<>();
+        for (Room room : getAll()) {
+            if (room.getHotelId().equals(hotel)) {
+                roomsInHotel.add(room);
+            }
+        }
+        return roomsInHotel;
     }
 }

@@ -56,6 +56,12 @@ public class HomePageController{
      */
     @FXML
     public Button myProfileButton;
+
+    /**
+     * The Reservations button.
+     */
+    @FXML
+    public Button reservationsButton;
     /**
      * The Welcome label.
      */
@@ -69,16 +75,25 @@ public class HomePageController{
 
     private final HotelManager h = new HotelManager();
 
+    private boolean isChildWindowOpen = false;
+
     private void openHotelListForCity(String city) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/homePage/HotelListPage.fxml"));
-            Parent root = loader.load();
-            HotelListController controller = loader.getController();
+            HotelListController controller = new HotelListController();
+            System.out.println("saljem u openHotelListForCity grad: "+city);
             controller.setCity(city);
             controller.setUser(user);
+            loader.setController(controller);
+            Parent root = loader.load();
             Stage stage = new Stage();
+            stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
             stage.setScene(new Scene(root));
+            System.out.println("cekam da udje u hotelListController");
+            //stage.setOnCloseRequest(event -> isChildWindowOpen = false);
             stage.show();
+            System.out.println("cekam...");
+            isChildWindowOpen = true;
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println(e.getMessage());
@@ -140,7 +155,9 @@ public class HomePageController{
             stackPane.getChildren().addAll(imageView, rect, cityName);
             stackPane.setAlignment(Pos.CENTER);
 
-            stackPane.setOnMouseClicked(event -> openHotelListForCity(city));
+            stackPane.setOnMouseClicked(event -> {System.out.println(city+"usla u ovo openHotel..");
+                openHotelListForCity(city);
+                });
             cityPane.add(stackPane, column, row);
             column++;
             if (column == 3) {
@@ -208,6 +225,9 @@ public class HomePageController{
             // Open the about us page window
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/AboutUsPage.fxml"));
+                AboutUsPageController controller = new AboutUsPageController();
+                controller.setUser(user);
+                fxmlLoader.setController(controller);
                 Parent root = fxmlLoader.load();
                 Stage aboutUsStage = new Stage();
                 aboutUsStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
@@ -234,7 +254,6 @@ public class HomePageController{
                 MyProfilePageController controller = new MyProfilePageController(user);
                 fxmlLoader.setController(controller);
                 Parent root = fxmlLoader.load();
-
                 Scene scene = new Scene(root);
                 scene.setFill(Color.TRANSPARENT);
                 myProfileStage.setScene(scene);
@@ -242,7 +261,31 @@ public class HomePageController{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });}
+        });
+
+        reservationsButton.setOnAction(event -> {
+            // Close the current window
+            Stage stage = (Stage) reservationsButton.getScene().getWindow();
+            stage.close();
+            // Open the "my reservations" page window
+            try {
+                Stage reservationsStage = new Stage();
+                reservationsStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+                reservationsStage.initStyle(StageStyle.TRANSPARENT);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/ListOfReservationsPage.fxml"));
+                ListOfReservationsPageController controller = new ListOfReservationsPageController(user);
+                fxmlLoader.setController(controller);
+                Parent root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                reservationsStage.setScene(scene);
+                reservationsStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+    }
 
         private void logOut() {
         // Close the current window

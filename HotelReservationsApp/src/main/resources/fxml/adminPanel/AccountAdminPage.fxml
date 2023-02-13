@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="742.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: white; -fx-border-color: white;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="742.0" style="-fx-border-radius: 30; -fx-background-radius: 20; -fx-background-color: white; -fx-border-color: white;" stylesheets="/stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <ImageView fitHeight="42.0" fitWidth="64.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../../images/HanaAvisTransLogoBlue.png" />
    </ImageView>
@@ -24,7 +24,7 @@
          <Font name="System Bold" size="14.0" />
       </font>
    </Label>
-   <Pane layoutX="579.0" layoutY="-6.0" prefHeight="610.0" prefWidth="163.0" style="-fx-background-color: #19274F;">
+   <Pane layoutX="579.0" layoutY="-6.0" prefHeight="610.0" prefWidth="163.0" style="-fx-background-color: #19274F; -fx-background-radius: 20; -fx-border-radius: 20;">
       <Pane layoutX="8.0" layoutY="65.0" prefHeight="143.0" prefWidth="148.0" style="-fx-background-color: #233770; -fx-background-radius: 15;">
          <Label fx:id="myAccountLabel" layoutX="25.0" layoutY="20.0" prefHeight="104.0" prefWidth="98.0" style="-fx-text-fill: white;" text="My account" textAlignment="CENTER" wrapText="true">
             <font>
@@ -50,7 +50,7 @@
          <Image url="@../../images/logOutIcon.png" />
       </ImageView>
    </Pane>
-   <Button layoutX="425.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" text="Home" />
+   <Button fx:id="homeButton" layoutX="425.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" text="Home" />
    <Button id="adminButtons" layoutX="489.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #0A1A3B;" styleClass="adminButton" stylesheets="@../../stylesheets/styles.css" text="Account" />
    <Label layoutX="10.0" layoutY="70.0" style="-fx-text-fill: #18254B;" text="MEET YOU THERE" textAlignment="CENTER" wrapText="true">
       <font>
@@ -60,7 +60,7 @@
          <InnerShadow />
       </effect>
    </Label>
-   <Button id="closeButton" fx:id="closeButton" layoutX="705.0" minWidth="25.0" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@/stylesheets/styles.css" text="X">
+   <Button id="closeButton" fx:id="closeButton" alignment="CENTER" layoutX="695.0" minWidth="38.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="38.0" style="-fx-background-color: transparent;" stylesheets="@/stylesheets/styles.css" text="X" textAlignment="CENTER">
       <font>
          <Font name="Yu Gothic Bold" size="15.0" />
       </font>
@@ -89,22 +89,22 @@
          <Font size="16.0" />
       </font>
    </Label>
-   <Label layoutX="200.0" layoutY="220.0" text="Label">
+   <Label fx:id="nameField" layoutX="200.0" layoutY="220.0" text="Label">
       <font>
          <Font size="18.0" />
       </font>
    </Label>
-   <Label layoutX="200.0" layoutY="280.0" text="Label">
+   <Label fx:id="surnameField" layoutX="200.0" layoutY="280.0" text="Label">
       <font>
          <Font size="18.0" />
       </font>
    </Label>
-   <Label layoutX="200.0" layoutY="340.0" text="Label">
+   <Label fx:id="usernameField" layoutX="200.0" layoutY="340.0" text="Label">
       <font>
          <Font size="18.0" />
       </font>
    </Label>
-   <Label layoutX="200.0" layoutY="400.0" text="Label">
+   <Label fx:id="emailField" layoutX="200.0" layoutY="400.0" text="Label">
       <font>
          <Font size="18.0" />
       </font>

@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="569.0" prefWidth="859.0" stylesheets="@../../stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.AboutUsPageController">
+<Pane prefHeight="569.0" prefWidth="859.0" stylesheets="@../../stylesheets/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <Pane pickOnBounds="false" snapToPixel="false" style="-fx-border-color: transparent; -fx-background-color: transparent;">
       <ImageView fitHeight="628.0" fitWidth="928.0" layoutX="-54.0" layoutY="-16.0" pickOnBounds="true">
          <Image url="@../../images/shapeBackground.jpg" />
@@ -70,7 +70,8 @@
       <ImageView fitHeight="194.0" fitWidth="219.0" layoutX="517.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../../images/womanMob.png" />
       </ImageView>
-   </Pane><ImageView fx:id="goBack" fitHeight="38.0" fitWidth="213.0" preserveRatio="true">
+   </Pane>
+   <ImageView fx:id="goBack" fitHeight="38.0" fitWidth="213.0" preserveRatio="true">
    <effect>
       <ColorAdjust brightness="1.0" contrast="-1.0" hue="-0.41" saturation="-1.0" />
    </effect>

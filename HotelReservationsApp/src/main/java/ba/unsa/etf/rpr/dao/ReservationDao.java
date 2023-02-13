@@ -11,6 +11,12 @@ import java.sql.SQLException;
  */
 public interface ReservationDao extends Dao<Reservation> {
 
+    /**
+     * Total income int.
+     *
+     * @return the int
+     * @throws SQLException the sql exception
+     */
     /* here we insert methods that are special only for that table, the implementation of it we do in SQL Impl file */
     public int totalIncome() throws SQLException;
 }

@@ -10,6 +10,9 @@ import org.apache.commons.cli.*;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * The type App.
+ */
 public class App {
     private static final Option addHotel = new Option("ah", "add-hotel", false, "Adding new hotel to hotel booking database");
     private static final Option addRoom = new Option("ar", "add-room", false, "Adding new room to a hotel in the hotel booking database");
@@ -32,6 +35,11 @@ public class App {
     private static final Option roomHotelID = new Option(null, "room-hotel-id", false, "Defining the owner of the room in terms of hotels for the next operation");
     private static final Option roomID = new Option(null, "room-id", false, "Defining the room number for the next operation");
 
+    /**
+     * Print formatted options.
+     *
+     * @param options the options
+     */
     public static void printFormattedOptions(Options options) {
         HelpFormatter helpFormatter = new HelpFormatter();
         PrintWriter printWriter = new PrintWriter(System.out);
@@ -40,6 +48,11 @@ public class App {
         printWriter.close();
     }
 
+    /**
+     * Add options options.
+     *
+     * @return the options
+     */
     public static Options addOptions() {
         Options options = new Options();
         options.addOption(addHotel);
@@ -65,18 +78,37 @@ public class App {
         return options;
     }
 
+    /**
+     * Search through hotels hotel.
+     *
+     * @param listOfHotels the list of hotels
+     * @param hotelName    the hotel name
+     * @return the hotel
+     */
     public static Hotel searchThroughHotels(List<Hotel> listOfHotels, String hotelName) {
         Hotel hotel;
         hotel = listOfHotels.stream().filter(h -> h.getName().equalsIgnoreCase(hotelName)).findAny().orElse(null);
         return hotel;
     }
 
+    /**
+     * Search through rooms room.
+     *
+     * @param listOfRooms the list of rooms
+     * @param roomNumber  the room number
+     * @return the room
+     */
     public static Room searchThroughRooms(List<Room> listOfRooms, int roomNumber) {
         Room room;
         room = listOfRooms.stream().filter(r -> r.getId() == roomNumber).findAny().orElse(null);
         return room;
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         CommandLineParser commandLineParser = new DefaultParser();
         Options options = addOptions();

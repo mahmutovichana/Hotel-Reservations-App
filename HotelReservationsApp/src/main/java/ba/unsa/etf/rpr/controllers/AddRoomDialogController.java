@@ -1,22 +1,25 @@
 package ba.unsa.etf.rpr.controllers;
 
-import ba.unsa.etf.rpr.business.RoomManager;
-import ba.unsa.etf.rpr.dao.DaoFactory;
+import ba.unsa.etf.rpr.business.HotelManager;
 import ba.unsa.etf.rpr.domain.Hotel;
 import ba.unsa.etf.rpr.domain.Room;
 import ba.unsa.etf.rpr.exceptions.HotelException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.util.List;
 
+/**
+ * The type Add room dialog controller.
+ */
 public class AddRoomDialogController {
 
-    private final RoomManager rm = new RoomManager();
-    @FXML
-    private ComboBox<String> typeBox = new ComboBox<>();
+
+    /**
+     * The Type combo box.
+     */
+    public ComboBox typeComboBox;
     @FXML
     private TextField capacityField;
     @FXML
@@ -27,28 +30,63 @@ public class AddRoomDialogController {
     private TextField priceField;
     @FXML
     private ComboBox<String> hotelComboBox;
-    @FXML
-    private Button saveButton;
-    @FXML
-    private Button cancelButton;
+    /**
+     * The Save button.
+     */
+    public Button saveButton;
+    /**
+     * The Cancel button.
+     */
+    public Button cancelButton;
 
     private Room room = new Room();
 
+    /**
+     * Instantiates a new Add room dialog controller.
+     *
+     * @throws HotelException the hotel exception
+     */
+    public AddRoomDialogController() throws HotelException {
+    }
+
+    /**
+     * Gets room.
+     *
+     * @return the room
+     */
     public Room getRoom() {
         return room;
     }
+
+    /**
+     * Sets room.
+     *
+     * @param r the r
+     */
     public void setRoom(Room r) {
         this.room = r;
     }
 
-    private final boolean okClicked = false;
+    private boolean okClicked = false;
 
+    /**
+     * Is ok clicked boolean.
+     *
+     * @return the boolean
+     */
     public boolean isOkClicked() {
         return okClicked;
     }
 
-    List<Hotel> hotelList = DaoFactory.hotelDao().fetchHotels();
+    private final HotelManager h = new HotelManager();
+    /**
+     * The Hotel list.
+     */
+    List<Hotel> hotelList = h.getAll();
 
+    /**
+     * Sets hotel list.
+     */
     public void setHotelList() {
         hotelComboBox.getItems().clear();
         for (Hotel hotel : hotelList) {
@@ -56,6 +94,9 @@ public class AddRoomDialogController {
         }
     }
 
+    /**
+     * Initialize.
+     */
     @FXML
     public void initialize() {
 
@@ -63,38 +104,38 @@ public class AddRoomDialogController {
         yesRadioButton.setToggleGroup(toggleGroup);
         noRadioButton.setToggleGroup(toggleGroup);
 
-        // Call the setHotelList method
+        // get the list of hotels to choose from to set the room owner
         setHotelList();
     }
 
-
+    /**
+     * Save room.
+     */
     @FXML
-    public void saveRoom(ActionEvent actionEvent) throws HotelException {
-        String type = typeBox.getValue();
-        int capacity = Integer.parseInt(capacityField.getText());
-        int hasAirConditioning;
-        if(yesRadioButton.isSelected()) hasAirConditioning=1; else hasAirConditioning=0;
-        int price = Integer.parseInt(priceField.getText());
+    public void saveRoom(){
+        room.setType((String) typeComboBox.getValue());
+        room.setPrice(Integer.parseInt(priceField.getText()));
+        room.setCapacity(Integer.parseInt(capacityField.getText()));
+        room.setHasAirConditioning(yesRadioButton.isSelected() ? 1 : 0);
+        room.setStatus(1);
         String selectedHotelName = hotelComboBox.getValue();
-        Hotel selectedHotel = null;
-        for (Hotel hotel : hotelList) {
-            if (hotel.getName().equals(selectedHotelName)) {
-                selectedHotel = hotel;
-                break;
-            }
-        }
-        room = new Room(type, capacity, hasAirConditioning, 1, selectedHotel, price);
-        rm.add(room);
+        Hotel selectedHotel = hotelList.stream()
+                .filter(hotel -> hotel.getName().equals(selectedHotelName))
+                .findFirst()
+                .orElse(null);
+        room.setHotelId(selectedHotel);
+        System.out.println(typeComboBox.getValue());
+        System.out.println(room.toString());
+        okClicked = true;
         // close the dialog
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.close();
+        ((Stage) saveButton.getScene().getWindow()).close();
     }
 
+    /**
+     * Cancel room.
+     */
     @FXML
     public void cancelRoom() {
-        room = null;
-        // close the dialog
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 }

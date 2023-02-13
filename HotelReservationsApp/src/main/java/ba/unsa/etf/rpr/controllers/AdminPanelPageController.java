@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.business.HotelManager;
+import ba.unsa.etf.rpr.business.ReservationManager;
 import ba.unsa.etf.rpr.business.RoomManager;
 import ba.unsa.etf.rpr.business.UserManager;
 import ba.unsa.etf.rpr.dao.Dao;
@@ -10,8 +11,6 @@ import ba.unsa.etf.rpr.domain.Reservation;
 import ba.unsa.etf.rpr.domain.Room;
 import ba.unsa.etf.rpr.domain.User;
 import ba.unsa.etf.rpr.exceptions.HotelException;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,41 +33,88 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * The type Admin panel page controller.
+ */
 public class AdminPanelPageController {
 
+    /**
+     * Instantiates a new Admin panel page controller.
+     */
+    public AdminPanelPageController(){}
+
+    /**
+     * The Total users registered.
+     */
     @FXML
     public Label totalUsersRegistered;
+    /**
+     * The Total hotels registered.
+     */
     @FXML
     public Label totalHotelsRegistered;
+    /**
+     * The Total rooms registered.
+     */
     @FXML
     public Label totalRoomsRegistered;
+    /**
+     * The Total income.
+     */
     @FXML
     public Label totalIncome;
-    @FXML
-    public Label mostReservedHotel;
 
-    public Button homeButton;
+    //public Button homeButton;
+    /**
+     * The My profile button.
+     */
     @FXML
     public Button myProfileButton;
+    /**
+     * The Welcome label.
+     */
     @FXML
     public Label welcomeLabel;
+    /**
+     * The Username label.
+     */
     @FXML
     public Label usernameLabel;
+    /**
+     * The Log out button.
+     */
     @FXML
     public ImageView logOutButton;
+    /**
+     * The Users table.
+     */
     public TableView<User> usersTable;
+    /**
+     * The Reservations table.
+     */
     public TableView<Reservation> reservationsTable;
+    /**
+     * The Hotels table.
+     */
     public TableView<Hotel> hotelsTable;
+    /**
+     * The Rooms table.
+     */
     public TableView<Room> roomsTable;
     @FXML
     private Label randomQuote;
-    private final String[] quotes = { "Today's the day, let's make it count!",
+
+    private final ReservationManager r = new ReservationManager();
+    private final HotelManager h = new HotelManager();
+    private final RoomManager rm = new RoomManager();
+    private final UserManager u = new UserManager();
+    private final String[] quotes = {
+            "Today's the day, let's make it count!",
             "Another day, another opportunity to shine!",
             "What about turning our goals into reality today?",
             "Dream big, work hard",
@@ -83,16 +129,34 @@ public class AdminPanelPageController {
             "Let's turn today into a masterpiece",
             "Let's make today unforgettable",
             "Let's make today a day to remember" };
+    /**
+     * The Add hotel button.
+     */
     @FXML
     public Button addHotelButton;
+    /**
+     * The Delete hotel button.
+     */
     @FXML
     public Button deleteHotelButton;
+    /**
+     * The Update hotel button.
+     */
     @FXML
     public Button updateHotelButton;
+    /**
+     * The Add room button.
+     */
     @FXML
     public Button addRoomButton;
+    /**
+     * The Delete room button.
+     */
     @FXML
     public Button deleteRoomButton;
+    /**
+     * The Update room button.
+     */
     @FXML
     public Button updateRoomButton;
     @FXML
@@ -100,21 +164,30 @@ public class AdminPanelPageController {
     @FXML
     private Button closeButton;
 
-    HotelManager h = new HotelManager();
-
-    RoomManager r = new RoomManager();
-
-    UserManager u = new UserManager();
-
+    /**
+     * Instantiates a new Admin panel page controller.
+     *
+     * @param finalUser the final user
+     */
     public AdminPanelPageController(User finalUser){
         this.user = finalUser;
     }
 
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
     @FXML
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     @FXML
     public User getUser() {
         return user;
@@ -129,10 +202,10 @@ public class AdminPanelPageController {
         daoMap.put(Reservation.class, DaoFactory.reservationDao());
 
         // Use the Map to get the correct DAO for the desired object type
-        Dao<T> dao = (Dao<T>) daoMap.get(type);
+        Dao<?> dao = daoMap.get(type);
 
         // Retrieve the data from the database using the DAO
-        List<T> dataList = dao.getAll();
+        List<T> dataList = (List<T>) dao.getAll();
         return FXCollections.observableArrayList(dataList);
     }
 
@@ -146,7 +219,8 @@ public class AdminPanelPageController {
             myProfileStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
             myProfileStage.initStyle(StageStyle.TRANSPARENT);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/adminPanel/AccountAdminPage.fxml"));
-            AccountAdminPageController controller = new AccountAdminPageController(user);
+            AccountAdminPageController controller = new AccountAdminPageController();
+            controller.setUser(user);
             fxmlLoader.setController(controller);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
@@ -164,38 +238,60 @@ public class AdminPanelPageController {
         private final Class type;
         private final String[] columns;
 
+        /**
+         * Instantiates a new Table column pair.
+         *
+         * @param table   the table
+         * @param type    the type
+         * @param columns the columns
+         */
         public TableColumnPair(TableView table, Class type, String... columns) {
             this.table = table;
             this.type = type;
             this.columns = columns;
         }
+
+        /**
+         * Gets table.
+         *
+         * @return the table
+         */
         public TableView getTable() {
             return table;
         }
+
+        /**
+         * Gets type.
+         *
+         * @return the type
+         */
         public Class getType() {
             return type;
         }
+
+        /**
+         * Get columns string [ ].
+         *
+         * @return the string [ ]
+         */
         public String[] getColumns() {
             return columns;
         }
     }
 
+    /**
+     * Initialize.
+     *
+     * @throws HotelException the hotel exception
+     * @throws SQLException   the sql exception
+     */
     @FXML
     public void initialize() throws HotelException, SQLException {
 
-        int result = DaoFactory.reservationDao().totalIncome();
-        totalIncome.setText(result +" $");
-
-        //mostReservedHotel.setText(bestHotel);
-
-        int totalHotels = DaoFactory.hotelDao().totalHotels();
-        totalHotelsRegistered.setText(String.valueOf(totalHotels));
-
-        int totalRooms = DaoFactory.roomDao().totalRooms();
-        totalRoomsRegistered.setText(String.valueOf(totalRooms));
-
-        int totalUsers = DaoFactory.userDao().totalUsers();
-        totalUsersRegistered.setText(String.valueOf(totalUsers));
+        totalIncome.setText(r.totalIncome() +" $");
+        totalHotelsRegistered.setText(String.valueOf(h.totalHotels()));
+        totalRoomsRegistered.setText(String.valueOf(rm.totalRooms()));
+        totalUsersRegistered.setText(String.valueOf(u.totalUsers()));
 
         usernameLabel.setText(user.getUsername());
 
@@ -215,9 +311,8 @@ public class AdminPanelPageController {
         tables.add(new TableColumnPair(usersTable, User.class, "firstName", "lastName", "username", "email"));
         tables.add(new TableColumnPair(reservationsTable, Reservation.class, "id", "checkIn", "checkOut", "total", "adults", "children", "roomId", "username"));
         tables.add(new TableColumnPair(hotelsTable, Hotel.class, "name", "zipCode", "city", "country", "starRating"));
-        tables.add(new TableColumnPair(roomsTable, Room.class, "id", "status", "type", "capacity", "hasAirConditioning", "hotelId"));
+        tables.add(new TableColumnPair(roomsTable, Room.class, "id", "price", "status", "type", "capacity", "hasAirConditioning", "hotelId"));
         // Add more tables and columns as needed
-
 
         for (TableColumnPair pair : tables) {
             TableView table = pair.getTable();
@@ -229,20 +324,7 @@ public class AdminPanelPageController {
 
             for (int i = 0; i < table.getColumns().size(); i++) {
                 TableColumn tableColumn = (TableColumn) table.getColumns().get(i);
-
-                if (columns[i].equals("name") && type.equals(Room.class)) {
-                    tableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Room, String>, ObservableValue<String>>() {
-                        @Override
-                        public ObservableValue<String> call(TableColumn.CellDataFeatures<Room, String> cellData) {
-                            Room room = cellData.getValue();
-                            Hotel hotel = room.getHotelId();
-                            String hotelName = hotel.getName();
-                            return new SimpleStringProperty(hotelName);
-                        }
-                    });
-                } else {
-                    tableColumn.setCellValueFactory(new PropertyValueFactory<>(columns[i]));
-                }
+                tableColumn.setCellValueFactory(new PropertyValueFactory<>(columns[i]));
             }
         }
 
@@ -261,6 +343,7 @@ public class AdminPanelPageController {
         deleteHotelButton.setOnAction(this::handleDeleteHotel);
 
         addRoomButton.setOnMouseClicked(this::handleAddRoom);
+        updateRoomButton.setOnMouseClicked(this::handleUpdateRoom);
         deleteRoomButton.setOnAction(this::handleDeleteRoom);
 
         myProfileButton.setOnAction(this::handleAccount);
@@ -270,15 +353,12 @@ public class AdminPanelPageController {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     @FXML
-    private void closeButtonMouseExited(MouseEvent mouseEvent) {
-        closeButton.getStyleClass().remove("closeButtonWhenHovered");
-    }
+    private void closeButtonMouseExited(MouseEvent mouseEvent){ closeButton.getStyleClass().remove("closeButtonWhenHovered"); }
     @FXML
     private void closeButtonMouseEntered(MouseEvent mouseEvent) {
         closeButton.getStyleClass().add("closeButtonStyle");
         closeButton.getStyleClass().add("closeButtonWhenHovered");
     }
-
     private void logOut() {
         // Close the current window
         Stage stage = (Stage) logOutButton.getScene().getWindow();
@@ -316,8 +396,7 @@ public class AdminPanelPageController {
             if (controller.isOkClicked()) {
                 h.add(hotel);
                 hotelsTable.setItems(getData(Hotel.class));
-                int totalHotels = DaoFactory.hotelDao().totalHotels();
-                totalHotelsRegistered.setText(String.valueOf(totalHotels));
+                totalHotelsRegistered.setText(String.valueOf(h.totalHotels()));
             }
         } catch (IOException | HotelException e) {
             e.printStackTrace();
@@ -339,17 +418,13 @@ public class AdminPanelPageController {
             dialogStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
             Hotel hotel = new Hotel();
             controller.setHotel(hotel);
-
             dialogStage.showAndWait();
-
             if (controller.isOkClicked()) {
                 h.update(hotel);
                 hotelsTable.setItems(getData(Hotel.class));
-                int totalHotels = DaoFactory.hotelDao().totalHotels();
-                totalHotelsRegistered.setText(String.valueOf(totalHotels));
+                totalHotelsRegistered.setText(String.valueOf(h.totalHotels()));
             }
         } catch (IOException | HotelException e) {
             e.printStackTrace();
@@ -372,16 +447,12 @@ public class AdminPanelPageController {
             dialogStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
-            controller.setHotels(DaoFactory.hotelDao().getAll());
-
+            controller.setHotels(h.getAll());
             dialogStage.showAndWait();
-
             if (controller.isOkClicked()) {
                 h.delete(controller.getSelectedHotel().getId());
                 hotelsTable.setItems(getData(Hotel.class));
-                int totalHotels = DaoFactory.hotelDao().totalHotels();
-                totalHotelsRegistered.setText(String.valueOf(totalHotels));
+                totalHotelsRegistered.setText(String.valueOf(h.totalHotels()));
             }
         } catch (IOException | HotelException e) {
             e.printStackTrace();
@@ -406,11 +477,10 @@ public class AdminPanelPageController {
             Room room = new Room();
             controller.setRoom(room);
             dialogStage.showAndWait();
-            if (controller.isOkClicked()) {
-                r.add(room);
+            if (controller.isOkClicked()){
+                rm.add(room);
                 roomsTable.setItems(getData(Room.class));
-                int totalRooms = DaoFactory.roomDao().totalRooms();
-                totalRoomsRegistered.setText(String.valueOf(totalRooms));
+                totalRoomsRegistered.setText(String.valueOf(rm.totalRooms()));
             }
         } catch (IOException | HotelException e) {
             e.printStackTrace();
@@ -426,19 +496,18 @@ public class AdminPanelPageController {
             GridPane page = loader.load();
             DeleteRoomDialogController controller = loader.getController();
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Delete Hotel");
+            dialogStage.setTitle("Delete Room");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(roomsTable.getScene().getWindow());
             dialogStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-            controller.setRooms(r.getAll());
+            controller.setRooms(rm.getAll());
             dialogStage.showAndWait();
             if (controller.isOkClicked()) {
-                r.delete(controller.getSelectedRoom().getId());
+                rm.delete(controller.getSelectedRoom().getId());
                 roomsTable.setItems(getData(Room.class));
-                int totalRooms = DaoFactory.roomDao().totalRooms();
-                totalRoomsRegistered.setText(String.valueOf(totalRooms));
+                totalRoomsRegistered.setText(String.valueOf(rm.totalRooms()));
             }
         } catch (IOException | HotelException e) {
             e.printStackTrace();
@@ -447,5 +516,30 @@ public class AdminPanelPageController {
         }
     }
 
-
+    private void handleUpdateRoom(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/adminPanel/UpdateRoomDialog.fxml"));
+            GridPane page = loader.load();
+            UpdateRoomController controller = loader.getController();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Update Room");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(roomsTable.getScene().getWindow());
+            dialogStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            Room room = new Room();
+            controller.setRoom(room);
+            dialogStage.showAndWait();
+            if (controller.isOkClicked()) {
+                roomsTable.setItems(getData(Room.class));
+                totalRoomsRegistered.setText(String.valueOf(rm.totalRooms()));
+            }
+        } catch (IOException | HotelException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

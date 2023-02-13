@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -32,19 +33,37 @@ import java.util.Objects;
  *
  * @author Hana Mahmutović
  */
-
 public class SignInController {
+    /**
+     * The Username field.
+     */
     public TextField usernameField;
+    /**
+     * The Password field.
+     */
     public PasswordField passwordField;
+    /**
+     * The Sign in button.
+     */
     public Button signInButton;
+    /**
+     * The Bad username in.
+     */
     @FXML
     public Label badUsernameIN;
+    /**
+     * The Bad password in.
+     */
     @FXML
     public Label badPasswordIN;
+    /**
+     * The Error label.
+     */
     @FXML
     public Label errorLabel;
 
     private final UserManager u = new UserManager();
+
     /**
      * This method is called by the JavaFX framework when the FXML file is loaded.
      * It is used to set up the controller and initialize any instance variables or UI elements.
@@ -64,9 +83,8 @@ public class SignInController {
     /**
      * This method is called when the user presses the Enter key while the focus is on the username field.
      * It sets the focus on the password field.
-     * @param event an ActionEvent object that represents the action event that caused the method to be called.
-     *      *                It contains information about the event, such as the source of the event and the type of event.
-     *      *                In this case, the event is triggered by the user pressing the Enter key in the username field.
+     *
+     * @param event an ActionEvent object that represents the action event that caused the method to be called.      *                It contains information about the event, such as the source of the event and the type of event.      *                In this case, the event is triggered by the user pressing the Enter key in the username field.
      */
     @FXML
     public void moveToNextTextField(ActionEvent event) {
@@ -76,9 +94,8 @@ public class SignInController {
     /**
      * This method is called when the user presses the Enter key while the focus is on the password field.
      * It enables and shows the sign-in button and fires a click event on it.
-     * @param event an ActionEvent object that represents the action event that caused the method to be called.
-     *                It contains information about the event, such as the source of the event and the type of event.
-     *                In this case, the event is triggered by the user pressing the Enter key in the password field.
+     *
+     * @param event an ActionEvent object that represents the action event that caused the method to be called.                It contains information about the event, such as the source of the event and the type of event.                In this case, the event is triggered by the user pressing the Enter key in the password field.
      */
     @FXML // currently not working as expected but will fix it later
     public void moveToTheSignIn(ActionEvent event){
@@ -168,14 +185,18 @@ public class SignInController {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
                 // Create the new window
                 Stage stage = new Stage();
+                stage.setResizable(false);
                 stage.setTitle("Admin Panel");
                 stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/adminPanel/AdminPanelPage.fxml"));
                     AdminPanelPageController controller = new AdminPanelPageController(finalUser);
-                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.initStyle(StageStyle.TRANSPARENT);
                     fxmlLoader.setController(controller);
-                    stage.setScene(new Scene(fxmlLoader.load()));
+                    Parent root = fxmlLoader.load();
+                    Scene scene = new Scene(root);
+                    scene.setFill(Color.TRANSPARENT);
+                    stage.setScene(scene);
                 } catch (IOException e) {
                     e.printStackTrace();
                     throw new RuntimeException(e);

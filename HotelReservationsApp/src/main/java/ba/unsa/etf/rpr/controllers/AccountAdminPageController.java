@@ -18,52 +18,98 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
+/**
+ * The type Account admin page controller.
+ */
 public class AccountAdminPageController {
+    /**
+     * The Home button.
+     */
     @FXML
     public Button homeButton;
+    /**
+     * The Close button.
+     */
     @FXML
     public Button closeButton;
 
+    /**
+     * The Log out button.
+     */
     @FXML
     public ImageView logOutButton;
+    /**
+     * The Name field.
+     */
     @FXML
     public Label nameField = new Label();
+    /**
+     * The Surname field.
+     */
     @FXML
     public Label surnameField = new Label();
+    /**
+     * The Username field.
+     */
     @FXML
     public Label usernameField = new Label();
+    /**
+     * The Email field.
+     */
     @FXML
     public Label emailField = new Label();
+
     private User user;
 
+    /**
+     * Instantiates a new Account admin page controller.
+     *
+     * @param u the u
+     */
     public AccountAdminPageController(User u){
         this.user = u;
     }
+
+    /**
+     * Instantiates a new Account admin page controller.
+     */
+    public AccountAdminPageController(){}
 
     @FXML
     private void closeButtonAction(ActionEvent event) {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     @FXML
-    private void closeButtonMouseExited(MouseEvent mouseEvent) {
-        closeButton.getStyleClass().remove("closeButtonWhenHovered");
-    }
+    private void closeButtonMouseExited(MouseEvent mouseEvent){ closeButton.getStyleClass().remove("closeButtonWhenHovered"); }
     @FXML
     private void closeButtonMouseEntered(MouseEvent mouseEvent) {
         closeButton.getStyleClass().add("closeButtonStyle");
         closeButton.getStyleClass().add("closeButtonWhenHovered");
     }
 
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
     @FXML
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     @FXML
     public User getUser() {
         return user;
     }
 
+    /**
+     * Initialize.
+     */
     public void initialize() {
 
         nameField.setText(user.getFirstName());
@@ -71,15 +117,20 @@ public class AccountAdminPageController {
         emailField.setText(user.getEmail());
         usernameField.setText(user.getUsername());
 
-        logOutButton.setOnMouseClicked(event -> logOut());
-        homeButton.setOnMouseClicked(event -> handleHome());
+        logOutButton.setOnMouseClicked(this::logOut);
+        homeButton.setOnMouseClicked(this::handleHome);
 
         closeButton.setOnAction(this::closeButtonAction);
         closeButton.setOnMouseEntered(this::closeButtonMouseEntered);
         closeButton.setOnMouseExited(this::closeButtonMouseExited);
     }
 
-    private void handleHome() {
+    /**
+     * Handle home.
+     *
+     * @param mouseEvent the mouse event
+     */
+    public void handleHome(MouseEvent mouseEvent) {
         // Close the current window
         Stage stage = (Stage) homeButton.getScene().getWindow();
         stage.close();
@@ -89,7 +140,8 @@ public class AccountAdminPageController {
             myProfileStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
             myProfileStage.initStyle(StageStyle.TRANSPARENT);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/adminPanel/AdminPanelPage.fxml"));
-            AdminPanelPageController controller = new AdminPanelPageController(user);
+            AdminPanelPageController controller = new AdminPanelPageController();
+            controller.setUser(user);
             fxmlLoader.setController(controller);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
@@ -100,7 +152,7 @@ public class AccountAdminPageController {
         }
     }
 
-    private void logOut() {
+    private void logOut(MouseEvent event) {
         // Close the current window
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         stage.close();

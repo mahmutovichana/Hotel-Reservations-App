@@ -16,18 +16,38 @@ public class DaoFactory {
     private DaoFactory(){
     }
 
+    /**
+     * Hotel dao hotel dao.
+     *
+     * @return the hotel dao
+     */
     public static HotelDao hotelDao(){
         return hotelDao;
     }
 
+    /**
+     * Reservation dao reservation dao.
+     *
+     * @return the reservation dao
+     */
     public static ReservationDao reservationDao(){
         return reservationDao;
     }
 
+    /**
+     * Room dao room dao.
+     *
+     * @return the room dao
+     */
     public static RoomDao roomDao(){
         return roomDao;
     }
 
+    /**
+     * User dao user dao.
+     *
+     * @return the user dao
+     */
     public static UserDao userDao(){
         return userDao;
     }

@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.domain.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,10 +11,37 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The type About us page controller.
+ */
 public class AboutUsPageController {
     @FXML
     private ImageView goBack;
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    private User user;
+
+
+    /**
+     * Initialize.
+     */
     public void initialize() {
 
         goBack.setOnMouseClicked(event -> {
@@ -24,6 +52,7 @@ public class AboutUsPageController {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/homePage/HomePage.fxml"));
                 HomePageController controller = new HomePageController();
+                controller.setUser(user);
                 fxmlLoader.setController(controller);
                 Parent root = fxmlLoader.load();
                 Stage homeStage = new Stage();

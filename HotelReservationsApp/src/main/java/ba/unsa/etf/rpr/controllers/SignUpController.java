@@ -35,28 +35,61 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 /**
- FXML controller for the sign-up form.
+ * FXML controller for the sign-up form.
  */
 public class SignUpController extends Component {
 
     private final UserManager u = new UserManager();
 
+    /**
+     * The Name.
+     */
     public TextField name;
+    /**
+     * The Bad name.
+     */
     public Label badName;
+    /**
+     * The Surname.
+     */
     public TextField surname;
+    /**
+     * The Email.
+     */
     public TextField email;
 
+    /**
+     * The Username.
+     */
     public TextField username;
 
+    /**
+     * The Password.
+     */
     public PasswordField password;
+    /**
+     * The Sign up button.
+     */
     public Button signUpButton;
+    /**
+     * The Bad surname.
+     */
     public Label badSurname;
+    /**
+     * The Bad email.
+     */
     public Label badEmail;
+    /**
+     * The Bad username.
+     */
     public Label badUsername;
+    /**
+     * The Bad password.
+     */
     public Label badPassword;
 
     /**
-     Initializes the form by adding event listeners to the form fields.
+     * Initializes the form by adding event listeners to the form fields.
      */
     public void initialize(){
         // Add an event listener to the name field
@@ -144,7 +177,6 @@ public class SignUpController extends Component {
             user.setEmail(emailInput);
             user.setUsername(usernameInput);
             user.setPassword(UserManager.hashPassword(passwordInput));
-            //UserDaoSQLImpl u = new UserDaoSQLImpl();
 
             try {
                 FileReader reader = new FileReader("src/main/resources/db.properties");
@@ -175,8 +207,9 @@ public class SignUpController extends Component {
     }
 
     /**
-     Displays a pop-up box with the given message.
-     @param message the message to display in the pop-up box
+     * Displays a pop-up box with the given message.
+     *
+     * @param message the message to display in the pop-up box
      */
     public void showPopupBox(String message) {
         try {

@@ -12,6 +12,7 @@ import java.util.TreeMap;
 
 /**
  * MySQL Implementation of DAO
+ *
  * @author Hana Mahmutović
  */
 public class UserDaoSQLImpl extends AbstractDao<User> implements UserDao {
@@ -22,10 +23,10 @@ public class UserDaoSQLImpl extends AbstractDao<User> implements UserDao {
     }
 
     /**
+     * Get instance user dao sql.
+     *
+     * @return QuoteDaoSQLImpl We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton This method will call private constructor in instance==null and then return that instance
      * @author Hana Mahmutović
-     * @return QuoteDaoSQLImpl
-     * We don't need more than one object for CRUD operations on table 'quotes' so we will use Singleton
-     * This method will call private constructor in instance==null and then return that instance
      */
     public static UserDaoSQLImpl getInstance(){
         if(instance==null)
@@ -33,6 +34,9 @@ public class UserDaoSQLImpl extends AbstractDao<User> implements UserDao {
         return instance;
     }
 
+    /**
+     * Remove instance.
+     */
     public static void removeInstance(){
         if(instance!=null)
             instance=null;
@@ -74,9 +78,9 @@ public class UserDaoSQLImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public User findUsername(String usernameField) throws HotelException{
-        String insert = "SELECT id from USERS where username='" + usernameField +"'";
+        String find = "SELECT id from USERS where username='" + usernameField +"'";
         try {
-            PreparedStatement stmt = getConnection().prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt = getConnection().prepareStatement(find, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()) { // result set is iterator.
                 return getById(rs.getInt(1));

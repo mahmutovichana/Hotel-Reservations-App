@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Reservation;
 import ba.unsa.etf.rpr.exceptions.HotelException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -69,5 +70,15 @@ public class ReservationManager {
      */
     public List<Reservation> getAll() throws HotelException {
         return DaoFactory.reservationDao().getAll();
+    }
+
+    /**
+     * Total income int.
+     *
+     * @return the int
+     * @throws SQLException the sql exception
+     */
+    public int totalIncome() throws SQLException{
+        return DaoFactory.reservationDao().totalIncome();
     }
 }

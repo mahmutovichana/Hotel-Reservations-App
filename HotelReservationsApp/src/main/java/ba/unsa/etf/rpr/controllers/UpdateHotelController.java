@@ -1,7 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.business.HotelManager;
-import ba.unsa.etf.rpr.dao.AbstractDao;
 import ba.unsa.etf.rpr.domain.Hotel;
 import ba.unsa.etf.rpr.exceptions.HotelException;
 import javafx.collections.FXCollections;
@@ -55,7 +54,7 @@ public class UpdateHotelController {
 
     private boolean okClicked = false;
     private List<Hotel> hotels = new ArrayList<>();
-    private Hotel hotel;
+    private Hotel hotel = new Hotel();
 
     private final HotelManager h = new HotelManager();
 
@@ -68,26 +67,21 @@ public class UpdateHotelController {
         selectedHotel.setCountry(countryField.getText());
         selectedHotel.setStarRating(Integer.parseInt(starRatingField.getText()));
         h.update(selectedHotel);
-        System.out.println(selectedHotel.getName());
-        System.out.println(h.getById(8).toString());
         okClicked = true;
-        Stage stage = (Stage) nameField.getScene().getWindow();
-        stage.close();
+        ((Stage) saveButton.getScene().getWindow()).close();
     }
 
     @FXML
-    private void handleCancel() {
-        Stage stage = (Stage) nameField.getScene().getWindow();
-        stage.close();
-    }
+    private void handleCancel(){ ((Stage) cancelButton.getScene().getWindow()).close(); }
 
     /**
      * Initialize.
      *
      * @throws HotelException the hotel exception
+     * @throws SQLException   the sql exception
      */
     public void initialize() throws HotelException, SQLException {
-        if(AbstractDao.getConnection().isClosed()) System.out.println("zatvorena");
+
         List<Hotel> allHotels = h.getAll();
         hotels = FXCollections.observableArrayList(allHotels);
         hotelComboBox.setItems((ObservableList<Hotel>) hotels);

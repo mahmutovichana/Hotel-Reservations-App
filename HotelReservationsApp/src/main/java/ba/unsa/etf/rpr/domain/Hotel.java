@@ -7,6 +7,9 @@ package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
 
+/**
+ * The type Hotel.
+ */
 public class Hotel implements Idable{
     private int id;
     private String name;
@@ -15,8 +18,20 @@ public class Hotel implements Idable{
     private String country;
     private int starRating;
 
+    /**
+     * Instantiates a new Hotel.
+     */
     public Hotel(){}
 
+    /**
+     * Instantiates a new Hotel.
+     *
+     * @param name       the name
+     * @param zipCode    the zip code
+     * @param city       the city
+     * @param country    the country
+     * @param starRating the star rating
+     */
     public Hotel(String name, int zipCode, String city, String country, int starRating) {
         this.name = name;
         this.zipCode = zipCode;
@@ -32,36 +47,88 @@ public class Hotel implements Idable{
         this.id = id;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() { return name; }
+
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) { this.name = name; }
+
+    /**
+     * Gets zip code.
+     *
+     * @return the zip code
+     */
     public int getZipCode() {
         return zipCode;
     }
 
+    /**
+     * Sets zip code.
+     *
+     * @param zipCode the zip code
+     */
     public void setZipCode(int zipCode) {
         this.zipCode = zipCode;
     }
 
+    /**
+     * Gets city.
+     *
+     * @return the city
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * Sets city.
+     *
+     * @param city the city
+     */
     public void setCity(String city) {
         this.city = city;
     }
 
+    /**
+     * Gets country.
+     *
+     * @return the country
+     */
     public String getCountry() {
         return country;
     }
 
+    /**
+     * Sets country.
+     *
+     * @param country the country
+     */
     public void setCountry(String country) {
         this.country = country;
     }
 
+    /**
+     * Gets star rating.
+     *
+     * @return the star rating
+     */
     public int getStarRating() {
         return starRating;
     }
 
+    /**
+     * Sets star rating.
+     *
+     * @param starRating the star rating
+     */
     public void setStarRating(int starRating) {
         this.starRating = starRating;
     }
@@ -76,14 +143,7 @@ public class Hotel implements Idable{
 
     @Override
     public String toString() {
-        return "Hotel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", zipCode=" + zipCode +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
-                ", starRating=" + starRating +
-                '}';
+        return name;
     }
 
     @Override
