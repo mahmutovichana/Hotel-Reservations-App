@@ -141,20 +141,21 @@
                <TableColumn minWidth="50.0" prefWidth="50.0" text="Total" />
                <TableColumn minWidth="50.0" prefWidth="50.0" text="Adults" />
                <TableColumn minWidth="50.0" prefWidth="60.0" text="Children" />
-               <TableColumn minWidth="60.0" prefWidth="60.0" text="Room ID" />
+               <TableColumn fx:id="roomColumn" minWidth="60.0" prefWidth="60.0" text="Room ID" />
                <TableColumn minWidth="100.0" prefWidth="100.0" text="User" />
             </columns>
          </TableView>
       </Tab>
       <Tab fx:id="hotelTab" text="Hotels">
          <AnchorPane>
-            <TableView fx:id="hotelsTable" editable="true" prefHeight="370.0" prefWidth="539.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" stylesheets="@../../stylesheets/styles.css">
+            <TableView fx:id="hotelsTable" editable="true" prefHeight="361.0" prefWidth="539.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" stylesheets="@../../stylesheets/styles.css">
                <columns>
                   <TableColumn minWidth="100.0" prefWidth="120.0" text="Name" />
                   <TableColumn minWidth="70.0" prefWidth="70.0" text="Zip Code" />
                   <TableColumn minWidth="100.0" prefWidth="120.0" text="City" />
                   <TableColumn minWidth="100.0" prefWidth="137.0" text="Country" />
                   <TableColumn minWidth="80.0" prefWidth="91.0" text="Star Rating" />
+                  <TableColumn minWidth="80.0" prefWidth="91.0" text="Number of rooms" />
                </columns>
             </TableView>
             <Button fx:id="addHotelButton" layoutX="100.0" layoutY="385.0" mnemonicParsing="false" prefWidth="100.0" text="ADD" />
@@ -164,7 +165,7 @@
       </Tab>
       <Tab fx:id="roomTab" text="Rooms">
          <AnchorPane>
-            <TableView fx:id="roomsTable" prefHeight="370.0" prefWidth="539.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" stylesheets="@../../stylesheets/styles.css">
+            <TableView fx:id="roomsTable" prefHeight="371.0" prefWidth="539.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" stylesheets="@../../stylesheets/styles.css">
                <columns>
                   <TableColumn minWidth="60.0" prefWidth="60.0" text="Room ID" />
                   <TableColumn minWidth="50.0" prefWidth="50.0" text="Price" />

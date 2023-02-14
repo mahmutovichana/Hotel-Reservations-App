@@ -121,4 +121,8 @@ public class HotelManager {
     public int totalHotels() throws SQLException{
         return DaoFactory.hotelDao().totalHotels();
     }
+
+    public List<Hotel> NoOfRooms() throws SQLException, HotelException{
+        return DaoFactory.hotelDao().NoOfRooms();
+    }
 }

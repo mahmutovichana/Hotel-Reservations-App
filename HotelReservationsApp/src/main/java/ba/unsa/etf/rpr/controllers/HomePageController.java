@@ -216,6 +216,17 @@ public class HomePageController{
         logOutButton.setOnMouseClicked(event -> logOut());
 
         aboutUsButton.setOnAction(event -> {
+            AboutUsPageController controller = new AboutUsPageController();
+            controller.setUser(user);
+            try {
+                openDialog("About Us", "/fxml/homePage/AboutUsPage.fxml", controller);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
+        aboutUsButton.setOnAction(event -> {
             // Close the current window
             Stage stage = (Stage) aboutUsButton.getScene().getWindow();
             stage.close();
@@ -306,4 +317,24 @@ public class HomePageController{
             e.printStackTrace();
         }
     }
+
+    private void openDialog(String title, String fxmlFile, Object controller) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        loader.setController(controller);
+        Stage stage = new Stage();
+        Parent rootParent = loader.load();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+        stage.setResizable(false);
+        Scene scene = new Scene(rootParent);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(new Scene(root));
+        // Get the current stage and close it
+        Stage currentStage = (Stage) root.getScene().getWindow();
+        currentStage.close();
+
+        stage.show();
+    }
+
+
 }

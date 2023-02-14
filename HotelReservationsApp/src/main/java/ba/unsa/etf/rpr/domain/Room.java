@@ -93,8 +93,9 @@ public class Room implements Idable{
      *
      * @return the has air conditioning
      */
-    public int getHasAirConditioning() {
-        return hasAirConditioning;
+    public boolean getHasAirConditioning() {
+        if(hasAirConditioning==1) return true;
+        return false;
     }
 
     /**

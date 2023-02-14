@@ -16,19 +16,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -38,6 +35,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
+import static javafx.scene.paint.Color.*;
+
 /**
  * The type Admin panel page controller.
  */
@@ -46,7 +45,8 @@ public class AdminPanelPageController {
     /**
      * Instantiates a new Admin panel page controller.
      */
-    public AdminPanelPageController(){}
+    public AdminPanelPageController() {
+    }
 
     /**
      * The Total users registered.
@@ -128,7 +128,7 @@ public class AdminPanelPageController {
             "Let's make today legendary",
             "Let's turn today into a masterpiece",
             "Let's make today unforgettable",
-            "Let's make today a day to remember" };
+            "Let's make today a day to remember"};
     /**
      * The Add hotel button.
      */
@@ -163,6 +163,9 @@ public class AdminPanelPageController {
     private User user;
     @FXML
     private Button closeButton;
+
+    @FXML
+    private TableColumn<Room, Room> roomColumn;
 
     /**
      * Instantiates a new Admin panel page controller.
@@ -308,9 +311,10 @@ public class AdminPanelPageController {
 
         // Define a list of tables and their corresponding columns
         List<TableColumnPair> tables = new ArrayList<>();
+
         tables.add(new TableColumnPair(usersTable, User.class, "firstName", "lastName", "username", "email"));
         tables.add(new TableColumnPair(reservationsTable, Reservation.class, "id", "checkIn", "checkOut", "total", "adults", "children", "roomId", "username"));
-        tables.add(new TableColumnPair(hotelsTable, Hotel.class, "name", "zipCode", "city", "country", "starRating"));
+        tables.add(new TableColumnPair(hotelsTable, Hotel.class, "name", "zipCode", "city", "country", "starRating", "noOfRooms"));
         tables.add(new TableColumnPair(roomsTable, Room.class, "id", "price", "status", "type", "capacity", "hasAirConditioning", "hotelId"));
         // Add more tables and columns as needed
 
@@ -327,6 +331,77 @@ public class AdminPanelPageController {
                 tableColumn.setCellValueFactory(new PropertyValueFactory<>(columns[i]));
             }
         }
+
+        /*ObservableList<Room> roomList = roomsTable.getItems();
+        for (Room room : roomList) {
+            Pane roomPane = new Pane();
+            roomPane.setPrefSize(200, 100); // set the size of the pane
+            Label capacityLabel = new Label("Capacity: " + room.getCapacity());
+            roomPane.getChildren().addAll(capacityLabel);
+            // add other labels for additional attributes as needed
+            // add the roomPane to a container such as a VBox or a ScrollPane
+        }*/
+
+        /*roomColumn.setCellFactory(column -> new TableCell<Room, Room>() {
+            @Override
+            protected void updateItem(Room room, boolean empty) {
+                super.updateItem(room, empty);
+                if (empty || room == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Pane roomPane = new Pane();
+                    roomPane.setPrefSize(200, 100);
+                    Label capacityLabel = new Label("Capacity " + room.getCapacity());
+                    Label typeLabel = new Label("Type "+ room.getType());
+                    Label hotelLabel = new Label("Hotel "+ room.getHotelId().toString());
+                    Label airLabel = new Label("Air conditioning "+room.getHasAirConditioning());
+                    Label priceLabel = new Label("Price "+room.getPrice());
+                    roomPane.getChildren().addAll(capacityLabel,typeLabel,hotelLabel,airLabel,priceLabel);
+                    setGraphic(roomPane);
+                }
+            }
+        });*/
+
+        roomColumn.setCellFactory(column -> new TableCell<Room, Room>() {
+            @Override
+            protected void updateItem(Room room, boolean empty) {
+                super.updateItem(room, empty);
+                if (empty || room == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    VBox roomBox = new VBox(5);
+                    roomBox.setPadding(new Insets(5));
+
+                    Label capacityLabel = new Label("Capacity: " + room.getCapacity());
+                    capacityLabel.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                    capacityLabel.setBackground(Background.fill(RED));
+
+                    Label typeLabel = new Label("Type: " + room.getType());
+                    typeLabel.setBorder(new Border(new BorderStroke(BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                    typeLabel.setBackground(Background.fill(BLUE));
+                    typeLabel.setTextFill(WHITE);
+
+                    Label hotelLabel = new Label("Hotel: " + room.getHotelId().toString());
+                    hotelLabel.setBorder(new Border(new BorderStroke(GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                    hotelLabel.setBackground(Background.fill(GREEN));
+                    hotelLabel.setTextFill(WHITE);
+
+                    Label airLabel = new Label("Air conditioning: " + room.getHasAirConditioning());
+                    airLabel.setBorder(new Border(new BorderStroke(Color.ORANGE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                    airLabel.setBackground(Background.fill(ORANGE));
+
+                    Label priceLabel = new Label("Price: " + room.getPrice());
+                    priceLabel.setBorder(new Border(new BorderStroke(Color.PURPLE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                    priceLabel.setBackground(Background.fill(PURPLE));
+                    priceLabel.setTextFill(WHITE);
+
+                    roomBox.getChildren().addAll(capacityLabel, typeLabel, hotelLabel, airLabel, priceLabel);
+                    setGraphic(roomBox);
+                }
+            }
+        });
 
         welcomeLabel.setText("Welcome " + user.getFirstName()); // set the text of the label to display the welcome message
 

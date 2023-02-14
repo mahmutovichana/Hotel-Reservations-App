@@ -18,6 +18,16 @@ public class Hotel implements Idable{
     private String country;
     private int starRating;
 
+    public int getNoOfRooms() {
+        return noOfRooms;
+    }
+
+    public void setNoOfRooms(int noOfRooms) {
+        this.noOfRooms = noOfRooms;
+    }
+
+    private int noOfRooms;
+
     /**
      * Instantiates a new Hotel.
      */

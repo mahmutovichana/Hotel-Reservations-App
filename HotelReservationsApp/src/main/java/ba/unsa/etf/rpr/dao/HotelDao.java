@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Hotel;
+import ba.unsa.etf.rpr.exceptions.HotelException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -51,4 +52,6 @@ public interface HotelDao extends Dao<Hotel>{
      * @throws SQLException the sql exception
      */
     int totalHotels() throws SQLException;
+
+    List<Hotel> NoOfRooms() throws HotelException;
 }

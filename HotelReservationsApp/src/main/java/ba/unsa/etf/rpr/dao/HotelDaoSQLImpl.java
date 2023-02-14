@@ -48,6 +48,7 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
             hotel.setCity(rs.getString("city"));
             hotel.setCountry(rs.getString("country"));
             hotel.setStarRating(rs.getInt("starRating"));
+            try{hotel.setNoOfRooms(rs.getInt("no_rooms"));}catch (Exception e){}
             return hotel;
         } catch (Exception e) {
             throw new HotelException(e.getMessage(), e);
@@ -157,10 +158,37 @@ public class HotelDaoSQLImpl extends AbstractDao<Hotel> implements HotelDao {
         String query = "SELECT count(id) AS total_hotels FROM HOTELS";
         try{
             ResultSet result = getConnection().prepareStatement(query).executeQuery();
+
             if (result.next()) total = result.getInt("total_hotels");
         }catch (SQLException e){
             e.printStackTrace();
         }
         return total;
     }
+
+    @Override
+    public List<Hotel> getAll() throws HotelException{
+        return NoOfRooms();
+    }
+
+    public List<Hotel> NoOfRooms() throws HotelException {
+        String query = "SELECT h.*, COUNT(*) AS no_rooms FROM HOTELS h JOIN ROOMS r ON r.hotel_id = h.id\n" +
+                "            GROUP BY h.id ORDER BY no_rooms DESC;";
+
+        return this.executeQuery(query,null);
+
+        /*try{
+            String query = "SELECT h.*, COUNT(*) no_rooms FROM HOTELS h JOIN ROOMS r ON r.hotel_id = h.id\n" +
+                    "            GROUP BY h.id ORDER BY no_rooms DESC";
+            PreparedStatement statement = getConnection().prepareStatement(query);
+            // Execute the query and get the result set
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next()) rooms = resultSet.getInt("no_rooms");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return total;*/
+    }
+
+
 }

@@ -115,7 +115,7 @@ public class UpdateRoomController {
             if (newValue != null) {
                 typeComboBox.setValue(newValue.getType());
                 capacityField.setText(String.valueOf(newValue.getCapacity()));
-                if (newValue.getHasAirConditioning() == 1) {
+                if (newValue.getHasAirConditioning()) {
                     yesRadioButton.setSelected(true); noRadioButton.setSelected(false);
                 } else {
                     noRadioButton.setSelected(true); yesRadioButton.setSelected(false);

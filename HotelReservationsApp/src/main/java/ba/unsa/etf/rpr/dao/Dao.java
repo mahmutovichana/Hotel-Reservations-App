@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.exceptions.HotelException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
