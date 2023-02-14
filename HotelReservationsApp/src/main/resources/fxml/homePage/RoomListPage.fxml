@@ -90,7 +90,7 @@
          <Font size="23.0" />
       </font>
    </Label>
-   <Label fx:id="alertLabel" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="710.0" layoutY="610.0" prefHeight="57.0" prefWidth="215.0" textAlignment="CENTER" textFill="RED" wrapText="true">
+   <Label fx:id="alertLabel" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="697.0" layoutY="575.0" prefHeight="120.0" prefWidth="257.0" textAlignment="CENTER" textFill="RED" wrapText="true">
       <font>
          <Font size="14.0" />
       </font>

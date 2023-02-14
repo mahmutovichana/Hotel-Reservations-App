@@ -3,11 +3,9 @@ package ba.unsa.etf.rpr.controllers;
 import ba.unsa.etf.rpr.business.HotelManager;
 import ba.unsa.etf.rpr.business.ReservationManager;
 import ba.unsa.etf.rpr.business.RoomManager;
-import ba.unsa.etf.rpr.domain.Hotel;
 import ba.unsa.etf.rpr.domain.Reservation;
-import ba.unsa.etf.rpr.domain.Room;
 import ba.unsa.etf.rpr.domain.User;
-import ba.unsa.etf.rpr.exceptions.HotelException;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +27,9 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
+
+import static org.apache.commons.lang3.StringUtils.valueOf;
 
 /**
  * The type List of reservations page controller.
@@ -105,7 +106,7 @@ public class ListOfReservationsPageController {
      * The Room type column.
      */
     @FXML
-    public TableColumn<Room, String> roomTypeColumn;
+    public TableColumn<Reservation, String> roomTypeColumn;
     /**
      * The Check in column.
      */
@@ -135,7 +136,7 @@ public class ListOfReservationsPageController {
      * The Hotel name column.
      */
     @FXML
-    public TableColumn<Hotel, String> hotelNameColumn;
+    public TableColumn<Reservation, String> hotelNameColumn;
 
     private final ReservationManager r = new ReservationManager();
     private final RoomManager rm = new RoomManager();
@@ -146,9 +147,9 @@ public class ListOfReservationsPageController {
      */
     void refreshTable(){
         try {
-            myReservationsTable.setItems(FXCollections.observableList(r.getAll()));
+            myReservationsTable.setItems(FXCollections.observableList(r.getAllForUser(user)));
             myReservationsTable.refresh();
-        } catch (HotelException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -158,13 +159,13 @@ public class ListOfReservationsPageController {
      */
     public void initialize() {
 
-        roomTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        roomTypeColumn.setCellValueFactory(param -> new SimpleStringProperty((valueOf(param.getValue().getRoomId().getType().toCharArray()))));
         checkInColumn.setCellValueFactory(new PropertyValueFactory<>("checkIn"));
         checkOutColumn.setCellValueFactory(new PropertyValueFactory<>("checkOut"));
         adultsColumn.setCellValueFactory(new PropertyValueFactory<>("adults"));
         childrenColumn.setCellValueFactory(new PropertyValueFactory<>("children"));
         totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
-        hotelNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        hotelNameColumn.setCellValueFactory(param -> new SimpleStringProperty((valueOf(param.getValue().getRoomId().getHotelId().getName().toCharArray()))));
         refreshTable();
 
         logOutButton.setOnMouseClicked(event -> logOut());

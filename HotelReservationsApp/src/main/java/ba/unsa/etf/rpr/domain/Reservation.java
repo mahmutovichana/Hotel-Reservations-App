@@ -50,6 +50,16 @@ public class Reservation implements Idable{
         this.username = username;
     }
 
+    public Reservation(LocalDate checkIn, LocalDate checkOut, int total, int adults, int children, Room roomId, User username) {
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.total = total;
+        this.adults = adults;
+        this.children = children;
+        this.roomId = roomId;
+        this.username = username;
+    }
+
     public int getId() {
         return id;
     }

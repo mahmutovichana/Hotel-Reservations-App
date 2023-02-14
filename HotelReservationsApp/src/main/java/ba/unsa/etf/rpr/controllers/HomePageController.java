@@ -73,27 +73,27 @@ public class HomePageController{
     @FXML
     public ScrollPane scroller;
 
+    public GridPane cityPane = new GridPane();
     private final HotelManager h = new HotelManager();
 
-    private boolean isChildWindowOpen = false;
-
     private void openHotelListForCity(String city) {
+        // Close the current window
+        Stage stage = (Stage) cityPane.getScene().getWindow();
+        stage.close();
+        // Open the "my reservations" page window
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/homePage/HotelListPage.fxml"));
             HotelListController controller = new HotelListController();
-            System.out.println("saljem u openHotelListForCity grad: "+city);
             controller.setCity(city);
             controller.setUser(user);
             loader.setController(controller);
             Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
-            stage.setScene(new Scene(root));
-            System.out.println("cekam da udje u hotelListController");
-            //stage.setOnCloseRequest(event -> isChildWindowOpen = false);
-            stage.show();
-            System.out.println("cekam...");
-            isChildWindowOpen = true;
+            Stage stage2 = new Stage();
+            stage2.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+            stage2.setResizable(false);
+            stage2.setScene(new Scene(root));
+            stage2.show();
+            stage.hide();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println(e.getMessage());
@@ -126,7 +126,6 @@ public class HomePageController{
      */
     public void CityDivs(Map<String, String> cityImageMap) {
         Set<String> cities = h.fetchCities();
-        GridPane cityPane = new GridPane();
         cityPane.setHgap(20);
         cityPane.setVgap(20);
         cityPane.setPadding(new Insets(10));
@@ -155,9 +154,7 @@ public class HomePageController{
             stackPane.getChildren().addAll(imageView, rect, cityName);
             stackPane.setAlignment(Pos.CENTER);
 
-            stackPane.setOnMouseClicked(event -> {System.out.println(city+"usla u ovo openHotel..");
-                openHotelListForCity(city);
-                });
+            stackPane.setOnMouseClicked(event -> openHotelListForCity(city));
             cityPane.add(stackPane, column, row);
             column++;
             if (column == 3) {
@@ -236,6 +233,7 @@ public class HomePageController{
                 scene.setFill(Color.TRANSPARENT);
                 aboutUsStage.setScene(scene);
                 aboutUsStage.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -258,6 +256,7 @@ public class HomePageController{
                 scene.setFill(Color.TRANSPARENT);
                 myProfileStage.setScene(scene);
                 myProfileStage.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -279,7 +278,9 @@ public class HomePageController{
                 Scene scene = new Scene(root);
                 scene.setFill(Color.TRANSPARENT);
                 reservationsStage.setScene(scene);
+                reservationsStage.setResizable(false);
                 reservationsStage.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -300,6 +301,7 @@ public class HomePageController{
             loginStage.setScene(new Scene(root, Color.TRANSPARENT));
             loginStage.initStyle(StageStyle.TRANSPARENT);
             loginStage.show();
+            stage.hide();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,14 +4,12 @@ import ba.unsa.etf.rpr.business.HotelManager;
 import ba.unsa.etf.rpr.domain.Hotel;
 import ba.unsa.etf.rpr.domain.User;
 import ba.unsa.etf.rpr.exceptions.HotelException;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -109,9 +107,13 @@ public class HotelListController {
         }
     }
 
-    private boolean isChildWindowOpen = false;
+    public GridPane hotelPane = new GridPane();
 
     private void openRoomListForHotel(String hotelName) {
+        // Close the current window
+        Stage stage = (Stage) hotelPane.getScene().getWindow();
+        stage.close();
+        // Open the "my reservations" page window
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/homePage/RoomListPage.fxml"));
             RoomListController controller = new RoomListController();
@@ -119,12 +121,12 @@ public class HotelListController {
             controller.setUser(user);
             loader.setController(controller);
             Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
-            stage.setScene(new Scene(root));stage.setResizable(false);
-            //stage.setOnCloseRequest(event2 -> handleCloseEvent(event2,stage));
-            stage.show();
-            isChildWindowOpen = true;
+            Stage stage2 = new Stage();
+            stage2.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
+            stage2.setScene(new Scene(root));
+            stage2.setResizable(false);
+            stage2.show();
+            stage.hide();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println(e.getMessage());
@@ -156,8 +158,6 @@ public class HotelListController {
      */
     public void HotelDivs(List<String> hotelImages) {
         List<Hotel> hotels = h.fetchHotelsByCity(city);
-        System.out.println("usla u hotelDivs sad sa hotelima : "+ Arrays.toString(hotels.toArray()));
-        GridPane hotelPane = new GridPane();
         hotelPane.setHgap(20);
         hotelPane.setVgap(20);
         hotelPane.setPadding(new Insets(10));
@@ -182,15 +182,12 @@ public class HotelListController {
             hotelName.setTextFill(Color.WHITE);
             hotelName.setFont(Font.font(null, FontWeight.BOLD, 20));
             hotelName.setAlignment(Pos.CENTER);
-            System.out.println(hotel.getName());
-            System.out.println(hotelName.getText());
 
             StackPane stackPane = new StackPane();
             stackPane.getChildren().addAll(imageView, rect, hotelName);
             stackPane.setAlignment(Pos.CENTER);
 
-            stackPane.setOnMouseClicked(event -> {
-                System.out.println(hotel.getName());openRoomListForHotel(hotel.getName());});
+            stackPane.setOnMouseClicked(event -> openRoomListForHotel(hotel.getName()));
             hotelPane.add(stackPane, column, row);
             column++;
             if (column == 3) {
@@ -230,9 +227,8 @@ public class HotelListController {
                 scene.setFill(Color.TRANSPARENT);
                 aboutUsStage.setScene(scene);
                 aboutUsStage.setResizable(false);
-                aboutUsStage.setOnCloseRequest(event2 -> handleCloseEvent(event2, stage));
                 aboutUsStage.show();
-                isChildWindowOpen = true;
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -255,9 +251,8 @@ public class HotelListController {
                 scene.setFill(Color.TRANSPARENT);
                 myProfileStage.setScene(scene);
                 myProfileStage.setResizable(false);
-                myProfileStage.setOnCloseRequest(event2 -> handleCloseEvent(event2, stage));
                 myProfileStage.show();
-                isChildWindowOpen = true;
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -278,9 +273,8 @@ public class HotelListController {
                 stage.setResizable(false);
                 homeStage.getIcons().add(new Image("images/HanaAvisTransLogoBlue.png"));
                 homeStage.setScene(new Scene(root));
-                homeStage.setOnCloseRequest(event2 -> handleCloseEvent(event2, stage));
                 homeStage.show();
-                isChildWindowOpen = true;
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -304,6 +298,7 @@ public class HotelListController {
                 scene.setFill(Color.TRANSPARENT);
                 stage2.setScene(scene);
                 stage2.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -325,7 +320,9 @@ public class HotelListController {
                 Scene scene = new Scene(root);
                 scene.setFill(Color.TRANSPARENT);
                 stage2.setScene(scene);
+                stage2.setResizable(false);
                 stage2.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -350,16 +347,4 @@ public class HotelListController {
         }
     }
 
-    private void handleCloseEvent(Event event, Stage stage) {
-        if (isChildWindowOpen) {
-            event.consume();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Child window still open");
-            alert.setContentText("Please close the child window before closing the parent window.");
-            alert.showAndWait();
-        } else {
-            stage.close();
-        }
-    }
 }

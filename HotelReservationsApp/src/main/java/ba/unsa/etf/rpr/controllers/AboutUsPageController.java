@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * The type About us page controller.
  */
-public class AboutUsPageController {
+public class AboutUsPageController{
     @FXML
     private ImageView goBack;
 

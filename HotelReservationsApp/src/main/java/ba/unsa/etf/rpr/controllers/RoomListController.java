@@ -229,6 +229,7 @@ public class RoomListController {
                 scene.setFill(Color.TRANSPARENT);
                 aboutUsStage.setScene(scene);
                 aboutUsStage.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -251,6 +252,7 @@ public class RoomListController {
                 scene.setFill(Color.TRANSPARENT);
                 myProfileStage.setScene(scene);
                 myProfileStage.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -273,6 +275,7 @@ public class RoomListController {
                 scene.setFill(Color.TRANSPARENT);
                 stage2.setScene(scene);
                 stage2.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -294,8 +297,10 @@ public class RoomListController {
                 stage2.initStyle(StageStyle.TRANSPARENT);
                 Scene scene = new Scene(root);
                 scene.setFill(Color.TRANSPARENT);
+                stage2.setResizable(false);
                 stage2.setScene(scene);
                 stage2.show();
+                stage.hide();
             } catch (IOException e) {
                 e.printStackTrace();
             }
