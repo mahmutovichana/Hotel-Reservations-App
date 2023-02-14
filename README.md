@@ -63,7 +63,7 @@ Please make sure to replace path/to/java-sdk/lib/* and the path/to/AppFX with th
 - Intellij IDEA 
 - Scene Builder
 - MySQL Workbench
-- 
+
 ## Contact
 Have any questions or feedback? Feel free to reach out to us at hmahmutovi3@etf.unsa.ba <br>
 We would love to hear from you and help you plan your next trip! 💬
